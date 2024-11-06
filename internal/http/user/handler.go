@@ -1,9 +1,12 @@
 package user
 
-import "homeworktodolist/internal/config"
+import (
+	"github.com/gofiber/fiber/v2"
+	"homeworktodolist/internal/config"
+)
 
 type Handler struct {
-	config *config.Config
+	config      *config.Config
 	userService UserService
 }
 
@@ -12,4 +15,8 @@ func NewUserHandler(config *config.Config, service UserService) *Handler {
 		config:      config,
 		userService: service,
 	}
+}
+
+func MapUserRoutes(g fiber.Router, h *Handler) {
+	g.Post("/register", h.Register())
 }

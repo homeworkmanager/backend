@@ -3,6 +3,7 @@ package postgres
 import (
 	"fmt"
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 )
 
 type PGConfig struct {
@@ -25,7 +26,7 @@ func Connect(cfg *PGConfig) *sqlx.DB {
 	)
 
 	if cfg.Password != "" {
-		dsn += fmt.Sprintf(" %s", cfg.Password)
+		dsn += fmt.Sprintf(" password=%s", cfg.Password)
 	}
 
 	db, err := sqlx.Connect("postgres", dsn)

@@ -34,6 +34,8 @@ func ErrorHandler(ctx *fiber.Ctx, err error) error {
 		})
 	}
 
+	//any unspecified error
+	ctx.Status(fiber.StatusInternalServerError)
 	return ctx.JSON(fiber.Map{
 		"data":  "",
 		"error": err.Error(),
