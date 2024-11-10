@@ -4,13 +4,17 @@ import (
 	"database/sql"
 	"errors"
 	"github.com/gofiber/fiber/v2"
+	"homeworktodolist/internal/errs"
 )
 
 var (
 	notFoundErrors = []error{
 		sql.ErrNoRows,
+		errs.UserNotFound,
 	}
-	badRequestErrors = []error{}
+	badRequestErrors = []error{
+		errs.UserExists,
+	}
 )
 
 func ErrorHandler(ctx *fiber.Ctx, err error) error {

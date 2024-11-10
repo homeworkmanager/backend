@@ -9,6 +9,6 @@ type User struct {
 	Email     string
 	Password  string
 	Role      Role
-	GroupId  int64
-	СreatedAt time.Time
+	GroupId   int64
+	CreatedAt time.Time
 }

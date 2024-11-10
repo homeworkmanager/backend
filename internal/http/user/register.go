@@ -2,7 +2,6 @@ package user
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/pkg/errors"
 	userService "homeworktodolist/internal/service/user"
 )
 
@@ -16,17 +15,15 @@ type RegisterReq struct {
 
 func (h *Handler) Register() fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		mName := "UserHandler.Register"
 		var req RegisterReq
 
 		if err := c.BodyParser(&req); err != nil {
-			err := errors.Wrap(err, fiber.ErrBadRequest.Error())
-			return errors.Wrap(err, mName)
+			return fiber.ErrBadRequest
 		}
 
 		err := h.userService.Create(c.Context(), req.toCreate())
 		if err != nil {
-			return errors.Wrap(err, mName)
+			return err
 		}
 
 		return c.JSON(fiber.Map{
