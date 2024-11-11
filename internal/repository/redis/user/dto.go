@@ -7,3 +7,11 @@ type credsData struct {
 	Role    entity.Role   `json:"role"`
 	GroupId int64         `json:"groupID"`
 }
+
+func (d *credsData) toCreds() entity.UserCreds {
+	return entity.UserCreds{
+		UserID:  d.UserID,
+		Role:    d.Role,
+		GroupId: d.GroupId,
+	}
+}

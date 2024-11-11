@@ -6,6 +6,7 @@ import (
 	"homeworktodolist/internal/config"
 	"homeworktodolist/internal/err_handler"
 	userHandlers "homeworktodolist/internal/http/user"
+	middleware "homeworktodolist/internal/middleware"
 	userRepo "homeworktodolist/internal/repository/postgres/user"
 	userRedisRepo "homeworktodolist/internal/repository/redis/user"
 	userService "homeworktodolist/internal/service/user"
@@ -43,9 +44,11 @@ func createApp() {
 		ErrorHandler: err_handler.ErrorHandler,
 	})
 
+	//middleware
+	mw := middleware.NewMwManager(userRedisRepo)
 	//groups
 	userGroup := fiberApp.Group("/user")
-	userHandlers.MapUserRoutes(userGroup, userHandler)
+	userHandlers.MapUserRoutes(userGroup, userHandler, mw)
 
 	//fiber listen
 	exit := make(chan os.Signal, 1)

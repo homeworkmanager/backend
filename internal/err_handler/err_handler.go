@@ -22,6 +22,10 @@ func ErrorHandler(ctx *fiber.Ctx, err error) error {
 	var ferr *fiber.Error
 	if errors.As(err, &ferr) {
 		ctx.Status(ferr.Code)
+		return ctx.JSON(fiber.Map{
+			"data":  "",
+			"error": err.Error(),
+		})
 	}
 
 	if isNotFoundError(err) {

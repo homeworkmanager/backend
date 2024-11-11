@@ -2,6 +2,7 @@ package user
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"homeworktodolist/internal/entity"
 	userService "homeworktodolist/internal/service/user"
 	"time"
 )
@@ -30,7 +31,7 @@ func (h *Handler) Auth() fiber.Handler {
 		}
 
 		c.Cookie(&fiber.Cookie{
-			Name:    "session_key",
+			Name:    entity.SessionKey,
 			Value:   sessionKey,
 			Path:    "/",
 			Domain:  h.config.Domain,

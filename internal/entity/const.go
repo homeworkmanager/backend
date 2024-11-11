@@ -5,3 +5,8 @@ const (
 	RoleGroupManager
 	RoleGlobalAdmin
 )
+
+const (
+	SessionKey = "session_key"
+	Claims     = "claims"
+)
