@@ -5,6 +5,7 @@ import (
 	"homeworktodolist/pkg/db/postgres"
 	"homeworktodolist/pkg/db/redis"
 	"os"
+	"time"
 )
 
 const (
@@ -16,7 +17,7 @@ type Config struct {
 	Port   string `json:"port"`
 	Domain string `json:"domain"`
 
-	AuthTTL int `json:"auth_ttl"`
+	AuthTTL time.Duration `json:"auth_ttl"`
 
 	postgres.PGConfig `json:"postgres"`
 	redis.RedisConfig `json:"redis"`

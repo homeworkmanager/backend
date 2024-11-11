@@ -14,6 +14,7 @@ var (
 	}
 	badRequestErrors = []error{
 		errs.UserExists,
+		errs.ErrInvalidPassword,
 	}
 )
 

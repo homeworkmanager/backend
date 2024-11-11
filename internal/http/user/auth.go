@@ -1,0 +1,44 @@
+package user
+
+import (
+	"github.com/gofiber/fiber/v2"
+	userService "homeworktodolist/internal/service/user"
+	"time"
+)
+
+type AuthReq struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+func (h *Handler) Auth() fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		var req AuthReq
+		if err := c.BodyParser(&req); err != nil {
+			return fiber.ErrBadRequest
+		}
+		if req.Email == "" || req.Password == "" {
+			return fiber.ErrBadRequest
+		}
+
+		sessionKey, err := h.userService.Auth(c.Context(), userService.AuthUser{
+			Email:    req.Email,
+			Password: req.Password,
+		})
+		if err != nil {
+			return err
+		}
+
+		c.Cookie(&fiber.Cookie{
+			Name:    "session_key",
+			Value:   sessionKey,
+			Path:    "/",
+			Domain:  h.config.Domain,
+			Expires: time.Now().Add(time.Second * time.Duration(h.config.AuthTTL)),
+		})
+
+		return c.JSON(fiber.Map{
+			"data": "user successfully authed",
+		})
+	}
+}

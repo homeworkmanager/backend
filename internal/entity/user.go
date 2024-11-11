@@ -12,3 +12,9 @@ type User struct {
 	GroupId   int64
 	CreatedAt time.Time
 }
+
+type UserCreds struct {
+	UserID  UserID
+	Role    Role
+	GroupId int64
+}

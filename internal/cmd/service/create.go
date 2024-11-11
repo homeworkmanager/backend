@@ -7,6 +7,7 @@ import (
 	"homeworktodolist/internal/err_handler"
 	userHandlers "homeworktodolist/internal/http/user"
 	userRepo "homeworktodolist/internal/repository/postgres/user"
+	userRedisRepo "homeworktodolist/internal/repository/redis/user"
 	userService "homeworktodolist/internal/service/user"
 	"homeworktodolist/internal/tx_manager"
 	postgres "homeworktodolist/pkg/db/postgres"
@@ -22,16 +23,17 @@ func createApp() {
 
 	//database
 	postgresDb := postgres.Connect(&cfg.PGConfig)
-	_ = redis.Connect(&cfg.RedisConfig)
+	redisClient := redis.Connect(&cfg.RedisConfig)
 
 	//txmanager
 	txmanager := tx_manager.NewTxManager(postgresDb)
 
 	//Repo
 	userRepo := userRepo.NewUserRepo(txmanager)
+	userRedisRepo := userRedisRepo.NewUserRepo(redisClient, cfg)
 
 	//Service
-	userService := userService.NewUserService(userRepo, cfg)
+	userService := userService.NewUserService(userRepo, userRedisRepo, cfg)
 
 	//Handlers
 	userHandler := userHandlers.NewUserHandler(cfg, userService)
