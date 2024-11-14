@@ -22,6 +22,7 @@ func (h *Handler) Register() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
+		//TODO добавить проверку на валидность email
 		if req.Name == "" || req.Email == "" || req.Password == "" || req.GroupID == 0 {
 			return fiber.ErrBadRequest
 		}

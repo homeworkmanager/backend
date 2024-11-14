@@ -1,8 +1,11 @@
 package admin
 
 type Service struct {
+	groupService GroupService
 }
 
-func NewAdminService() *Service {
-	return &Service{}
+func NewAdminService(groupService GroupService) *Service {
+	return &Service{
+		groupService: groupService,
+	}
 }
