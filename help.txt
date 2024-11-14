@@ -1,1 +1,1 @@
- goose -dir ./internal/db/migrations/ postgres "user=postgres database=homeworkmanager password=admin host=192.168.0.69 port=5432" up
+ goose -dir ./internal/db/migrations postgres "user=postgres password=admin database=homeworkmanager host=192.168.0.69 port=5432" up

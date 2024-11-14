@@ -9,12 +9,12 @@ type User struct {
 	Email     string
 	Password  string
 	Role      Role
-	GroupId   int64
+	GroupID   GroupID
 	CreatedAt time.Time
 }
 
 type UserCreds struct {
 	UserID  UserID
 	Role    Role
-	GroupId int64
+	GroupID GroupID
 }

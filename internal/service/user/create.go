@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"errors"
 	"golang.org/x/crypto/bcrypt"
 	"homeworktodolist/internal/entity"
 	"homeworktodolist/internal/errs"
@@ -12,7 +13,7 @@ type CreateUser struct {
 	Surname  *string
 	Email    string
 	Password string
-	GroupId  int64
+	GroupID  entity.GroupID
 }
 
 func (s *Service) Create(ctx context.Context, req CreateUser) error {
@@ -22,7 +23,7 @@ func (s *Service) Create(ctx context.Context, req CreateUser) error {
 	if err == nil {
 		return errs.UserExists
 	}
-	if err != errs.UserNotFound {
+	if !(errors.Is(err, errs.UserNotFound)) {
 		return err
 	}
 
@@ -53,6 +54,6 @@ func (r *CreateUser) toUser() entity.User {
 		Name:    r.Name,
 		Surname: r.Surname,
 		Email:   r.Email,
-		GroupId: r.GroupId,
+		GroupID: r.GroupID,
 	}
 }

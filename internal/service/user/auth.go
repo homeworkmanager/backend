@@ -25,7 +25,7 @@ func (s *Service) Auth(ctx context.Context, req AuthUser) (sessionKey string, er
 	sessionKey, err = s.userRedisRepo.CreateCreds(ctx, entity.UserCreds{
 		UserID:  user.UserID,
 		Role:    user.Role,
-		GroupId: user.GroupId,
+		GroupID: user.GroupID,
 	})
 	if err != nil {
 		return "", err

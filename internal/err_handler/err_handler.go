@@ -11,9 +11,11 @@ var (
 	notFoundErrors = []error{
 		sql.ErrNoRows,
 		errs.UserNotFound,
+		errs.GroupNotFound,
 	}
 	badRequestErrors = []error{
 		errs.UserExists,
+		errs.GroupExists,
 		errs.ErrInvalidPassword,
 	}
 )

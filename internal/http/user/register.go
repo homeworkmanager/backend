@@ -2,15 +2,16 @@ package user
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"homeworktodolist/internal/entity"
 	userService "homeworktodolist/internal/service/user"
 )
 
 type RegisterReq struct {
-	Name     string  `json:"name"`
-	Surname  *string `json:"surname"`
-	Email    string  `json:"email"`
-	Password string  `json:"password"`
-	GroupId  int64   `json:"groupId"`
+	Name     string         `json:"name"`
+	Surname  *string        `json:"surname"`
+	Email    string         `json:"email"`
+	Password string         `json:"password"`
+	GroupID  entity.GroupID `json:"groupId"`
 }
 
 func (h *Handler) Register() fiber.Handler {
@@ -18,6 +19,10 @@ func (h *Handler) Register() fiber.Handler {
 		var req RegisterReq
 
 		if err := c.BodyParser(&req); err != nil {
+			return fiber.ErrBadRequest
+		}
+
+		if req.Name == "" || req.Email == "" || req.Password == "" || req.GroupID == 0 {
 			return fiber.ErrBadRequest
 		}
 
@@ -38,6 +43,6 @@ func (r *RegisterReq) toCreate() userService.CreateUser {
 		Surname:  r.Surname,
 		Email:    r.Email,
 		Password: r.Password,
-		GroupId:  r.GroupId,
+		GroupID:  r.GroupID,
 	}
 }
