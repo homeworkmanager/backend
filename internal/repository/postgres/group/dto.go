@@ -5,9 +5,10 @@ import (
 )
 
 type group struct {
-	GroupID entity.GroupID `db:"group_id"`
-	Name    string         `db:"group_name"`
-	Course  int8           `db:"course"`
+	GroupID  entity.GroupID `db:"group_id"`
+	Name     string         `db:"group_name"`
+	Course   int8           `db:"course"`
+	IcalLink string         `db:"ical_link"`
 }
 
 func (g group) toGroup() entity.Group {

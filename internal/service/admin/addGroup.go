@@ -7,8 +7,9 @@ import (
 )
 
 type AddGroup struct {
-	Name   string
-	Course int8
+	Name     string
+	Course   int8
+	IcalLink string
 }
 
 func (s *Service) AddGroup(ctx context.Context, req AddGroup) error {
@@ -16,8 +17,9 @@ func (s *Service) AddGroup(ctx context.Context, req AddGroup) error {
 
 	//TODO спросить у олега, нужно ли здесь переводить тип в CreateGroup из groupService, или можно сделать так чтобы функция сразу entity принимала
 	err := s.groupService.Create(ctx, groupService.CreateGroup{
-		Name:   group.Name,
-		Course: group.Course,
+		Name:     group.Name,
+		Course:   group.Course,
+		IcalLink: group.IcalLink,
 	})
 	if err != nil {
 		return err
@@ -27,7 +29,8 @@ func (s *Service) AddGroup(ctx context.Context, req AddGroup) error {
 
 func (r *AddGroup) toUser() entity.Group {
 	return entity.Group{
-		Name:   r.Name,
-		Course: r.Course,
+		Name:     r.Name,
+		Course:   r.Course,
+		IcalLink: r.IcalLink,
 	}
 }

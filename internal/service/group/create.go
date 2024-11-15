@@ -8,8 +8,9 @@ import (
 )
 
 type CreateGroup struct {
-	Name   string
-	Course int8
+	Name     string
+	Course   int8
+	IcalLink string
 }
 
 func (s *Service) Create(ctx context.Context, req CreateGroup) error {
@@ -34,7 +35,8 @@ func (s *Service) Create(ctx context.Context, req CreateGroup) error {
 
 func (g *CreateGroup) toGroup() entity.Group {
 	return entity.Group{
-		Name:   g.Name,
-		Course: g.Course,
+		Name:     g.Name,
+		Course:   g.Course,
+		IcalLink: g.IcalLink,
 	}
 }

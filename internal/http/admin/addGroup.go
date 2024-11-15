@@ -7,8 +7,9 @@ import (
 )
 
 type AddGroupReq struct {
-	Name   string `json:"name"`
-	Course int8   `json:"course"`
+	Name     string `json:"name"`
+	Course   int8   `json:"course"`
+	IcalLink string `json:"icalLink"`
 }
 
 func (h *Handler) AddGroup() fiber.Handler {
@@ -20,7 +21,7 @@ func (h *Handler) AddGroup() fiber.Handler {
 		}
 
 		//TODO добавить проверку на формат строки группы "XXXX-YY-YY"
-		if req.Name == "" || req.Course == 0 || req.Name != strings.ToUpper(req.Name) {
+		if req.Name == "" || req.Course == 0 || req.IcalLink == "" || req.Name != strings.ToUpper(req.Name) {
 			return fiber.ErrBadRequest
 		}
 
@@ -36,7 +37,8 @@ func (h *Handler) AddGroup() fiber.Handler {
 }
 func (r *AddGroupReq) toAdd() adminService.AddGroup {
 	return adminService.AddGroup{
-		Name:   r.Name,
-		Course: r.Course,
+		Name:     r.Name,
+		Course:   r.Course,
+		IcalLink: r.IcalLink,
 	}
 }

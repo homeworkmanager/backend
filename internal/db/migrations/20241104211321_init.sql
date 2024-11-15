@@ -3,7 +3,8 @@
 CREATE TABLE IF NOT EXISTS Groups (
       group_id BIGSERIAL PRIMARY KEY,
       group_name TEXT NOT NULL UNIQUE,
-      course SMALLINT NOT NULL
+      course SMALLINT NOT NULL,
+      ical_link TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Users (
