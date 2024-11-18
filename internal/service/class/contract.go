@@ -1,4 +1,4 @@
-package admin
+package class
 
 import (
 	"context"
@@ -11,6 +11,10 @@ type GroupService interface {
 	GetAllGroups(ctx context.Context) ([]entity.Group, error)
 }
 
-type ClassService interface {
-	Update(ctx context.Context) error
+type ClassRepo interface {
+	Clear(ctx context.Context) error
+}
+
+type SubjectService interface {
+	GetBySubjectNameAndGroup(ctx context.Context, subjectName string, groupId entity.GroupID) (entity.Subject, error)
 }

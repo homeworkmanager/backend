@@ -8,4 +8,5 @@ import (
 type GroupRepo interface {
 	Create(ctx context.Context, group entity.Group) error
 	GetByName(ctx context.Context, name string) (entity.Group, error)
+	GetAllGroups(ctx context.Context) ([]entity.Group, error)
 }

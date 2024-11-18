@@ -6,8 +6,9 @@ type Class struct {
 	ClassID        ClassID
 	GroupID        GroupID
 	SubjectID      SubjectID
-	Date           time.Time
-	DayClassNumber int8
+	StartTime      time.Time
+	EndTime        time.Time
+	Summary        string
 	SemClassNumber int64
 	Location       string
 }
