@@ -1,6 +1,8 @@
 package class
 
-import "context"
+import (
+	"context"
+)
 
 func (r *Repo) Clear(ctx context.Context) error {
 
@@ -12,5 +14,6 @@ func (r *Repo) Clear(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }

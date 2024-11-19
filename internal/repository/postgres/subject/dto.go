@@ -3,9 +3,9 @@ package subject
 import "homeworktodolist/internal/entity"
 
 type subject struct {
-	SubjectId   entity.SubjectID `json:"subject_id"`
-	GroupId     entity.GroupID   `json:"group_id"`
-	SubjectName string           `json:"subject_name"`
+	SubjectId   entity.SubjectID `db:"subject_id"`
+	GroupId     entity.GroupID   `db:"group_id"`
+	SubjectName string           `db:"subject_name"`
 }
 
 func (s subject) toSubject() entity.Subject {

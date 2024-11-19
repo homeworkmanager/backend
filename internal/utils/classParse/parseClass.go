@@ -2,7 +2,7 @@ package classParse
 
 import (
 	ics "github.com/arran4/golang-ical"
-	"homeworktodolist/internal/service/class"
+	"homeworktodolist/internal/entity"
 	"io"
 	"net/http"
 	"sort"
@@ -26,7 +26,7 @@ var (
 	description string
 )
 
-func IcalParse(icalLink string) ([]class.UpdateClass, error) {
+func IcalParse(icalLink string) ([]entity.UpdateClass, error) {
 
 	resp, err := http.Get(icalLink)
 	if err != nil {
@@ -47,11 +47,11 @@ func IcalParse(icalLink string) ([]class.UpdateClass, error) {
 		return nil, err
 	}
 
-	var classes []class.UpdateClass
+	var classes []entity.UpdateClass
 	for _, event := range calendar.Events() {
 		class := toClass(event)
 		if class.Description == "" && class.Location == "" {
-
+			continue
 		}
 		classes = append(classes, class.toClass())
 	}
@@ -63,10 +63,10 @@ func IcalParse(icalLink string) ([]class.UpdateClass, error) {
 	return classes, nil
 }
 
-func (c *Class) toClass() class.UpdateClass {
+func (c *Class) toClass() entity.UpdateClass {
 	start, _ := time.Parse("20060102T150405", c.Start)
 	end, _ := time.Parse("20060102T150405", c.End)
-	return class.UpdateClass{
+	return entity.UpdateClass{
 		Summary:     c.Summary,
 		Start:       start,
 		End:         end,

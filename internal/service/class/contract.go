@@ -13,6 +13,7 @@ type GroupService interface {
 
 type ClassRepo interface {
 	Clear(ctx context.Context) error
+	Create(ctx context.Context, classes []entity.Class) error
 }
 
 type SubjectService interface {

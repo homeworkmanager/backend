@@ -18,4 +18,6 @@ func NewAdminHandler(service AdminService) *Handler {
 // TODO добавить валидацию user на то что он Admin
 func MapAdminRoutes(g fiber.Router, h *Handler, mw *middleware.MwManager) {
 	g.Post("/addGroup", h.AddGroup())
+	g.Patch("/updateClasses", h.UpdateClasses())
+	g.Patch("/refreshAllData", h.RefreshAllData())
 }

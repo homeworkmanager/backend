@@ -3,6 +3,7 @@ package tx_manager
 import (
 	"context"
 	"database/sql"
+	"github.com/jmoiron/sqlx"
 )
 
 type DBOps interface {
@@ -13,15 +14,15 @@ type DBOps interface {
 }
 
 type TxWrapper struct {
-	Tx *sql.Tx
+	Tx *sqlx.Tx
 }
 
 func (t TxWrapper) SelectContext(ctx context.Context, dest interface{}, query string, args ...interface{}) error {
-	return t.Tx.QueryRowContext(ctx, query, args...).Scan(dest)
+	return t.Tx.SelectContext(ctx, dest, query, args...)
 }
 
 func (t TxWrapper) GetContext(ctx context.Context, dest interface{}, query string, args ...interface{}) error {
-	return t.Tx.QueryRowContext(ctx, query, args...).Scan(dest)
+	return t.Tx.GetContext(ctx, dest, query, args...)
 }
 
 func (t TxWrapper) ExecContext(ctx context.Context, query string, args ...any) (sql.Result, error) {

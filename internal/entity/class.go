@@ -12,3 +12,13 @@ type Class struct {
 	SemClassNumber int64
 	Location       string
 }
+
+// TODO: спросить что делать, потому что если эта структура будет в сервисном слое будут циклические зависисмости
+type UpdateClass struct {
+	SubjectID   SubjectID
+	Summary     string
+	Start       time.Time
+	End         time.Time
+	Description string
+	Location    string
+}

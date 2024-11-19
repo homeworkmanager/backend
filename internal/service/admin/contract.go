@@ -14,3 +14,7 @@ type GroupService interface {
 type ClassService interface {
 	Update(ctx context.Context) error
 }
+
+type SubjectService interface {
+	Create(ctx context.Context, subject entity.Subject) error
+}

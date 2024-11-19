@@ -8,11 +8,15 @@ import (
 	adminHandlers "homeworktodolist/internal/http/admin"
 	userHandlers "homeworktodolist/internal/http/user"
 	middleware "homeworktodolist/internal/middleware"
+	classRepo "homeworktodolist/internal/repository/postgres/class"
 	groupRepo "homeworktodolist/internal/repository/postgres/group"
+	subjectRepo "homeworktodolist/internal/repository/postgres/subject"
 	userRepo "homeworktodolist/internal/repository/postgres/user"
 	userRedisRepo "homeworktodolist/internal/repository/redis/user"
 	adminService "homeworktodolist/internal/service/admin"
+	classService "homeworktodolist/internal/service/class"
 	groupService "homeworktodolist/internal/service/group"
+	subjectService "homeworktodolist/internal/service/subject"
 	userService "homeworktodolist/internal/service/user"
 	"homeworktodolist/internal/tx_manager"
 	postgres "homeworktodolist/pkg/db/postgres"
@@ -36,15 +40,20 @@ func createApp() {
 	//Repo
 	userRepo := userRepo.NewUserRepo(txmanager)
 	userRedisRepo := userRedisRepo.NewUserRepo(redisClient, cfg)
-
 	groupRepo := groupRepo.NewGroupRepo(txmanager)
+	classRepo := classRepo.NewClassRepo(txmanager)
+	subjectRepo := subjectRepo.NewSubjectRepo(txmanager)
 
 	//Service
 	userService := userService.NewUserService(userRepo, userRedisRepo, cfg)
 
 	groupService := groupService.NewGroupService(groupRepo)
 
-	adminService := adminService.NewAdminService(groupService)
+	subjectService := subjectService.NewSubjectService(subjectRepo)
+
+	classService := classService.NewClassService(groupService, classRepo, subjectService, txmanager)
+
+	adminService := adminService.NewAdminService(groupService, classService, subjectService)
 
 	//Handlers
 	userHandler := userHandlers.NewUserHandler(cfg, userService)

@@ -2,7 +2,6 @@ package tx_manager
 
 import (
 	"context"
-	"database/sql"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -16,12 +15,12 @@ func NewTxManager(db *sqlx.DB) *TxManager {
 	return &TxManager{db: db}
 }
 
-func (m *TxManager) injectTx(ctx context.Context, tx *sql.Tx) context.Context {
+func (m *TxManager) injectTx(ctx context.Context, tx *sqlx.Tx) context.Context {
 	return context.WithValue(ctx, txkey, tx)
 }
 
-func (m *TxManager) extractTx(ctx context.Context) (*sql.Tx, bool) {
-	tx, ok := ctx.Value(txkey).(*sql.Tx)
+func (m *TxManager) extractTx(ctx context.Context) (*sqlx.Tx, bool) {
+	tx, ok := ctx.Value(txkey).(*sqlx.Tx)
 	return tx, ok
 }
 
@@ -33,7 +32,7 @@ func (m *TxManager) GetTxOrDefault(ctx context.Context) DBOps {
 }
 
 func (m *TxManager) Do(ctx context.Context, f func(ctx context.Context) error) error {
-	tx, err := m.db.Begin()
+	tx, err := m.db.BeginTxx(ctx, nil)
 	if err != nil {
 		return err
 	}

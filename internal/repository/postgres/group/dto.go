@@ -13,8 +13,9 @@ type group struct {
 
 func (g group) toGroup() entity.Group {
 	return entity.Group{
-		GroupID: g.GroupID,
-		Name:    g.Name,
-		Course:  g.Course,
+		GroupID:  g.GroupID,
+		Name:     g.Name,
+		Course:   g.Course,
+		IcalLink: g.IcalLink,
 	}
 }
