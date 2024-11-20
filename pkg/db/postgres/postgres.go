@@ -29,6 +29,7 @@ func Connect(cfg *PGConfig) *sqlx.DB {
 		dsn += fmt.Sprintf(" password=%s", cfg.Password)
 	}
 
+	//TODO: поправить лаг с подключением
 	db, err := sqlx.Connect("postgres", dsn)
 	if err != nil {
 		panic(err)

@@ -13,7 +13,6 @@ type Class struct {
 	Location       string
 }
 
-// TODO: спросить что делать, потому что если эта структура будет в сервисном слое будут циклические зависисмости
 type UpdateClass struct {
 	SubjectID   SubjectID
 	Summary     string

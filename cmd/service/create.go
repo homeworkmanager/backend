@@ -53,7 +53,7 @@ func createApp() {
 
 	classService := classService.NewClassService(groupService, classRepo, subjectService, txmanager)
 
-	adminService := adminService.NewAdminService(groupService, classService, subjectService)
+	adminService := adminService.NewAdminService(groupService, classService, subjectService, txmanager)
 
 	//Handlers
 	userHandler := userHandlers.NewUserHandler(cfg, userService)

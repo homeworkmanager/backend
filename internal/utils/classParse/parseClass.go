@@ -18,14 +18,6 @@ type Class struct {
 	Location    string
 }
 
-var (
-	summary     string
-	start       string
-	end         string
-	location    string
-	description string
-)
-
 func IcalParse(icalLink string) ([]entity.UpdateClass, error) {
 
 	resp, err := http.Get(icalLink)

@@ -27,6 +27,7 @@ func (s *Service) Auth(ctx context.Context, req AuthUser) (sessionKey string, er
 		Role:    user.Role,
 		GroupID: user.GroupID,
 	})
+
 	if err != nil {
 		return "", err
 	}

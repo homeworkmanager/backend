@@ -12,9 +12,10 @@ type GroupService interface {
 }
 
 type ClassService interface {
-	Update(ctx context.Context) error
+	UpdGroupClasses(ctx context.Context, g entity.Group) error
+	ClearAllClasses(ctx context.Context) error
 }
 
 type SubjectService interface {
-	Create(ctx context.Context, subject entity.Subject) error
+	UpdGroupSubjects(ctx context.Context, group entity.Group) error
 }

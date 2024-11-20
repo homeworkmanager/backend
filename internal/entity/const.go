@@ -10,3 +10,7 @@ const (
 	SessionKey = "session_key"
 	Claims     = "claims"
 )
+
+const (
+	SemesterNumWeeks = 16
+)

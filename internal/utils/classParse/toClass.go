@@ -4,6 +4,8 @@ import ics "github.com/arran4/golang-ical"
 
 func toClass(event *ics.VEvent) Class {
 
+	var summary, start, end, location, description string
+
 	if event.GetProperty(ics.ComponentPropertySummary) != nil {
 		summary = event.GetProperty(ics.ComponentPropertySummary).Value
 	}
