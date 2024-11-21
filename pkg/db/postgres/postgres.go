@@ -7,29 +7,30 @@ import (
 )
 
 type PGConfig struct {
-	Host     string `json:"host"`
-	Port     string `json:"port"`
-	User     string `json:"user"`
-	Password string `json:"password"`
-	DBName   string `json:"db_name"`
-	SSLMode  string `json:"sslMode"`
+	Host           string `json:"host"`
+	Port           string `json:"port"`
+	User           string `json:"user"`
+	Password       string `json:"password"`
+	DBName         string `json:"db_name"`
+	SSLMode        string `json:"sslMode"`
+	ConnectTimeout string `json:"connect_timeout"`
 }
 
 func Connect(cfg *PGConfig) *sqlx.DB {
 	dsn := fmt.Sprintf(
-		"host=%s port=%s user=%s dbname=%s sslmode=%s",
+		"host=%s port=%s user=%s dbname=%s sslmode=%s connect_timeout=%s",
 		cfg.Host,
 		cfg.Port,
 		cfg.User,
 		cfg.DBName,
 		cfg.SSLMode,
+		cfg.ConnectTimeout,
 	)
 
 	if cfg.Password != "" {
 		dsn += fmt.Sprintf(" password=%s", cfg.Password)
 	}
 
-	//TODO: поправить лаг с подключением
 	db, err := sqlx.Connect("postgres", dsn)
 	if err != nil {
 		panic(err)
