@@ -18,4 +18,5 @@ type ClassService interface {
 
 type SubjectService interface {
 	UpdGroupSubjects(ctx context.Context, group entity.Group) error
+	ClearAllSubjects(ctx context.Context) error
 }

@@ -6,7 +6,7 @@ import (
 
 func (s *Service) UpdateClasses(ctx context.Context) error {
 
-	g, err := s.groupService.GetAllGroups(ctx)
+	groups, err := s.groupService.GetAllGroups(ctx)
 	if err != nil {
 		return err
 	}
@@ -16,7 +16,7 @@ func (s *Service) UpdateClasses(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		for _, group := range g {
+		for _, group := range groups {
 			err = s.classService.UpdGroupClasses(ctx, group)
 			if err != nil {
 				return err
