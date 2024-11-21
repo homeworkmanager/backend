@@ -6,6 +6,7 @@ import (
 	"homeworktodolist/internal/config"
 	"homeworktodolist/internal/err_handler"
 	adminHandlers "homeworktodolist/internal/http/admin"
+	groupHandlers "homeworktodolist/internal/http/group"
 	userHandlers "homeworktodolist/internal/http/user"
 	middleware "homeworktodolist/internal/middleware"
 	classRepo "homeworktodolist/internal/repository/postgres/class"
@@ -60,6 +61,8 @@ func createApp() {
 
 	adminHandler := adminHandlers.NewAdminHandler(adminService)
 
+	groupHandler := groupHandlers.NewGroupHandler(groupService)
+
 	//fiber
 	fiberApp := fiber.New(fiber.Config{
 		ErrorHandler: err_handler.ErrorHandler,
@@ -73,6 +76,9 @@ func createApp() {
 
 	adminGroup := fiberApp.Group("/admin")
 	adminHandlers.MapAdminRoutes(adminGroup, adminHandler, mw)
+
+	groupGroup := fiberApp.Group("/group")
+	groupHandlers.MapGroupRoutes(groupGroup, groupHandler)
 
 	//fiber listen
 	exit := make(chan os.Signal, 1)

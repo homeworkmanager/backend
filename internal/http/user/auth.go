@@ -39,7 +39,7 @@ func (h *Handler) Auth() fiber.Handler {
 		})
 
 		return c.JSON(fiber.Map{
-			"data": "user successfully authed",
+			"data": "User successfully authed",
 		})
 	}
 }

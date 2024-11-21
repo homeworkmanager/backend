@@ -12,6 +12,7 @@ type AddGroup struct {
 	IcalLink string
 }
 
+// TODO:Добавить подгрузку предметов и расписания для группы
 func (s *Service) AddGroup(ctx context.Context, req AddGroup) error {
 	group := req.toUser()
 
