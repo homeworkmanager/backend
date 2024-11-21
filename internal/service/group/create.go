@@ -13,23 +13,24 @@ type CreateGroup struct {
 	IcalLink string
 }
 
-func (s *Service) Create(ctx context.Context, req CreateGroup) error {
+func (s *Service) Create(ctx context.Context, req CreateGroup) (entity.GroupID, error) {
 	group := req.toGroup()
 
 	_, err := s.groupRepo.GetByName(ctx, group.Name)
 
 	if err == nil {
-		return errs.GroupExists
+		return 0, errs.GroupExists
 	}
 	if !(errors.Is(err, errs.GroupNotFound)) {
-		return err
+		return 0, err
 	}
 
-	if err := s.groupRepo.Create(ctx, group); err != nil {
-		return err
+	id, err := s.groupRepo.Create(ctx, group)
+	if err != nil {
+		return 0, err
 	}
 
-	return nil
+	return id, nil
 
 }
 

@@ -12,22 +12,40 @@ type AddGroup struct {
 	IcalLink string
 }
 
-// TODO:Добавить подгрузку предметов и расписания для группы
 func (s *Service) AddGroup(ctx context.Context, req AddGroup) error {
-	group := req.toUser()
+	group := req.toGroup()
 
-	err := s.groupService.Create(ctx, groupService.CreateGroup{
-		Name:     group.Name,
-		Course:   group.Course,
-		IcalLink: group.IcalLink,
+	err := s.manager.Do(ctx, func(ctx context.Context) error {
+		var err error
+		group.GroupID, err = s.groupService.Create(ctx, groupService.CreateGroup{
+			Name:     group.Name,
+			Course:   group.Course,
+			IcalLink: group.IcalLink,
+		})
+		if err != nil {
+			return err
+		}
+
+		err = s.subjectService.UpdGroupSubjects(ctx, group)
+		if err != nil {
+			return err
+		}
+
+		err = s.classService.UpdGroupClasses(ctx, group)
+		if err != nil {
+			return err
+		}
+
+		return nil
 	})
+
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (r *AddGroup) toUser() entity.Group {
+func (r *AddGroup) toGroup() entity.Group {
 	return entity.Group{
 		Name:     r.Name,
 		Course:   r.Course,

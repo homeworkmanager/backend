@@ -7,7 +7,7 @@ import (
 )
 
 type GroupService interface {
-	Create(ctx context.Context, req groupService.CreateGroup) error
+	Create(ctx context.Context, req groupService.CreateGroup) (entity.GroupID, error)
 	GetAllGroups(ctx context.Context) ([]entity.Group, error)
 }
 
