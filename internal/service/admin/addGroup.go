@@ -3,7 +3,6 @@ package admin
 import (
 	"context"
 	"homeworktodolist/internal/entity"
-	groupService "homeworktodolist/internal/service/group"
 )
 
 type AddGroup struct {
@@ -17,11 +16,7 @@ func (s *Service) AddGroup(ctx context.Context, req AddGroup) error {
 
 	err := s.manager.Do(ctx, func(ctx context.Context) error {
 		var err error
-		group.GroupID, err = s.groupService.Create(ctx, groupService.CreateGroup{
-			Name:     group.Name,
-			Course:   group.Course,
-			IcalLink: group.IcalLink,
-		})
+		group.GroupID, err = s.groupService.Create(ctx, group)
 		if err != nil {
 			return err
 		}

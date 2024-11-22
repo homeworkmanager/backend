@@ -46,11 +46,11 @@ CREATE TABLE  IF NOT EXISTS Classes (
 
 CREATE TABLE IF NOT EXISTS Homeworks (
     homework_id BIGSERIAL PRIMARY KEY,
-    semClassNumber INTEGER,
+    class_sem_number INTEGER,
     group_id INTEGER NOT NULL,
     subject_id INTEGER NOT NULL,
     homework_text TEXT NOT NULL,
-    due_date DATE NOT NULL,
+    due_date TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT group_fk FOREIGN KEY (group_id)REFERENCES Groups(group_id),

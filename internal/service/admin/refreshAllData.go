@@ -4,6 +4,7 @@ import (
 	"context"
 )
 
+// TODO: проверить что функция err = s.homeworkService.ClearAllHomeworks(ctx) правильно отрабатывает
 func (s *Service) RefreshAllData(ctx context.Context) error {
 
 	groups, err := s.groupService.GetAllGroups(ctx)
@@ -12,6 +13,10 @@ func (s *Service) RefreshAllData(ctx context.Context) error {
 	}
 
 	err = s.manager.Do(ctx, func(ctx context.Context) error {
+		err = s.homeworkService.ClearAllHomeworks(ctx)
+		if err != nil {
+			return err
+		}
 		err = s.classService.ClearAllClasses(ctx)
 		if err != nil {
 			return err

@@ -7,7 +7,7 @@ import (
 
 func (r *Repo) Create(ctx context.Context, subject entity.Subject) error {
 
-	q := "INSERT INTO subjects(group_id, subject_name) VALUES ($1, $2);"
+	q := "INSERT INTO subjects(group_id, subject_name) VALUES ($1, $2)"
 
 	t := r.manager.GetTxOrDefault(ctx)
 

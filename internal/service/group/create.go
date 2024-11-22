@@ -7,14 +7,7 @@ import (
 	"homeworktodolist/internal/errs"
 )
 
-type CreateGroup struct {
-	Name     string
-	Course   int8
-	IcalLink string
-}
-
-func (s *Service) Create(ctx context.Context, req CreateGroup) (entity.GroupID, error) {
-	group := req.toGroup()
+func (s *Service) Create(ctx context.Context, group entity.Group) (entity.GroupID, error) {
 
 	_, err := s.groupRepo.GetByName(ctx, group.Name)
 
@@ -32,12 +25,4 @@ func (s *Service) Create(ctx context.Context, req CreateGroup) (entity.GroupID, 
 
 	return id, nil
 
-}
-
-func (g *CreateGroup) toGroup() entity.Group {
-	return entity.Group{
-		Name:     g.Name,
-		Course:   g.Course,
-		IcalLink: g.IcalLink,
-	}
 }
