@@ -12,6 +12,7 @@ var (
 		sql.ErrNoRows,
 		errs.UserNotFound,
 		errs.GroupNotFound,
+		errs.ClassesNotFound,
 	}
 	badRequestErrors = []error{
 		errs.UserExists,
