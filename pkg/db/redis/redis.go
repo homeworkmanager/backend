@@ -6,8 +6,8 @@ import (
 )
 
 type RedisConfig struct {
-	Host string `json:"host"`
-	Port string `json:"port"`
+	Host string `envconfig:"REDIS_HOST"`
+	Port string `envconfig:"REDIS_PORT"`
 }
 
 func Connect(cfg *RedisConfig) *redis.Client {

@@ -7,13 +7,13 @@ import (
 )
 
 type PGConfig struct {
-	Host           string `json:"host"`
-	Port           string `json:"port"`
-	User           string `json:"user"`
-	Password       string `json:"password"`
-	DBName         string `json:"db_name"`
-	SSLMode        string `json:"sslMode"`
-	ConnectTimeout string `json:"connect_timeout"`
+	Host           string `envconfig:"POSTGRES_HOST"`
+	Port           string `envconfig:"POSTGRES_PORT"`
+	User           string `envconfig:"POSTGRES_USER"`
+	Password       string `envconfig:"POSTGRES_PASSWORD"`
+	DBName         string `envconfig:"POSTGRES_DB_NAME"`
+	SSLMode        string `envconfig:"POSTGRES_SSLMODE"`
+	ConnectTimeout string `envconfig:"POSTGRES_CONNECT_TIMEOUT"`
 }
 
 func Connect(cfg *PGConfig) *sqlx.DB {
