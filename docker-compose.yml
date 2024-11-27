@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16.4
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: homeworkmanager
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+  app:
+    build:
+      context: .
+      args:
+        - POSTGRES_DB_NAME=homeworkmanager
+        - POSTGRES_HOST=db
+        - POSTGRES_PASSWORD=admin
+        - POSTGRES_PORT=5432
+        - POSTGRES_USER=postgres
+
+    environment:
+      - AUTH_TTL=1500s
+      - DOMAIN=localhost
+      - HOST=0.0.0.0
+      - PORT=8888
+      - POSTGRES_CONNECT_TIMEOUT=5
+      - POSTGRES_DB_NAME=homeworkmanager
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_PORT=5432
+      - POSTGRES_SSLMODE=disable
+      - POSTGRES_USER=postgres
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8888:8888"
+    restart: always
+
+volumes:
+  db_data:
+  redis_data:
+
+
+

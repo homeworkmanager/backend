@@ -1,10 +1,13 @@
 package redis
 
-import "github.com/go-redis/redis"
+import (
+	"context"
+	"github.com/go-redis/redis/v8"
+)
 
 type RedisConfig struct {
-	Host string `json:"host"`
-	Port string `json:"port"`
+	Host string `envconfig:"REDIS_HOST"`
+	Port string `envconfig:"REDIS_PORT"`
 }
 
 func Connect(cfg *RedisConfig) *redis.Client {
@@ -12,7 +15,7 @@ func Connect(cfg *RedisConfig) *redis.Client {
 		Addr: cfg.Host + ":" + cfg.Port,
 	})
 
-	if err := client.Ping().Err(); err != nil {
+	if err := client.Ping(context.Background()).Err(); err != nil {
 		panic(err)
 	}
 

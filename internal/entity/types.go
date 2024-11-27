@@ -1,6 +1,10 @@
 package entity
 
 type (
-	UserID int64
-	Role   int8
+	UserID     int64
+	ClassID    int64
+	GroupID    int64
+	SubjectID  int64
+	HomeworkID int64
+	Role       int8
 )

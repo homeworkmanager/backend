@@ -6,14 +6,16 @@
   "auth_ttl": 1500,
   "postgres": {
     "host": "192.168.0.69",
-    "port": "6379",
+    "port": "5432",
     "user": "postgres",
     "password":"admin",
     "db_name":"homeworkmanager",
-    "sslMode":"disable"
+    "sslMode":"disable",
+    "connect_timeout": "5"
   },
   "redis": {
     "host": "192.168.0.69",
     "port": "6379"
   }
+
 }

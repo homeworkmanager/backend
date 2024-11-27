@@ -1,37 +1,33 @@
 package config
 
 import (
-	"encoding/json"
+	"errors"
+	"github.com/kelseyhightower/envconfig"
 	"homeworktodolist/pkg/db/postgres"
 	"homeworktodolist/pkg/db/redis"
-	"os"
-)
-
-const (
-	cfgPath = "./internal/config/config.json"
+	"time"
 )
 
 type Config struct {
-	Host   string `json:"host"`
-	Port   string `json:"port"`
-	Domain string `json:"domain"`
+	Host   string `envconfig:"HOST"`
+	Port   string `envconfig:"PORT"`
+	Domain string `envconfig:"DOMAIN"`
 
-	AuthTTL int `json:"auth_ttl"`
+	AuthTTL time.Duration `envconfig:"AUTH_TTL"`
 
-	postgres.PGConfig `json:"postgres"`
-	redis.RedisConfig `json:"redis"`
+	postgres.PGConfig
+	redis.RedisConfig
 }
 
 func NewCfg() *Config {
-	jsonFile, err := os.Open(cfgPath)
-	defer jsonFile.Close()
-	if err != nil {
+	var cfg Config
+
+	if err := envconfig.Process("", &cfg); err != nil {
 		panic(err)
 	}
+	if cfg.Host == "" {
+		panic(errors.New("cfg is required"))
+	}
 
-	var config Config
-
-	err = json.NewDecoder(jsonFile).Decode(&config)
-
-	return &config
+	return &cfg
 }

@@ -4,19 +4,31 @@ import (
 	"database/sql"
 	"errors"
 	"github.com/gofiber/fiber/v2"
+	"homeworktodolist/internal/errs"
 )
 
 var (
 	notFoundErrors = []error{
 		sql.ErrNoRows,
+		errs.UserNotFound,
+		errs.GroupNotFound,
+		errs.ClassesNotFound,
 	}
-	badRequestErrors = []error{}
+	badRequestErrors = []error{
+		errs.UserExists,
+		errs.GroupExists,
+		errs.ErrInvalidPassword,
+	}
 )
 
 func ErrorHandler(ctx *fiber.Ctx, err error) error {
 	var ferr *fiber.Error
 	if errors.As(err, &ferr) {
 		ctx.Status(ferr.Code)
+		return ctx.JSON(fiber.Map{
+			"data":  "",
+			"error": err.Error(),
+		})
 	}
 
 	if isNotFoundError(err) {
@@ -34,6 +46,8 @@ func ErrorHandler(ctx *fiber.Ctx, err error) error {
 		})
 	}
 
+	//any unspecified error
+	ctx.Status(fiber.StatusInternalServerError)
 	return ctx.JSON(fiber.Map{
 		"data":  "",
 		"error": err.Error(),

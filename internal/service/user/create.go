@@ -2,9 +2,10 @@ package user
 
 import (
 	"context"
-	"github.com/pkg/errors"
+	"errors"
 	"golang.org/x/crypto/bcrypt"
 	"homeworktodolist/internal/entity"
+	"homeworktodolist/internal/errs"
 )
 
 type CreateUser struct {
@@ -12,35 +13,32 @@ type CreateUser struct {
 	Surname  *string
 	Email    string
 	Password string
-	GroupId int64
+	GroupID  entity.GroupID
 }
 
 func (s *Service) Create(ctx context.Context, req CreateUser) error {
-	mName := "UserService.Create"
-
 	user := req.toUser()
+
+	_, err := s.userRepo.GetByEmail(ctx, user.Email)
+	if err == nil {
+		return errs.UserExists
+	}
+	if !(errors.Is(err, errs.UserNotFound)) {
+		return err
+	}
 
 	hash, err := s.passwordHash(req.Password)
 	if err != nil {
-		return errors.Wrap(err, mName)
+		return err
 	}
 	user.Password = hash
 
-	if err:= s.userRepo.Create(ctx, user); err != nil {
-		return errors.Wrap(err, mName)
+	if err := s.userRepo.Create(ctx, user); err != nil {
+		return err
 	}
 
 	return nil
 
-}
-
-func (r *CreateUser) toUser() entity.User {
-	return entity.User{
-		Name:     r.Name,
-		Surname:  r.Surname,
-		Email:    r.Email,
-		GroupId: r.GroupId,
-	}
 }
 
 func (s *Service) passwordHash(password string) (string, error) {
@@ -49,4 +47,13 @@ func (s *Service) passwordHash(password string) (string, error) {
 		return "", err
 	}
 	return string(hash), nil
+}
+
+func (r *CreateUser) toUser() entity.User {
+	return entity.User{
+		Name:    r.Name,
+		Surname: r.Surname,
+		Email:   r.Email,
+		GroupID: r.GroupID,
+	}
 }
