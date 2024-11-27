@@ -1,5 +1,5 @@
-SELECT * FROM classes
-FULL OUTER JOIN homeworks on classes.group_id = homeworks.group_id and classes.subject_id = homeworks.subject_id
+SELECT classes.class_id, classes.group_id, classes.subject_id, classes.start_time, classes.end_time, classes.summary, classes.class_sem_number, classes.location, homework_id, homework_text, due_date FROM classes
+                  FULL OUTER JOIN homeworks on classes.group_id = homeworks.group_id and classes.subject_id = homeworks.subject_id
     and classes.class_sem_number = homeworks.class_sem_number
 WHERE  (classes.group_id = 2 OR homeworks.group_id = 2)
   AND (classes.start_time >= '2024-09-02' OR classes.start_time IS NULL)

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"homeworktodolist/internal/config"
@@ -13,6 +14,7 @@ import (
 	classRepo "homeworktodolist/internal/repository/postgres/class"
 	groupRepo "homeworktodolist/internal/repository/postgres/group"
 	homeworkRepo "homeworktodolist/internal/repository/postgres/homework"
+	scheduleRepo "homeworktodolist/internal/repository/postgres/schedule"
 	subjectRepo "homeworktodolist/internal/repository/postgres/subject"
 	userRepo "homeworktodolist/internal/repository/postgres/user"
 	userRedisRepo "homeworktodolist/internal/repository/redis/user"
@@ -49,6 +51,12 @@ func createApp() {
 	classRepo := classRepo.NewClassRepo(txmanager)
 	subjectRepo := subjectRepo.NewSubjectRepo(txmanager)
 	homeworkRepo := homeworkRepo.NewHomeworkRepo(txmanager)
+	scheduleRepo := scheduleRepo.NewScheduleRepo(txmanager)
+
+	_, err := scheduleRepo.GetByGroupId(context.Background(), 2)
+	if err != nil {
+		panic(err)
+	}
 
 	//Service
 	userService := userService.NewUserService(userRepo, userRedisRepo, cfg)
