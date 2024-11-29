@@ -91,7 +91,7 @@ func createApp() {
 	fiberApp.Use(cors.New(cors.Config{
 		AllowOrigins: "http://localhost:5000",
 		AllowMethods: "GET,POST,PUT,DELETE,OPTIONS",
-		AllowHeaders: "Content-Type, Authorization",
+		AllowHeaders: "*",
 	}))
 
 	//middleware
