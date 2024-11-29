@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -52,12 +51,7 @@ func createApp() {
 	classRepo := classRepo.NewClassRepo(txmanager)
 	subjectRepo := subjectRepo.NewSubjectRepo(txmanager)
 	homeworkRepo := homeworkRepo.NewHomeworkRepo(txmanager)
-	scheduleRepo := scheduleRepo.NewScheduleRepo(txmanager)
-
-	_, err := scheduleRepo.GetByGroupId(context.Background(), 2)
-	if err != nil {
-		panic(err)
-	}
+	_ = scheduleRepo.NewScheduleRepo(txmanager)
 
 	//Service
 	userService := userService.NewUserService(userRepo, userRedisRepo, cfg)
@@ -89,9 +83,10 @@ func createApp() {
 	})
 
 	fiberApp.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:5000",
-		AllowMethods: "GET,POST,PUT,DELETE,OPTIONS",
-		AllowHeaders: "*",
+		AllowOrigins:     "http://localhost:5000",
+		AllowMethods:     "GET,POST,PUT,DELETE,OPTIONS",
+		AllowHeaders:     "Content-Type, Authorization",
+		AllowCredentials: true,
 	}))
 
 	//middleware
