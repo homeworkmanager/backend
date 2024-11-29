@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"homeworktodolist/internal/config"
 	"homeworktodolist/internal/err_handler"
 	adminHandlers "homeworktodolist/internal/http/admin"
@@ -86,6 +87,12 @@ func createApp() {
 	fiberApp := fiber.New(fiber.Config{
 		ErrorHandler: err_handler.ErrorHandler,
 	})
+
+	fiberApp.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:5000",
+		AllowMethods: "GET,POST,PUT,DELETE,OPTIONS",
+		AllowHeaders: "Content-Type, Authorization",
+	}))
 
 	//middleware
 	mw := middleware.NewMwManager(userRedisRepo)

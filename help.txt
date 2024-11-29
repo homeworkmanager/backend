@@ -4,3 +4,8 @@ SELECT classes.class_id, classes.group_id, classes.subject_id, classes.start_tim
 WHERE  (classes.group_id = 2 OR homeworks.group_id = 2)
   AND (classes.start_time >= '2024-09-02' OR classes.start_time IS NULL)
   AND (classes.end_time < '2024-09-09' OR classes.end_time IS NULL)
+
+
+
+
+ docker-compose down -v

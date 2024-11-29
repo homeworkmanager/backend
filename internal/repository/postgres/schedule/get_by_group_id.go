@@ -21,6 +21,7 @@ func (r *Repo) GetByGroupId(ctx context.Context, groupId entity.GroupID) ([]enti
 	t := r.manager.GetTxOrDefault(ctx)
 
 	err := t.SelectContext(ctx, &schedule, q, groupId)
+	//TODO заменить везде sql.ErrNoRows на другое, так как оно только с гет работает
 	if errors.Is(err, sql.ErrNoRows) {
 		return []entity.Schedule{}, errs.ClassesNotFound
 	}
