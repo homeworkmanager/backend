@@ -3,6 +3,7 @@ package class
 import (
 	"context"
 	"homeworktodolist/internal/entity"
+	"time"
 )
 
 type GroupService interface {
@@ -12,6 +13,7 @@ type GroupService interface {
 type ClassRepo interface {
 	Clear(ctx context.Context) error
 	Create(ctx context.Context, classes []entity.Class) error
+	GetByGroupAndTime(ctx context.Context, groupID entity.GroupID, fromTime time.Time, toTime time.Time) ([]entity.Class, error)
 }
 
 type SubjectService interface {

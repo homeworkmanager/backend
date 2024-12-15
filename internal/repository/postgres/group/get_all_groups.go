@@ -2,8 +2,6 @@ package group
 
 import (
 	"context"
-	"database/sql"
-	"errors"
 	"homeworktodolist/internal/entity"
 	"homeworktodolist/internal/errs"
 )
@@ -17,7 +15,7 @@ func (r *Repo) GetAllGroups(ctx context.Context) ([]entity.Group, error) {
 	t := r.manager.GetTxOrDefault(ctx)
 
 	err := t.SelectContext(ctx, &groups, q)
-	if errors.Is(err, sql.ErrNoRows) {
+	if len(groups) == 0 {
 		return []entity.Group{}, errs.GroupNotFound
 	}
 	if err != nil {

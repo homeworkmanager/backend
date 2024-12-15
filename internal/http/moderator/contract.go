@@ -6,5 +6,5 @@ import (
 )
 
 type ModeratorService interface {
-	AddGroup(ctx context.Context, req moderatorService.AddHomework) error
+	AddHomework(ctx context.Context, req moderatorService.AddHomework) error
 }

@@ -28,7 +28,7 @@ func (h *Handler) AddHomeworkToClass() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
-		err := h.moderatorService.AddGroup(c.Context(), req.toAdd())
+		err := h.moderatorService.AddHomework(c.Context(), req.toAdd())
 		if err != nil {
 			return err
 		}

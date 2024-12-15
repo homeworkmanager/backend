@@ -14,7 +14,6 @@ import (
 	classRepo "homeworktodolist/internal/repository/postgres/class"
 	groupRepo "homeworktodolist/internal/repository/postgres/group"
 	homeworkRepo "homeworktodolist/internal/repository/postgres/homework"
-	scheduleRepo "homeworktodolist/internal/repository/postgres/schedule"
 	subjectRepo "homeworktodolist/internal/repository/postgres/subject"
 	userRepo "homeworktodolist/internal/repository/postgres/user"
 	userRedisRepo "homeworktodolist/internal/repository/redis/user"
@@ -51,7 +50,6 @@ func createApp() {
 	classRepo := classRepo.NewClassRepo(txmanager)
 	subjectRepo := subjectRepo.NewSubjectRepo(txmanager)
 	homeworkRepo := homeworkRepo.NewHomeworkRepo(txmanager)
-	_ = scheduleRepo.NewScheduleRepo(txmanager)
 
 	//Service
 	userService := userService.NewUserService(userRepo, userRedisRepo, cfg)
@@ -67,6 +65,8 @@ func createApp() {
 	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, txmanager)
 
 	moderatorService := moderatorService.NewModeratorService(homeworkService)
+
+	//scheduleService := scheduleService.NewScheduleService(classService, homeworkService)
 
 	//Handlers
 	userHandler := userHandlers.NewUserHandler(cfg, userService)

@@ -15,7 +15,7 @@ type AddHomework struct {
 }
 
 // TODO: добавить проверку на то что такое занятие существует
-func (s *Service) AddGroup(ctx context.Context, req AddHomework) error {
+func (s *Service) AddHomework(ctx context.Context, req AddHomework) error {
 	homework := req.toHomework()
 
 	err := s.homeworkService.Create(ctx, homework)
