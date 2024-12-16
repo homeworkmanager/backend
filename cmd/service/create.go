@@ -9,6 +9,7 @@ import (
 	adminHandlers "homeworktodolist/internal/http/admin"
 	groupHandlers "homeworktodolist/internal/http/group"
 	moderatorHandlers "homeworktodolist/internal/http/moderator"
+	scheduleHandlers "homeworktodolist/internal/http/schedule"
 	userHandlers "homeworktodolist/internal/http/user"
 	middleware "homeworktodolist/internal/middleware"
 	classRepo "homeworktodolist/internal/repository/postgres/class"
@@ -22,6 +23,7 @@ import (
 	groupService "homeworktodolist/internal/service/group"
 	homeworkService "homeworktodolist/internal/service/homework"
 	moderatorService "homeworktodolist/internal/service/moderator"
+	scheduleService "homeworktodolist/internal/service/schedule"
 	subjectService "homeworktodolist/internal/service/subject"
 	userService "homeworktodolist/internal/service/user"
 	"homeworktodolist/internal/tx_manager"
@@ -66,7 +68,7 @@ func createApp() {
 
 	moderatorService := moderatorService.NewModeratorService(homeworkService)
 
-	//scheduleService := scheduleService.NewScheduleService(classService, homeworkService)
+	scheduleService := scheduleService.NewScheduleService(classService, homeworkService)
 
 	//Handlers
 	userHandler := userHandlers.NewUserHandler(cfg, userService)
@@ -76,6 +78,8 @@ func createApp() {
 	groupHandler := groupHandlers.NewGroupHandler(groupService)
 
 	moderatorHandler := moderatorHandlers.NewModeratorHandler(moderatorService)
+
+	scheduleHandler := scheduleHandlers.NewScheduleHandler(scheduleService)
 
 	//fiber
 	fiberApp := fiber.New(fiber.Config{
@@ -103,6 +107,9 @@ func createApp() {
 
 	moderatorGroup := fiberApp.Group("/moderator")
 	moderatorHandlers.MapModeratorRoutes(moderatorGroup, moderatorHandler)
+
+	scheduleGroup := fiberApp.Group("/schedule")
+	scheduleHandlers.MapScheduleRoutes(scheduleGroup, scheduleHandler, mw)
 
 	//fiber listen
 	exit := make(chan os.Signal, 1)

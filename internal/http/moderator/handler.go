@@ -12,6 +12,7 @@ func NewModeratorHandler(moderatorService ModeratorService) *Handler {
 	}
 }
 
+// TODO: проверка ролей
 func MapModeratorRoutes(g fiber.Router, h *Handler) {
 	g.Post("/addHomework/class", h.AddHomeworkToClass())
 	g.Post("/addHomework/date", h.AddHomeworkToDate())

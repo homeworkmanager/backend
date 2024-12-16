@@ -3,13 +3,13 @@ package schedule
 import (
 	"github.com/gofiber/fiber/v2"
 	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/service/schedule"
+	scheduleService "homeworktodolist/internal/service/schedule"
 	"time"
 )
 
 type GetReq struct {
-	FromTime  time.Time `json:"from_time"`
-	CountDays int       `json:"count_days"`
+	FromTime  string `query:"from_time"`
+	CountDays int    `query:"count_days"`
 }
 
 func (h *Handler) GetSchedule() fiber.Handler {
@@ -24,13 +24,18 @@ func (h *Handler) GetSchedule() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
-		if req.FromTime.IsZero() || req.CountDays == 0 {
+		if req.FromTime == "" || req.CountDays == 0 {
 			return fiber.ErrBadRequest
 		}
 
-		days, err := h.scheduleService.GetAllByGroupAndTime(c.Context(), schedule.GetSchedule{
+		parsedFromTime, err := time.Parse("02.01.2006", req.FromTime)
+		if err != nil {
+			return fiber.ErrBadRequest
+		}
+
+		days, err := h.scheduleService.GetAllByGroupAndTime(c.Context(), scheduleService.GetSchedule{
 			GroupId:   creds.GroupID,
-			FromTime:  req.FromTime,
+			FromTime:  parsedFromTime,
 			CountDays: req.CountDays,
 		})
 		if err != nil {

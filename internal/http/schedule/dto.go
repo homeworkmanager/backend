@@ -6,10 +6,11 @@ import (
 )
 
 type homework struct {
-	ClassSemNumber *int64           `json:"classSemNumber"`
-	SubjectID      entity.SubjectID `json:"subjectId"`
-	HomeworkText   string           `json:"homeworkText"`
-	DueDate        time.Time        `json:"dueDate"`
+	HomeworkID     entity.HomeworkID `json:"homeworkID"`
+	ClassSemNumber *int64            `json:"classSemNumber"`
+	SubjectID      entity.SubjectID  `json:"subjectId"`
+	HomeworkText   string            `json:"homeworkText"`
+	DueDate        time.Time         `json:"dueDate"`
 }
 
 type class struct {
@@ -27,8 +28,8 @@ type outputClass struct {
 }
 
 type day struct {
-	OutPutClass         []outputClass `json:"outPutClass"`
-	IndependentHomework []homework    `json:"independentHomework"`
+	OutPutClass         []outputClass `json:"outPutClasses"`
+	IndependentHomework []homework    `json:"independentHomeworks"`
 }
 
 func toClass(c entity.Class) class {
@@ -45,6 +46,7 @@ func toHomework(c []entity.Homework) []homework {
 	result := make([]homework, len(c))
 	for i, h := range c {
 		result[i] = homework{
+			HomeworkID:     h.HomeworkID,
 			ClassSemNumber: h.ClassSemNumber,
 			SubjectID:      h.SubjectID,
 			HomeworkText:   h.HomeworkText,
