@@ -28,7 +28,7 @@ type outputClass struct {
 }
 
 type day struct {
-	OutPutClass         []outputClass `json:"outPutClasses"`
+	OutputClass         []outputClass `json:"outputClasses"`
 	IndependentHomework []homework    `json:"independentHomeworks"`
 }
 
@@ -47,7 +47,7 @@ func toHomework(c []entity.Homework) []homework {
 	for i, h := range c {
 		result[i] = homework{
 			HomeworkID:     h.HomeworkID,
-			ClassSemNumber: h.ClassSemNumber,
+			ClassSemNumber: h.SemClassNumber,
 			SubjectID:      h.SubjectID,
 			HomeworkText:   h.HomeworkText,
 			DueDate:        h.DueDate,

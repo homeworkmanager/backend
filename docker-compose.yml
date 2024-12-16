@@ -28,16 +28,25 @@ services:
       - redis_data:/data
     restart: always
 
+  goose:
+    build:
+      context: .
+      dockerfile: ./migrations/Dockerfile
+    environment:
+      - POSTGRES_DB_NAME=homeworkmanager
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_PORT=5432
+      - POSTGRES_SSLMODE=disable
+      - POSTGRES_USER=postgres
+    depends_on:
+      db:
+        condition: service_healthy
+
+
   app:
     build:
       context: .
-      args:
-        - POSTGRES_DB_NAME=homeworkmanager
-        - POSTGRES_HOST=db
-        - POSTGRES_PASSWORD=admin
-        - POSTGRES_PORT=5432
-        - POSTGRES_USER=postgres
-
     environment:
       - AUTH_TTL=1500s
       - DOMAIN=localhost
@@ -53,6 +62,8 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     depends_on:
+      goose:
+        condition: service_completed_successfully
       db:
         condition: service_healthy
     ports:

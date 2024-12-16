@@ -11,7 +11,7 @@ func (r *Repo) Create(ctx context.Context, homework entity.Homework) error {
 
 	t := r.manager.GetTxOrDefault(ctx)
 
-	_, err := t.ExecContext(ctx, q, homework.ClassSemNumber, homework.GroupID, homework.SubjectID, homework.HomeworkText, homework.DueDate)
+	_, err := t.ExecContext(ctx, q, homework.SemClassNumber, homework.GroupID, homework.SubjectID, homework.HomeworkText, homework.DueDate)
 
 	if err != nil {
 		return err

@@ -9,6 +9,6 @@ type OutputClass struct {
 
 type Day struct {
 	Date                time.Time
-	OutPutClass         []OutputClass
+	OutputClass         []OutputClass
 	IndependentHomework []Homework
 }

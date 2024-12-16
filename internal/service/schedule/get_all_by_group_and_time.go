@@ -36,7 +36,7 @@ func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]
 	for i := 0; i < req.CountDays; i++ {
 		days[i] = entity.Day{
 			Date:                req.FromTime.Add(time.Duration(i) * 24 * time.Hour).UTC(),
-			OutPutClass:         []entity.OutputClass{},
+			OutputClass:         []entity.OutputClass{},
 			IndependentHomework: []entity.Homework{},
 		}
 	}
@@ -64,16 +64,16 @@ func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]
 			}
 
 			for _, homework := range dayHomeworks {
-				if homework.SubjectID == class.SubjectID && utils.DeRef[int64](homework.ClassSemNumber) == class.SemClassNumber {
+				if homework.SubjectID == class.SubjectID && utils.DeRef[int64](homework.SemClassNumber) == class.SemClassNumber {
 					outputClass.Homework = append(outputClass.Homework, homework)
 				}
 			}
 
-			day.OutPutClass = append(day.OutPutClass, outputClass)
+			day.OutputClass = append(day.OutputClass, outputClass)
 		}
 
 		for _, homework := range dayHomeworks {
-			if utils.DeRef[int64](homework.ClassSemNumber) == 0 {
+			if utils.DeRef[int64](homework.SemClassNumber) == 0 {
 				day.IndependentHomework = append(day.IndependentHomework, homework)
 			}
 		}

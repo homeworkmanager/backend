@@ -29,7 +29,7 @@ func (s *Service) AddHomework(ctx context.Context, req AddHomework) error {
 
 func (r *AddHomework) toHomework() entity.Homework {
 	return entity.Homework{
-		ClassSemNumber: r.ClassSemNumber,
+		SemClassNumber: r.ClassSemNumber,
 		GroupID:        r.GroupID,
 		SubjectID:      r.SubjectID,
 		HomeworkText:   r.HomeworkText,

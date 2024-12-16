@@ -18,7 +18,7 @@ type homework struct {
 func (h homework) toHomework() entity.Homework {
 	return entity.Homework{
 		HomeworkID:     h.HomeworkID,
-		ClassSemNumber: h.ClassSemNumber,
+		SemClassNumber: h.ClassSemNumber,
 		GroupID:        h.GroupID,
 		SubjectID:      h.SubjectID,
 		HomeworkText:   h.HomeworkText,

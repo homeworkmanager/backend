@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"github.com/google/uuid"
 	"homeworktodolist/internal/entity"
-	"time"
 )
 
 func (r *Repo) CreateCreds(ctx context.Context, creds entity.UserCreds) (sessionKey string, err error) {
@@ -20,7 +19,7 @@ func (r *Repo) CreateCreds(ctx context.Context, creds entity.UserCreds) (session
 		return "", err
 	}
 
-	if err = r.client.Set(ctx, sessionKey, credsBytes, r.config.AuthTTL*time.Second).Err(); err != nil {
+	if err = r.client.Set(ctx, sessionKey, credsBytes, r.config.AuthTTL).Err(); err != nil {
 		return "", err
 	}
 

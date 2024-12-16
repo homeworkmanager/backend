@@ -35,7 +35,7 @@ func (h *Handler) Auth() fiber.Handler {
 			Value:   sessionKey,
 			Path:    "/",
 			Domain:  h.config.Domain,
-			Expires: time.Now().Add(time.Second * time.Duration(h.config.AuthTTL)),
+			Expires: time.Now().Add(h.config.AuthTTL),
 		})
 
 		return c.JSON(fiber.Map{
