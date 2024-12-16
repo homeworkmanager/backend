@@ -81,5 +81,5 @@ func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]
 		days[i] = day
 
 	}
-	return []entity.Day{}, nil
+	return days, nil
 }
