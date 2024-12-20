@@ -32,7 +32,7 @@ func IcalParse(icalLink string) ([]entity.UpdateClass, error) {
 	}
 	bodyString := string(body)
 
-	bodyString = strings.Replace(bodyString, "X-SCHEDULE_VERSION-ID:8", "X-SCHEDULE-VERSION-ID:8", -1)
+	bodyString = strings.Replace(bodyString, "X-SCHEDULE_VERSION-ID:", "X-SCHEDULE-VERSION-ID:", -1)
 
 	calendar, err := ics.ParseCalendar(strings.NewReader(bodyString))
 	if err != nil {
