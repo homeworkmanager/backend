@@ -21,4 +21,5 @@ func NewUserHandler(config *config.Config, service UserService) *Handler {
 func MapUserRoutes(g fiber.Router, h *Handler, mw *middleware.MwManager) {
 	g.Post("/register", h.Register())
 	g.Post("/auth", h.Auth())
+	g.Get("/get", mw.Auth(), h.Get())
 }
