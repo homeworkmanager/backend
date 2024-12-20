@@ -15,5 +15,5 @@ func NewGroupHandler(groupService GroupService) *Handler {
 }
 
 func MapGroupRoutes(g fiber.Router, h *Handler) {
-	g.Get("/getAllGroup", h.GetAllGroup())
+	g.Get("/getAll", h.GetAllGroup())
 }

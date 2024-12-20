@@ -9,7 +9,7 @@ import (
 
 type GetReq struct {
 	FromTime  string `query:"from_time"`
-	CountDays int    `query:"count_days"`
+	DaysCount int    `query:"days_count"`
 }
 
 func (h *Handler) GetSchedule() fiber.Handler {
@@ -24,7 +24,7 @@ func (h *Handler) GetSchedule() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
-		if req.FromTime == "" || req.CountDays == 0 {
+		if req.FromTime == "" || req.DaysCount == 0 {
 			return fiber.ErrBadRequest
 		}
 
@@ -36,7 +36,7 @@ func (h *Handler) GetSchedule() fiber.Handler {
 		days, err := h.scheduleService.GetAllByGroupAndTime(c.Context(), scheduleService.GetSchedule{
 			GroupId:   creds.GroupID,
 			FromTime:  parsedFromTime,
-			CountDays: req.CountDays,
+			DaysCount: req.DaysCount,
 		})
 		if err != nil {
 			return err

@@ -106,7 +106,7 @@ func createApp() {
 	groupHandlers.MapGroupRoutes(groupGroup, groupHandler)
 
 	moderatorGroup := fiberApp.Group("/moderator")
-	moderatorHandlers.MapModeratorRoutes(moderatorGroup, moderatorHandler)
+	moderatorHandlers.MapModeratorRoutes(moderatorGroup, moderatorHandler, mw)
 
 	scheduleGroup := fiberApp.Group("/schedule")
 	scheduleHandlers.MapScheduleRoutes(scheduleGroup, scheduleHandler, mw)
