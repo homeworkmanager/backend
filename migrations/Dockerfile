@@ -6,5 +6,5 @@ RUN chmod a+x ./entrypoint.sh
 
 
 RUN echo "run migrations"
-CMD ["./entrypoint.sh"]
+CMD ["bash", "./entrypoint.sh"]
 
