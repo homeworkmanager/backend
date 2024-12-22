@@ -24,6 +24,7 @@ func generateGroupSchedule(weeks int, updateGroup UpdateGroup) []entity.Class {
 				StartTime:      class.Start.Add(shift),
 				EndTime:        class.End.Add(shift),
 				Summary:        class.Summary,
+				Description:    class.Description,
 				SemClassNumber: subjectCounters[class.SubjectID],
 				Location:       class.Location,
 			})

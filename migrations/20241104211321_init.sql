@@ -37,6 +37,7 @@ CREATE TABLE  IF NOT EXISTS Classes (
       start_time timestamp not null ,
       end_time timestamp not null,
       summary TEXT not null ,
+      description TEXT not null ,
       class_sem_number  INTEGER NOT NULL,
       location TEXT,
 
