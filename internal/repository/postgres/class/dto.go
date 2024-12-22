@@ -12,6 +12,7 @@ type class struct {
 	StartTime      time.Time        `db:"start_time"`
 	EndTime        time.Time        `db:"end_time"`
 	Summary        string           `db:"summary"`
+	Description    string           `db:"description"`
 	SemClassNumber int64            `db:"class_sem_number"`
 	Location       string           `db:"location"`
 }
@@ -24,6 +25,7 @@ func (c class) toClass() entity.Class {
 		StartTime:      c.StartTime,
 		EndTime:        c.EndTime,
 		Summary:        c.Summary,
+		Description:    c.Description,
 		SemClassNumber: c.SemClassNumber,
 		Location:       c.Location,
 	}

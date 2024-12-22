@@ -18,6 +18,7 @@ type class struct {
 	StartTime      time.Time        `json:"startTime"`
 	EndTime        time.Time        `json:"endTime"`
 	Summary        string           `json:"summary"`
+	Description    string           `json:"description"`
 	SemClassNumber int64            `json:"semClassNumber"`
 	Location       string           `json:"location"`
 }
@@ -38,6 +39,7 @@ func toClass(c entity.Class) class {
 		StartTime:      c.StartTime,
 		EndTime:        c.EndTime,
 		Summary:        c.Summary,
+		Description:    c.Description,
 		SemClassNumber: c.SemClassNumber,
 		Location:       c.Location,
 	}
