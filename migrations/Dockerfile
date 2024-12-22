@@ -8,5 +8,5 @@ RUN tr -d '\r' <./entrypoint.sh> ./entrypoint.sh
 
 
 RUN echo "run migrations"
-CMD ["./entrypoint.sh"]
+CMD ["bash", "./entrypoint.sh"]
 
