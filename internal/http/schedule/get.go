@@ -44,7 +44,7 @@ func (h *Handler) GetSchedule() fiber.Handler {
 
 		daysMap := make(map[string]day)
 		for _, d := range days {
-			key := d.Date.Format("2006-01-02") // Форматируем дату в строку
+			key := d.Date.Format("2006-01-02")
 			daysMap[key] = day{
 				OutputClass:         toOutputClass(d.OutputClass),
 				IndependentHomework: toHomework(d.IndependentHomework),
