@@ -4,6 +4,8 @@ FROM gomicro/goose
 COPY ./migrations/*.sql ./migrations/entrypoint.sh ./
 RUN chmod a+x ./entrypoint.sh
 
+RUN tr -d '\r' <./entrypoint.sh> ./entrypoint.sh
+
 
 RUN echo "run migrations"
 CMD ["./entrypoint.sh"]
