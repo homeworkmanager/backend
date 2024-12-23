@@ -4,6 +4,7 @@ import (
 	"context"
 	"homeworktodolist/internal/entity"
 	"homeworktodolist/internal/utils/classParse"
+	"strings"
 )
 
 type UpdateGroup struct {
@@ -24,7 +25,7 @@ func (s *Service) UpdGroupClasses(ctx context.Context, g entity.Group) error {
 	}
 
 	for i := range group.Class {
-		subject, err := s.subjectService.GetBySubjectNameAndGroup(ctx, string([]rune(group.Class[i].Summary)[3:]), group.GroupId)
+		subject, err := s.subjectService.GetBySubjectNameAndGroup(ctx, strings.Join(strings.Split(group.Class[i].Summary, " ")[1:], " "), group.GroupId)
 		if err != nil {
 			return err
 		}
