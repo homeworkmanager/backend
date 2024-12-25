@@ -6,15 +6,16 @@ import (
 )
 
 type class struct {
-	ClassID        entity.ClassID   `db:"class_id"`
-	GroupID        entity.GroupID   `db:"group_id"`
-	SubjectID      entity.SubjectID `db:"subject_id"`
-	StartTime      time.Time        `db:"start_time"`
-	EndTime        time.Time        `db:"end_time"`
-	Summary        string           `db:"summary"`
-	Description    string           `db:"description"`
-	SemClassNumber int64            `db:"class_sem_number"`
-	Location       string           `db:"location"`
+	ClassID        entity.ClassID       `db:"class_id"`
+	GroupID        entity.GroupID       `db:"group_id"`
+	SubjectID      entity.SubjectID     `db:"subject_id"`
+	StartTime      time.Time            `db:"start_time"`
+	EndTime        time.Time            `db:"end_time"`
+	Summary        string               `db:"summary"`
+	Description    string               `db:"description"`
+	SemClassNumber int64                `db:"class_sem_number"`
+	Location       string               `db:"location"`
+	Category       entity.ClassCategory `db:"category"`
 }
 
 func (c class) toClass() entity.Class {
@@ -28,5 +29,6 @@ func (c class) toClass() entity.Class {
 		Description:    c.Description,
 		SemClassNumber: c.SemClassNumber,
 		Location:       c.Location,
+		Category:       c.Category,
 	}
 }

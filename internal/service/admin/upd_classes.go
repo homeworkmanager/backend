@@ -2,6 +2,7 @@ package admin
 
 import (
 	"context"
+	"homeworktodolist/internal/utils/classParse"
 )
 
 func (s *Service) UpdateClasses(ctx context.Context) error {
@@ -17,7 +18,14 @@ func (s *Service) UpdateClasses(ctx context.Context) error {
 			return err
 		}
 		for _, group := range groups {
-			err = s.classService.UpdGroupClasses(ctx, group)
+
+			classes, _, err := classParse.IcalParse(group.IcalLink)
+			if err != nil {
+				return err
+			}
+
+			err = s.classService.UpdGroupClasses(ctx, group, classes)
+
 			if err != nil {
 				return err
 			}

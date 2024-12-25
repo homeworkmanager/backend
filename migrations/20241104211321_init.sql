@@ -40,6 +40,7 @@ CREATE TABLE  IF NOT EXISTS Classes (
       description TEXT not null ,
       class_sem_number  INTEGER NOT NULL,
       location TEXT,
+      category int8 NOT NULL,
 
     CONSTRAINT group_fk FOREIGN KEY (group_id)REFERENCES Groups(group_id),
     CONSTRAINT subject_fk FOREIGN KEY (subject_id)REFERENCES Subjects(subject_id)

@@ -1,11 +1,10 @@
 package classParse
 
 import (
-	"homeworktodolist/internal/entity"
 	"strings"
 )
 
-func ParseSubject(classes []entity.UpdateClass) []string {
+func parseSubject(classes []Class) []string {
 	uniqueMap := make(map[string]struct{})
 
 	var res []string

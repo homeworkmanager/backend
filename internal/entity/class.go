@@ -12,13 +12,5 @@ type Class struct {
 	Description    string
 	SemClassNumber int64
 	Location       string
-}
-
-type UpdateClass struct {
-	SubjectID   SubjectID
-	Summary     string
-	Start       time.Time
-	End         time.Time
-	Description string
-	Location    string
+	Category       ClassCategory
 }

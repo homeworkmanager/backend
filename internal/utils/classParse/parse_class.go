@@ -2,7 +2,9 @@ package classParse
 
 import (
 	ics "github.com/arran4/golang-ical"
+	"github.com/teambition/rrule-go"
 	"homeworktodolist/internal/entity"
+	"homeworktodolist/internal/utils"
 	"io"
 	"net/http"
 	"sort"
@@ -12,23 +14,25 @@ import (
 
 type Class struct {
 	Summary     string
-	Start       string
-	End         string
+	Start       time.Time
+	End         time.Time
 	Description string
 	Location    string
+	Category    string
+	Dates       []time.Time
 }
 
-func IcalParse(icalLink string) ([]entity.UpdateClass, error) {
+func IcalParse(icalLink string) ([]entity.Class, []string, error) {
 
 	resp, err := http.Get(icalLink)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	bodyString := string(body)
 
@@ -36,33 +40,87 @@ func IcalParse(icalLink string) ([]entity.UpdateClass, error) {
 
 	calendar, err := ics.ParseCalendar(strings.NewReader(bodyString))
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	var classes []entity.UpdateClass
+	var classes []Class
 	for _, event := range calendar.Events() {
-		class := toClass(event)
-		if class.Description == "" && class.Location == "" {
+
+		if utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyCategories)).Value == "" {
 			continue
 		}
-		classes = append(classes, class.toClass())
+
+		class := Class{
+			Summary:     utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertySummary)).Value,
+			Description: utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyDescription)).Value,
+			Location:    utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyLocation)).Value,
+			Category:    utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyCategories)).Value,
+		}
+		class.Start, err = time.Parse("20060102T150405", utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyDtStart)).Value)
+
+		class.End, err = time.Parse("20060102T150405", utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyDtEnd)).Value)
+
+		RRULE := utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyRrule)).Value
+
+		if RRULE != "" {
+			rule, err := rrule.StrToRRule(RRULE)
+			rule.DTStart(class.Start)
+			if err != nil {
+				return nil, nil, err
+			}
+			prepareDates := rule.All()
+
+			exDateStr := utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyExdate)).Value
+
+			exMap := make(map[time.Time]struct{})
+			exDatesStr := strings.Split(exDateStr, ",")
+			for _, date := range exDatesStr {
+				if date == "" {
+					continue
+				}
+				date, err := time.Parse("20060102T150405", date)
+				if err != nil {
+					return nil, nil, err
+				}
+				exMap[date] = struct{}{}
+			}
+			for _, date := range prepareDates {
+				if _, ok := exMap[date]; ok {
+					continue
+				}
+				class.Dates = append(class.Dates, date)
+			}
+		} else {
+			class.Dates = append(class.Dates, class.Start)
+		}
+
+		classes = append(classes, class)
 	}
 
-	sort.Slice(classes, func(i, j int) bool {
-		return classes[i].Start.Before(classes[j].Start)
+	subjects := parseSubject(classes)
+
+	var result []entity.Class
+
+	for _, class := range classes {
+
+		duration := class.End.Sub(class.Start)
+		for _, date := range class.Dates {
+			result = append(result, entity.Class{
+				StartTime:   date,
+				EndTime:     date.Add(duration),
+				Summary:     class.Summary,
+				Description: class.Description,
+				Location:    class.Location,
+				Category:    entity.CategoryToNumber[class.Category],
+			})
+		}
+	}
+
+	sort.Slice(result, func(i, j int) bool {
+		startI := result[i].StartTime
+		startJ := result[j].EndTime
+		return startI.Before(startJ)
 	})
 
-	return classes, nil
-}
-
-func (c *Class) toClass() entity.UpdateClass {
-	start, _ := time.Parse("20060102T150405", c.Start)
-	end, _ := time.Parse("20060102T150405", c.End)
-	return entity.UpdateClass{
-		Summary:     c.Summary,
-		Start:       start,
-		End:         end,
-		Description: c.Description,
-		Location:    c.Location,
-	}
+	return result, subjects, nil
 }

@@ -3,49 +3,44 @@ package class
 import (
 	"context"
 	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/utils/classParse"
 	"strings"
 )
 
-type UpdateGroup struct {
-	GroupId  entity.GroupID
-	IcalLink string
-	Class    []entity.UpdateClass
+type classCount struct {
+	entity.ClassCategory
+	entity.SubjectID
 }
 
-func (s *Service) UpdGroupClasses(ctx context.Context, g entity.Group) error {
+func (s *Service) UpdGroupClasses(ctx context.Context, group entity.Group, classes []entity.Class) error {
 	var err error
 
-	group := toUpdateGroup(g)
+	classCounter := make(map[classCount]int64)
 
-	group.Class, err = classParse.IcalParse(group.IcalLink)
+	for i := range classes {
 
-	if err != nil {
-		return err
-	}
-
-	for i := range group.Class {
-		subject, err := s.subjectService.GetBySubjectNameAndGroup(ctx, strings.Join(strings.Split(group.Class[i].Summary, " ")[1:], " "), group.GroupId)
+		subject, err := s.subjectService.GetBySubjectNameAndGroup(ctx, strings.Join(strings.Split(classes[i].Summary, " ")[1:], " "), group.GroupID)
 		if err != nil {
 			return err
 		}
-		group.Class[i].SubjectID = subject.SubjectId
+
+		classC := classCount{
+			ClassCategory: classes[i].Category,
+			SubjectID:     subject.SubjectId,
+		}
+
+		classCounter[classC]++
+
+		classes[i].SubjectID = subject.SubjectId
+		classes[i].GroupID = group.GroupID
+		classes[i].SemClassNumber = classCounter[classC]
 	}
 
-	classes := generateGroupSchedule(entity.SemesterNumWeeks, group)
 	err = s.classRepo.Create(ctx, classes)
+
 	if err != nil {
 		return err
 	}
 
 	return nil
 
-}
-
-func toUpdateGroup(group entity.Group) UpdateGroup {
-	return UpdateGroup{
-		GroupId:  group.GroupID,
-		IcalLink: group.IcalLink,
-		Class:    []entity.UpdateClass{},
-	}
 }

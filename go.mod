@@ -24,6 +24,7 @@ require (
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/onsi/gomega v1.35.1 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/teambition/rrule-go v1.8.2 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
