@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS Homeworks (
     group_id INTEGER NOT NULL,
     subject_id INTEGER NOT NULL,
     homework_text TEXT NOT NULL,
+    category int8,
     due_date TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 

@@ -8,8 +8,9 @@ import (
 )
 
 type AddHomeworkToClassReq struct {
-	ClassSemNumber *int64           `json:"classSemNumber"`
+	ClassSemNumber int64            `json:"classSemNumber"`
 	SubjectID      entity.SubjectID `json:"subjectId"`
+	Category       string           `json:"category"`
 	HomeworkText   string           `json:"homeworkText"`
 	DueDate        time.Time        `json:"dueDate"`
 }
@@ -29,14 +30,20 @@ func (h *Handler) AddHomeworkToClass() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
-		if req.ClassSemNumber == nil || *req.ClassSemNumber == 0 || req.SubjectID == 0 || req.HomeworkText == "" || req.DueDate.IsZero() {
+		if req.ClassSemNumber == 0 || req.SubjectID == 0 || req.HomeworkText == "" || req.DueDate.IsZero() {
+			return fiber.ErrBadRequest
+		}
+
+		category, ok := entity.CategoryToNumber[req.Category]
+		if !ok {
 			return fiber.ErrBadRequest
 		}
 
 		err := h.moderatorService.AddHomework(c.Context(), moderatorService.AddHomework{
-			ClassSemNumber: req.ClassSemNumber,
+			ClassSemNumber: &req.ClassSemNumber,
 			GroupID:        creds.GroupID,
 			SubjectID:      req.SubjectID,
+			Category:       &category,
 			HomeworkText:   req.HomeworkText,
 			DueDate:        req.DueDate,
 		})

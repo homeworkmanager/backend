@@ -64,7 +64,7 @@ func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]
 			}
 
 			for _, homework := range dayHomeworks {
-				if homework.SubjectID == class.SubjectID && utils.DeRef[int64](homework.SemClassNumber) == class.SemClassNumber {
+				if homework.SubjectID == class.SubjectID && utils.DeRef[int64](homework.SemClassNumber) == class.SemClassNumber && utils.DeRef[entity.ClassCategory](homework.Category) == class.Category {
 					outputClass.Homework = append(outputClass.Homework, homework)
 				}
 			}

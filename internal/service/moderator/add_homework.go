@@ -10,6 +10,7 @@ type AddHomework struct {
 	ClassSemNumber *int64
 	GroupID        entity.GroupID
 	SubjectID      entity.SubjectID
+	Category       *entity.ClassCategory
 	HomeworkText   string
 	DueDate        time.Time
 }
@@ -32,6 +33,7 @@ func (r *AddHomework) toHomework() entity.Homework {
 		SemClassNumber: r.ClassSemNumber,
 		GroupID:        r.GroupID,
 		SubjectID:      r.SubjectID,
+		Category:       r.Category,
 		HomeworkText:   r.HomeworkText,
 		DueDate:        r.DueDate,
 	}
