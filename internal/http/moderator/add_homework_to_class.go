@@ -15,7 +15,6 @@ type AddHomeworkToClassReq struct {
 	DueDate        time.Time        `json:"dueDate"`
 }
 
-// TODO: траблы с временем
 func (h *Handler) AddHomeworkToClass() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 

@@ -28,3 +28,24 @@ func (u user) toUser() entity.User {
 		CreatedAt: u.CreatedAt,
 	}
 }
+
+type userFull struct {
+	UserID    entity.UserID `db:"user_id"`
+	Name      string        `db:"name"`
+	Surname   *string       `db:"surname"`
+	Email     string        `db:"email"`
+	Password  string        `db:"password"`
+	Role      entity.Role   `db:"role"`
+	GroupName string        `db:"group_name"`
+}
+
+func (u userFull) toUserFull() entity.UserFullInfo {
+	return entity.UserFullInfo{
+		UserID:    u.UserID,
+		Name:      u.Name,
+		Surname:   u.Surname,
+		Email:     u.Email,
+		Role:      u.Role,
+		GroupName: u.GroupName,
+	}
+}

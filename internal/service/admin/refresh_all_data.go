@@ -5,7 +5,6 @@ import (
 	"homeworktodolist/internal/utils/classParse"
 )
 
-// TODO: проверить что функция err = s.homeworkService.ClearAllHomeworks(ctx) правильно отрабатывает
 func (s *Service) RefreshAllData(ctx context.Context) error {
 
 	groups, err := s.groupService.GetAllGroups(ctx)
