@@ -5,11 +5,11 @@ import (
 	"homeworktodolist/internal/entity"
 )
 
-func (s *Service) Create(ctx context.Context, homework entity.Homework) error {
+func (s *Service) Create(ctx context.Context, homework entity.Homework) (entity.HomeworkID, error) {
 
-	err := s.homeworkRepo.Create(ctx, homework)
+	id, err := s.homeworkRepo.Create(ctx, homework)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return id, nil
 }

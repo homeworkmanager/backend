@@ -8,6 +8,6 @@ import (
 
 type HomeworkRepo interface {
 	Clear(ctx context.Context) error
-	Create(ctx context.Context, homework entity.Homework) error
+	Create(ctx context.Context, homework entity.Homework) (entity.HomeworkID, error)
 	GetByGroupAndTime(ctx context.Context, groupID entity.GroupID, fromTime time.Time, toTime time.Time) ([]entity.Homework, error)
 }

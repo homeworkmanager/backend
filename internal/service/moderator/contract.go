@@ -6,5 +6,5 @@ import (
 )
 
 type HomeworkService interface {
-	Create(ctx context.Context, homework entity.Homework) error
+	Create(ctx context.Context, homework entity.Homework) (entity.HomeworkID, error)
 }

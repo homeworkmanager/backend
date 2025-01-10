@@ -16,16 +16,16 @@ type AddHomework struct {
 }
 
 // TODO: добавить проверку на то что такое занятие существует
-func (s *Service) AddHomework(ctx context.Context, req AddHomework) error {
+func (s *Service) AddHomework(ctx context.Context, req AddHomework) (entity.HomeworkID, error) {
 	homework := req.toHomework()
 
-	err := s.homeworkService.Create(ctx, homework)
+	id, err := s.homeworkService.Create(ctx, homework)
 
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	return nil
+	return id, nil
 }
 
 func (r *AddHomework) toHomework() entity.Homework {
