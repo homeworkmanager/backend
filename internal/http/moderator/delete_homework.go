@@ -19,7 +19,7 @@ func (h *Handler) DeleteHomework() fiber.Handler {
 
 		var req DeleteHomeworkReq
 
-		if err := c.BodyParser(&req); err != nil {
+		if err := c.QueryParser(&req); err != nil {
 			return fiber.ErrBadRequest
 		}
 
