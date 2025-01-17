@@ -11,6 +11,7 @@ import (
 	homeworkStatusHandlers "homeworktodolist/internal/http/homework_status"
 	moderatorHandlers "homeworktodolist/internal/http/moderator"
 	scheduleHandlers "homeworktodolist/internal/http/schedule"
+	subjectHandlers "homeworktodolist/internal/http/subject"
 	userHandlers "homeworktodolist/internal/http/user"
 	middleware "homeworktodolist/internal/middleware"
 	classRepo "homeworktodolist/internal/repository/postgres/class"
@@ -89,6 +90,8 @@ func createApp() {
 
 	homeworkStatusHandler := homeworkStatusHandlers.NewHomeworkStatusHandler(homeworkStatusService)
 
+	subjectHandler := subjectHandlers.NewSubjectHandler(subjectService)
+
 	//fiber
 	fiberApp := fiber.New(fiber.Config{
 		ErrorHandler: err_handler.ErrorHandler,
@@ -121,6 +124,9 @@ func createApp() {
 
 	homeworkGroup := fiberApp.Group("/homework")
 	homeworkStatusHandlers.MapHomeworkStatusRoutes(homeworkGroup, homeworkStatusHandler, mw)
+
+	subjectGroup := fiberApp.Group("/subject")
+	subjectHandlers.MapSubjectRoutes(subjectGroup, subjectHandler, mw)
 
 	//fiber listen
 	exit := make(chan os.Signal, 1)
