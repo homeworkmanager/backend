@@ -1,10 +1,12 @@
 package user
 
 import (
+	"time"
+
 	"github.com/gofiber/fiber/v2"
+
 	"homeworktodolist/internal/entity"
 	userService "homeworktodolist/internal/service/user"
-	"time"
 )
 
 type AuthReq struct {

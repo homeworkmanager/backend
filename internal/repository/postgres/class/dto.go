@@ -1,8 +1,9 @@
 package class
 
 import (
-	"homeworktodolist/internal/entity"
 	"time"
+
+	"homeworktodolist/internal/entity"
 )
 
 type class struct {

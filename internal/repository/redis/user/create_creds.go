@@ -3,7 +3,9 @@ package user
 import (
 	"context"
 	"encoding/json"
+
 	"github.com/google/uuid"
+
 	"homeworktodolist/internal/entity"
 )
 

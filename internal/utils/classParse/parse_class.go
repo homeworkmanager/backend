@@ -1,15 +1,17 @@
 package classParse
 
 import (
-	ics "github.com/arran4/golang-ical"
-	"github.com/teambition/rrule-go"
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/utils"
 	"io"
 	"net/http"
 	"sort"
 	"strings"
 	"time"
+
+	ics "github.com/arran4/golang-ical"
+	"github.com/teambition/rrule-go"
+
+	"homeworktodolist/internal/entity"
+	"homeworktodolist/internal/utils"
 )
 
 type Class struct {

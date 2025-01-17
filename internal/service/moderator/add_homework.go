@@ -2,8 +2,9 @@ package moderator
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
 	"time"
+
+	"homeworktodolist/internal/entity"
 )
 
 type AddHomework struct {

@@ -60,11 +60,10 @@ CREATE TABLE IF NOT EXISTS Homeworks (
     CONSTRAINT subject_fk FOREIGN KEY (subject_id)REFERENCES Subjects(subject_id)
 );
 
-CREATE TABLE IF NOT EXISTS HomeworkSubmissions (
-   submissions_id BIGSERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS HomeworkStatuses (
+   id BIGSERIAL PRIMARY KEY,
    user_id INTEGER,
    homework_id INTEGER,
-   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
    CONSTRAINT user_fk FOREIGN KEY (user_id)REFERENCES Users(user_id),
    CONSTRAINT homework_fk FOREIGN KEY (homework_id)REFERENCES Homeworks(homework_id)
@@ -94,6 +93,6 @@ DROP TABLE IF EXISTS Groups CASCADE;
 DROP TABLE IF EXISTS Subjects CASCADE;
 DROP TABLE IF EXISTS Classes CASCADE;
 DROP TABLE IF EXISTS Homeworks CASCADE;
-DROP TABLE IF EXISTS HomeworkSubmissions CASCADE;
+DROP TABLE IF EXISTS HomeworkStatuses CASCADE;
 DROP TABLE IF EXISTS SubjectNotes CASCADE;
 -- +goose StatementEnd

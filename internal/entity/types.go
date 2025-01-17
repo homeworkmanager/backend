@@ -6,6 +6,7 @@ type (
 	GroupID       int64
 	SubjectID     int64
 	HomeworkID    int64
+	StatusID      int64
 	Role          int8
 	ClassCategory int8
 )

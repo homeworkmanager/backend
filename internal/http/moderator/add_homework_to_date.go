@@ -1,10 +1,12 @@
 package moderator
 
 import (
+	"time"
+
 	"github.com/gofiber/fiber/v2"
+
 	"homeworktodolist/internal/entity"
 	moderatorService "homeworktodolist/internal/service/moderator"
-	"time"
 )
 
 type AddHomeworkToDateReq struct {

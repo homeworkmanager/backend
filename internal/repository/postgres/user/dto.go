@@ -1,8 +1,9 @@
 package user
 
 import (
-	"homeworktodolist/internal/entity"
 	"time"
+
+	"homeworktodolist/internal/entity"
 )
 
 type user struct {

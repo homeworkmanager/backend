@@ -9,6 +9,7 @@ type Homework struct {
 	SubjectID      SubjectID
 	HomeworkText   string
 	Category       *ClassCategory
+	IsCompleted    bool
 	DueDate        time.Time
 	CreatedAt      time.Time
 }

@@ -2,7 +2,9 @@ package user
 
 import (
 	"context"
+
 	"golang.org/x/crypto/bcrypt"
+
 	"homeworktodolist/internal/entity"
 	"homeworktodolist/internal/errs"
 )

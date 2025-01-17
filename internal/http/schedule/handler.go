@@ -2,6 +2,7 @@ package schedule
 
 import (
 	"github.com/gofiber/fiber/v2"
+
 	"homeworktodolist/internal/middleware"
 )
 

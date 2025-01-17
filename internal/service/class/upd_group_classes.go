@@ -2,8 +2,9 @@ package class
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
 	"strings"
+
+	"homeworktodolist/internal/entity"
 )
 
 type classCount struct {

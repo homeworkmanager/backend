@@ -1,14 +1,16 @@
 package schedule
 
 import (
-	"homeworktodolist/internal/entity"
 	"time"
+
+	"homeworktodolist/internal/entity"
 )
 
 type homework struct {
 	HomeworkID   entity.HomeworkID `json:"homeworkID"`
 	SubjectID    entity.SubjectID  `json:"subjectId"`
 	HomeworkText string            `json:"homeworkText"`
+	IsCompleted  bool              `json:"isCompleted"`
 	DueDate      time.Time         `json:"dueDate"`
 }
 
@@ -52,6 +54,7 @@ func toHomework(c []entity.Homework) []homework {
 			HomeworkID:   h.HomeworkID,
 			SubjectID:    h.SubjectID,
 			HomeworkText: h.HomeworkText,
+			IsCompleted:  h.IsCompleted,
 			DueDate:      h.DueDate,
 		}
 	}

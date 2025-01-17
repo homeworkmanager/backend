@@ -3,8 +3,9 @@ package class
 import (
 	"context"
 	"fmt"
-	"homeworktodolist/internal/entity"
 	"reflect"
+
+	"homeworktodolist/internal/entity"
 )
 
 func (r *Repo) Create(ctx context.Context, classes []entity.Class) error {

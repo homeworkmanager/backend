@@ -1,9 +1,11 @@
 package user
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"homeworktodolist/internal/entity"
 	"time"
+
+	"github.com/gofiber/fiber/v2"
+
+	"homeworktodolist/internal/entity"
 )
 
 func (h *Handler) Refresh() fiber.Handler {

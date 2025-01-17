@@ -1,11 +1,11 @@
 
-MIGRATION_FOLDER = ./internal/db/migrations
+MIGRATION_FOLDER = ./migrations
 
 local_migration_up:
-	goose -dir $(MIGRATION_FOLDER) postgres "user=postgres password=admin database=homeworkmanager host=192.168.0.69 port=5432" up
+	goose -dir $(MIGRATION_FOLDER) postgres "user=postgres password=admin database=homeworkmanager host=localhost port=5431" up
 
 local_migration_down:
-	goose -dir $(MIGRATION_FOLDER) postgres "user=postgres password=admin database=homeworkmanager host=192.168.0.69 port=5432" down
+	goose -dir $(MIGRATION_FOLDER) postgres "user=postgres password=admin database=homeworkmanager host=localhost port=5431" down
 
 
 

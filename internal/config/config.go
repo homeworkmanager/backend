@@ -2,10 +2,12 @@ package config
 
 import (
 	"errors"
+	"time"
+
 	"github.com/kelseyhightower/envconfig"
+
 	"homeworktodolist/pkg/db/postgres"
 	"homeworktodolist/pkg/db/redis"
-	"time"
 )
 
 type Config struct {

@@ -3,7 +3,9 @@ package user
 import (
 	"context"
 	"database/sql"
+
 	"github.com/pkg/errors"
+
 	"homeworktodolist/internal/entity"
 	"homeworktodolist/internal/errs"
 )

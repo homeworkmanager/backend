@@ -1,8 +1,9 @@
 package homework
 
 import (
-	"homeworktodolist/internal/entity"
 	"time"
+
+	"homeworktodolist/internal/entity"
 )
 
 type homework struct {
@@ -12,6 +13,7 @@ type homework struct {
 	SubjectID      entity.SubjectID      `db:"subject_id"`
 	Category       *entity.ClassCategory `db:"category"`
 	HomeworkText   string                `db:"homework_text"`
+	Status         bool                  `db:"status"`
 	DueDate        time.Time             `db:"due_date"`
 	CreatedAt      time.Time             `db:"created_at"`
 }
@@ -24,6 +26,7 @@ func (h homework) toHomework() entity.Homework {
 		SubjectID:      h.SubjectID,
 		Category:       h.Category,
 		HomeworkText:   h.HomeworkText,
+		IsCompleted:    h.Status,
 		DueDate:        h.DueDate,
 		CreatedAt:      h.CreatedAt,
 	}

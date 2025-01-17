@@ -2,6 +2,7 @@ package user
 
 import (
 	"github.com/go-redis/redis/v8"
+
 	"homeworktodolist/internal/config"
 )
 
