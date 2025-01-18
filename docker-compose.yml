@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   db:
     image: postgres:16.4
@@ -45,11 +43,13 @@ services:
 
 
   app:
+    image: registry.gitlab.com/homeworkmanager/backend/api:${TAG:-latest}
     build:
       context: .
     environment:
       - AUTH_TTL=1500s
       - DOMAIN=localhost
+      - ENCODING_MODE=console
       - HOST=0.0.0.0
       - PORT=8888
       - POSTGRES_CONNECT_TIMEOUT=5

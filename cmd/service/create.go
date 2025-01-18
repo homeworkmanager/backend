@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"go.uber.org/zap"
 	"homeworktodolist/internal/config"
 	"homeworktodolist/internal/err_handler"
 	adminHandlers "homeworktodolist/internal/http/admin"
@@ -33,6 +34,7 @@ import (
 	"homeworktodolist/internal/tx_manager"
 	postgres "homeworktodolist/pkg/db/postgres"
 	"homeworktodolist/pkg/db/redis"
+	"homeworktodolist/pkg/logger"
 	"os"
 	"os/signal"
 )
@@ -106,6 +108,24 @@ func createApp() {
 
 	//middleware
 	mw := middleware.NewMwManager(userRedisRepo)
+
+	//logger
+	logger := logger.InitLogger(cfg)
+
+	fiberApp.Use(func(c *fiber.Ctx) error {
+		err := c.Next()
+		if err != nil {
+			logger.Errorw("Unhandled error occurred",
+				zap.String("method", c.Method()),
+				zap.String("path", c.Path()),
+				zap.Error(err),
+			)
+			return err
+		}
+
+		return nil
+	}, mw.RequestLogger(logger))
+
 	//groups
 	userGroup := fiberApp.Group("/user")
 	userHandlers.MapUserRoutes(userGroup, userHandler, mw)

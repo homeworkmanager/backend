@@ -17,6 +17,8 @@ type Config struct {
 
 	AuthTTL time.Duration `envconfig:"AUTH_TTL"`
 
+	EncodingMode string `envconfig:"ENCODING_MODE"`
+
 	postgres.PGConfig
 	redis.RedisConfig
 }
