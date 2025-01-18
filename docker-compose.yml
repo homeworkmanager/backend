@@ -43,7 +43,7 @@ services:
 
 
   app:
-    image: kirillzet/homeworkmanager-api:${TAG:-latest}
+    image: ghcr.io/homeworkmanager/api:${TAG:-latest}
     build:
       context: .
     environment:
