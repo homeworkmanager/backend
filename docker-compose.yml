@@ -43,7 +43,7 @@ services:
 
 
   app:
-    image: registry.gitlab.com/homeworkmanager/backend/api:${TAG:-latest}
+    image: kirillzet/homeworkmanager-api:${TAG:-latest}
     build:
       context: .
     environment:
