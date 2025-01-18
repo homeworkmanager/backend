@@ -9,10 +9,8 @@ env:
     IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  deploy:
+  build-docker:
     runs-on: ubuntu-latest
-    environment: main
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
