@@ -3,8 +3,8 @@ services:
     image: postgres:16.4
     container_name: postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: homeworkmanager
     volumes:
       - db_data:/var/lib/postgresql/data
@@ -34,9 +34,13 @@ services:
     build:
       context: .
       dockerfile: ./migrations/Dockerfile
-    env_file:
-      - db.env
-
+    environment:
+      - POSTGRES_DB_NAME=homeworkmanager
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_PORT=5432
+      - POSTGRES_SSLMODE=disable
+      - POSTGRES_USER=${POSTGRES_USER}
     networks:
       - backend
 
@@ -62,8 +66,23 @@ services:
     image: ghcr.io/homeworkmanager/backend:${BACKEND_TAG:-latest}
     build:
       context: .
-    env_file:
-      - backend.env
+    environment:
+      - AUTH_TTL=1500s
+      - DOMAIN=localhost
+      - ENCODING_MODE=console
+      - HOST=0.0.0.0
+      - PORT=8888
+      - FRONTEND_HOST=localhost
+      - FRONTEND_PORT=3000
+      - POSTGRES_CONNECT_TIMEOUT=5
+      - POSTGRES_DB_NAME=homeworkmanager
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_PORT=5432
+      - POSTGRES_SSLMODE=disable
+      - POSTGRES_USER=${POSTGRES_USER}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     depends_on:
       goose:
         condition: service_completed_successfully
