@@ -4,7 +4,7 @@ import (
 	"context"
 )
 
-func (s Service) RefreshCookie(ctx context.Context, sessionKey string) error {
+func (s *Service) RefreshCookie(ctx context.Context, sessionKey string) error {
 	_, err := s.userRedisRepo.GetCreds(ctx, sessionKey)
 	if err != nil {
 		return err
