@@ -59,6 +59,8 @@ services:
       - frontend
     volumes:
       - ./nginx.conf:/etc/nginx/sites-enabled/nginx.conf
+    ports:
+      - "80:80"
 
 
 
