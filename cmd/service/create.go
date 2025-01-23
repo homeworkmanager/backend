@@ -69,15 +69,15 @@ func createApp() {
 
 	classService := classService.NewClassService(groupService, classRepo, subjectService, txmanager)
 
-	homeworkService := homeworkService.NewHomeworkService(homeworkRepo)
+	homeworkStatusService := homeworkStatusService.NewHomeworkStatusService(homeworkStatusRepo)
+
+	homeworkService := homeworkService.NewHomeworkService(homeworkRepo, homeworkStatusService, txmanager)
 
 	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, txmanager)
 
 	moderatorService := moderatorService.NewModeratorService(homeworkService)
 
 	scheduleService := scheduleService.NewScheduleService(classService, homeworkService)
-
-	homeworkStatusService := homeworkStatusService.NewHomeworkStatusService(homeworkStatusRepo)
 
 	//Handlers
 	userHandler := userHandlers.NewUserHandler(cfg, userService)
