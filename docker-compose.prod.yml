@@ -2,14 +2,16 @@ services:
   db:
     image: postgres:16.4
     container_name: postgres
-    ports:
-      - "5431:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: homeworkmanager
     volumes:
       - db_data:/var/lib/postgresql/data
+
+    networks:
+      - backend
+
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -20,59 +22,73 @@ services:
   redis:
     image: redis:latest
     container_name: redis
-    ports:
-      - "6379:6379"
     volumes:
       - redis_data:/data
+
+    networks:
+      - backend
+
     restart: always
 
   goose:
     build:
       context: .
       dockerfile: ./migrations/Dockerfile
-    environment:
-      - POSTGRES_DB_NAME=homeworkmanager
-      - POSTGRES_HOST=db
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_PORT=5432
-      - POSTGRES_SSLMODE=disable
-      - POSTGRES_USER=postgres
+    env_file:
+      - db.env
+
+    networks:
+      - backend
+
     depends_on:
       db:
         condition: service_healthy
 
 
-  app:
-    image: ghcr.io/homeworkmanager/api:${TAG:-latest}
+  nginx:
+    image: nginx:latest
+    networks:
+      - backend
+      - frontend
+    depends_on:
+      - backend
+      - frontend
+    volumes:
+      - nginx.conf:/etc/nginx/sites-enabled/nginx.conf
+
+
+
+  backend:
+    image: ghcr.io/homeworkmanager/backend:${BACKEND_TAG:-latest}
     build:
       context: .
-    environment:
-      - AUTH_TTL=1500s
-      - DOMAIN=localhost
-      - ENCODING_MODE=console
-      - HOST=0.0.0.0
-      - PORT=8888
-      - POSTGRES_CONNECT_TIMEOUT=5
-      - POSTGRES_DB_NAME=homeworkmanager
-      - POSTGRES_HOST=db
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_PORT=5432
-      - POSTGRES_SSLMODE=disable
-      - POSTGRES_USER=postgres
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+    env_file:
+      - backend.env
     depends_on:
       goose:
         condition: service_completed_successfully
       db:
         condition: service_healthy
-    ports:
-      - "8888:8888"
+    networks:
+      - backend
+
     restart: always
+
+  frontend:
+    image: ghcr.io/homeworkmanager/frontend:${FRONTEND_TAG:-latest}
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - backend
+
 
 volumes:
   db_data:
   redis_data:
 
 
+networks:
+  backend:
+  frontend:
 

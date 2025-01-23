@@ -71,7 +71,7 @@ func createApp() {
 
 	homeworkService := homeworkService.NewHomeworkService(homeworkRepo)
 
-	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, txmanager)
+	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, txmanager)
 
 	moderatorService := moderatorService.NewModeratorService(homeworkService)
 
@@ -100,8 +100,8 @@ func createApp() {
 	})
 
 	fiberApp.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:5000",
-		AllowMethods:     "GET,POST,PUT,DELETE,OPTIONS",
+		AllowOrigins:     fmt.Sprintf("http://%s:%s", cfg.FrontendHost, cfg.FrontendPort),
+		AllowMethods:     "GET, POST, PUT, DELETE, OPTIONS, PATCH",
 		AllowHeaders:     "Content-Type, Authorization",
 		AllowCredentials: true,
 	}))

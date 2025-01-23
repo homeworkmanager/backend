@@ -19,6 +19,9 @@ type Config struct {
 
 	EncodingMode string `envconfig:"ENCODING_MODE"`
 
+	FrontendHost string `envconfig:"FRONTEND_HOST"`
+	FrontendPort string `envconfig:"FRONTEND_PORT"`
+
 	postgres.PGConfig
 	redis.RedisConfig
 }

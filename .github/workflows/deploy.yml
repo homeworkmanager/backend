@@ -6,7 +6,7 @@ on:
       - release*
 env:
     REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}-api
+    IMAGE_NAME: ${{ github.repository }}
     MAJOR_VERSION: 1 
 
 jobs:
@@ -34,5 +34,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ IMAGE_NAME }}:${{ MAJOR_VERSION }}.${{ github.run_count }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.MAJOR_VERSION }}.${{ github.run_number }}
           labels: ${{ steps.meta.outputs.labels }}
