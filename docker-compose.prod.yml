@@ -59,6 +59,8 @@ services:
       - frontend
     volumes:
       - ./nginx.conf:/etc/nginx/sites-enabled/nginx.conf
+    ports:
+      - "80:80"
 
 
 
@@ -68,7 +70,7 @@ services:
       context: .
     environment:
       - AUTH_TTL=1500s
-      - DOMAIN=localhost
+      - DOMAIN=unihelper.ru
       - ENCODING_MODE=console
       - HOST=0.0.0.0
       - PORT=8888
