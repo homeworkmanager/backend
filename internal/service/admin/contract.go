@@ -6,6 +6,10 @@ import (
 	"homeworktodolist/internal/entity"
 )
 
+type UserService interface {
+	UpdateRole(ctx context.Context, userID entity.UserID, role entity.Role) error
+}
+
 type GroupService interface {
 	Create(ctx context.Context, group entity.Group) (entity.GroupID, error)
 	GetAllGroups(ctx context.Context) ([]entity.Group, error)
