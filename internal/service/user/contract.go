@@ -12,6 +12,7 @@ type UserRepo interface {
 	GetById(ctx context.Context, id entity.UserID) (entity.User, error)
 	GetFullById(ctx context.Context, id entity.UserID) (entity.UserFullInfo, error)
 	UpdateRole(ctx context.Context, userID entity.UserID, role entity.Role) error
+	GetAllFull(ctx context.Context) ([]entity.UserFullInfo, error)
 }
 
 type UserRedisRepo interface {

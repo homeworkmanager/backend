@@ -50,3 +50,11 @@ func (u userFull) toUserFull() entity.UserFullInfo {
 		GroupName: u.GroupName,
 	}
 }
+
+func toUsersFull(users []userFull) []entity.UserFullInfo {
+	result := make([]entity.UserFullInfo, len(users))
+	for i, u := range users {
+		result[i] = u.toUserFull()
+	}
+	return result
+}
