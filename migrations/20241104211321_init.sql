@@ -74,10 +74,9 @@ CREATE TABLE IF NOT EXISTS SubjectNotes (
     note_id BIGSERIAL PRIMARY KEY,
     subject_id INTEGER,
     group_id INTEGER,
-    semester INTEGER NOT NULL,
     note_text TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
 
 
     CONSTRAINT group_fk FOREIGN KEY (group_id)REFERENCES Groups(group_id),

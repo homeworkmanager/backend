@@ -49,20 +49,6 @@ services:
         condition: service_healthy
 
 
-  nginx:
-    image: nginx:latest
-    networks:
-      - backend
-      - frontend
-    depends_on:
-        - backend
-        - frontend
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
-
-
-
-
   backend:
     image: ghcr.io/homeworkmanager/backend:${BACKEND_TAG:-latest}
     build:
@@ -82,13 +68,6 @@ services:
 
     restart: always
 
-  frontend:
-    image: ghcr.io/homeworkmanager/frontend:${FRONTEND_TAG:-latest}
-    networks:
-      - frontend
-      - backend
-    depends_on:
-      - backend
 
 
 volumes:

@@ -26,12 +26,12 @@ func (s *Service) UpdGroupClasses(ctx context.Context, group entity.Group, class
 
 		classC := classCount{
 			ClassCategory: classes[i].Category,
-			SubjectID:     subject.SubjectId,
+			SubjectID:     subject.SubjectID,
 		}
 
 		classCounter[classC]++
 
-		classes[i].SubjectID = subject.SubjectId
+		classes[i].SubjectID = subject.SubjectID
 		classes[i].GroupID = group.GroupID
 		classes[i].SemClassNumber = classCounter[classC]
 	}

@@ -29,7 +29,7 @@ func (h *Handler) UpdateHomework() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
-		err := h.moderatorService.Update(c.Context(), req.HomeworkId, req.HomeworkText)
+		err := h.moderatorService.UpdateHomework(c.Context(), req.HomeworkId, req.HomeworkText)
 
 		if err != nil {
 			return err

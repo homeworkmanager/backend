@@ -11,3 +11,8 @@ type HomeworkService interface {
 	Delete(ctx context.Context, id entity.HomeworkID) error
 	Update(ctx context.Context, homeworkId entity.HomeworkID, homeworkText string) error
 }
+type SubjectNoteService interface {
+	AddNote(ctx context.Context, note entity.SubjectNote) (entity.NoteID, error)
+	Delete(ctx context.Context, noteID entity.NoteID) error
+	Update(ctx context.Context, noteID entity.NoteID, noteText string) error
+}
