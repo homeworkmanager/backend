@@ -48,7 +48,6 @@ services:
       db:
         condition: service_healthy
 
-
   backend:
     image: ghcr.io/homeworkmanager/backend:${BACKEND_TAG:-latest}
     build:
@@ -68,14 +67,10 @@ services:
 
     restart: always
 
-
-
 volumes:
   db_data:
   redis_data:
 
-
 networks:
   backend:
   frontend:
-
