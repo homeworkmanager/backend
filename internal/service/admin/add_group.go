@@ -2,7 +2,9 @@ package admin
 
 import (
 	"context"
+
 	"homeworktodolist/internal/entity"
+	"homeworktodolist/internal/utils/classParse"
 )
 
 type AddGroup struct {
@@ -21,12 +23,17 @@ func (s *Service) AddGroup(ctx context.Context, req AddGroup) error {
 			return err
 		}
 
-		err = s.subjectService.UpdGroupSubjects(ctx, group)
+		classes, subjects, err := classParse.IcalParse(group.IcalLink)
 		if err != nil {
 			return err
 		}
 
-		err = s.classService.UpdGroupClasses(ctx, group)
+		err = s.subjectService.UpdGroupSubjects(ctx, group, subjects)
+		if err != nil {
+			return err
+		}
+
+		err = s.classService.UpdGroupClasses(ctx, group, classes)
 		if err != nil {
 			return err
 		}

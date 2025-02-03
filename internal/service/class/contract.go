@@ -2,8 +2,9 @@ package class
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
 	"time"
+
+	"homeworktodolist/internal/entity"
 )
 
 type GroupService interface {

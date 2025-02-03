@@ -1,10 +1,12 @@
 package schedule
 
 import (
+	"time"
+
 	"github.com/gofiber/fiber/v2"
+
 	"homeworktodolist/internal/entity"
 	scheduleService "homeworktodolist/internal/service/schedule"
-	"time"
 )
 
 type GetReq struct {
@@ -34,7 +36,8 @@ func (h *Handler) GetSchedule() fiber.Handler {
 		}
 
 		days, err := h.scheduleService.GetAllByGroupAndTime(c.Context(), scheduleService.GetSchedule{
-			GroupId:   creds.GroupID,
+			UserID:    creds.UserID,
+			GroupID:   creds.GroupID,
 			FromTime:  parsedFromTime,
 			DaysCount: req.DaysCount,
 		})

@@ -2,10 +2,12 @@ package config
 
 import (
 	"errors"
+	"time"
+
 	"github.com/kelseyhightower/envconfig"
+
 	"homeworktodolist/pkg/db/postgres"
 	"homeworktodolist/pkg/db/redis"
-	"time"
 )
 
 type Config struct {
@@ -14,6 +16,11 @@ type Config struct {
 	Domain string `envconfig:"DOMAIN"`
 
 	AuthTTL time.Duration `envconfig:"AUTH_TTL"`
+
+	EncodingMode string `envconfig:"ENCODING_MODE"`
+
+	FrontendHost string `envconfig:"FRONTEND_HOST"`
+	FrontendPort string `envconfig:"FRONTEND_PORT"`
 
 	postgres.PGConfig
 	redis.RedisConfig

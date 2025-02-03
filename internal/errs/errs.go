@@ -3,11 +3,13 @@ package errs
 import "errors"
 
 var (
-	UserNotFound      = errors.New("user doesn't exist")
-	GroupNotFound     = errors.New("group doesn't exist")
-	SubjectsNotFound  = errors.New("subjects doesn't exist")
-	ClassesNotFound   = errors.New("classes doesn't exist")
-	HomeworksNotFound = errors.New("homeworks doesn't exist")
+	UserNotFound           = errors.New("user doesn't exist")
+	GroupNotFound          = errors.New("group doesn't exist")
+	SubjectsNotFound       = errors.New("subjects doesn't exist")
+	ClassesNotFound        = errors.New("classes doesn't exist")
+	HomeworksNotFound      = errors.New("homeworks doesn't exist")
+	HomeworkStatusNotFound = errors.New("homeworkStatus doesn't exist")
+	SubjectNotesNotFound   = errors.New("subjectNote doesn't exist")
 )
 
 var (

@@ -2,6 +2,7 @@ package subject
 
 import (
 	"context"
+
 	"homeworktodolist/internal/entity"
 )
 
@@ -11,7 +12,7 @@ func (r *Repo) Create(ctx context.Context, subject entity.Subject) error {
 
 	t := r.manager.GetTxOrDefault(ctx)
 
-	_, err := t.ExecContext(ctx, q, subject.GroupId, subject.SubjectName)
+	_, err := t.ExecContext(ctx, q, subject.GroupID, subject.SubjectName)
 
 	if err != nil {
 		return err

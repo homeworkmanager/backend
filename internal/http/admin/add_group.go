@@ -1,9 +1,11 @@
 package admin
 
 import (
-	"github.com/gofiber/fiber/v2"
-	adminService "homeworktodolist/internal/service/admin"
 	"strings"
+
+	"github.com/gofiber/fiber/v2"
+
+	adminService "homeworktodolist/internal/service/admin"
 )
 
 type AddGroupReq struct {

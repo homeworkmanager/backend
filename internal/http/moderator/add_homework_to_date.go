@@ -1,10 +1,12 @@
 package moderator
 
 import (
+	"time"
+
 	"github.com/gofiber/fiber/v2"
+
 	"homeworktodolist/internal/entity"
 	moderatorService "homeworktodolist/internal/service/moderator"
-	"time"
 )
 
 type AddHomeworkToDateReq struct {
@@ -31,7 +33,7 @@ func (h *Handler) AddHomeworkToDate() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
-		err := h.moderatorService.AddHomework(c.Context(), moderatorService.AddHomework{
+		id, err := h.moderatorService.AddHomework(c.Context(), moderatorService.AddHomework{
 			ClassSemNumber: nil,
 			GroupID:        creds.GroupID,
 			SubjectID:      req.SubjectID,
@@ -43,7 +45,8 @@ func (h *Handler) AddHomeworkToDate() fiber.Handler {
 		}
 
 		return c.JSON(fiber.Map{
-			"data": "Homework successfully added",
+			"homework_id": id,
+			"data":        "Homework successfully added",
 		})
 	}
 }

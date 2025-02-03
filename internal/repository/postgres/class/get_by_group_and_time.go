@@ -2,9 +2,10 @@ package class
 
 import (
 	"context"
+	"time"
+
 	"homeworktodolist/internal/entity"
 	"homeworktodolist/internal/errs"
-	"time"
 )
 
 func (r *Repo) GetByGroupAndTime(ctx context.Context, groupID entity.GroupID, fromTime time.Time, toTime time.Time) ([]entity.Class, error) {

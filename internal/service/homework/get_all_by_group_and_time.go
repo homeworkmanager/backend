@@ -2,12 +2,13 @@ package homework
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
 	"time"
+
+	"homeworktodolist/internal/entity"
 )
 
-func (s *Service) GetByGroupAndTime(ctx context.Context, groupID entity.GroupID, fromTime time.Time, toTime time.Time) ([]entity.Homework, error) {
-	homeworks, err := s.homeworkRepo.GetByGroupAndTime(ctx, groupID, fromTime, toTime)
+func (s *Service) GetByGroupAndTime(ctx context.Context, userID entity.UserID, groupID entity.GroupID, fromTime time.Time, toTime time.Time) ([]entity.Homework, error) {
+	homeworks, err := s.homeworkRepo.GetByGroupAndTime(ctx, userID, groupID, fromTime, toTime)
 	if err != nil {
 		return nil, err
 	}

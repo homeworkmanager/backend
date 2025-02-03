@@ -1,20 +1,19 @@
 package classParse
 
 import (
-	"homeworktodolist/internal/entity"
+	"strings"
 )
 
-func ParseSubject(classes []entity.UpdateClass) []string {
+func parseSubject(classes []Class) []string {
 	uniqueMap := make(map[string]struct{})
 
 	var res []string
 
 	for _, class := range classes {
-
-		subject := string([]rune(class.Summary)[3:])
-		if _, exists := uniqueMap[subject]; !exists {
-			uniqueMap[subject] = struct{}{}
-			res = append(res, subject)
+		subjectName := strings.Join(strings.Split(class.Summary, " ")[1:], " ")
+		if _, exists := uniqueMap[subjectName]; !exists {
+			uniqueMap[subjectName] = struct{}{}
+			res = append(res, subjectName)
 		}
 	}
 

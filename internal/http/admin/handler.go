@@ -2,6 +2,7 @@ package admin
 
 import (
 	"github.com/gofiber/fiber/v2"
+
 	"homeworktodolist/internal/middleware"
 )
 
@@ -20,4 +21,6 @@ func MapAdminRoutes(g fiber.Router, h *Handler, mw *middleware.MwManager) {
 	g.Post("/addGroup", h.AddGroup())
 	g.Patch("/updateClasses", h.UpdateClasses())
 	g.Patch("/refreshAllData", h.RefreshAllData())
+	g.Patch("/role/:userID", h.UpdateRole())
+	g.Get("/users", h.GetAllUsers())
 }

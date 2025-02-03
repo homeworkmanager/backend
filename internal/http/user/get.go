@@ -2,16 +2,17 @@ package user
 
 import (
 	"github.com/gofiber/fiber/v2"
+
 	"homeworktodolist/internal/entity"
 )
 
 type UserResp struct {
-	UserID  entity.UserID  `json:"user_id"`
-	Name    string         `json:"name"`
-	Surname *string        `json:"surname"`
-	Email   string         `json:"email"`
-	Role    entity.Role    `json:"role"`
-	GroupID entity.GroupID `json:"group_id"`
+	UserID    entity.UserID `json:"user_id"`
+	Name      string        `json:"name"`
+	Surname   *string       `json:"surname"`
+	Email     string        `json:"email"`
+	Role      entity.Role   `json:"role"`
+	GroupName string        `json:"group_name"`
 }
 
 func (h Handler) Get() fiber.Handler {
@@ -22,7 +23,7 @@ func (h Handler) Get() fiber.Handler {
 			return fiber.ErrUnauthorized
 		}
 
-		user, err := h.userService.GetUser(c.Context(), creds.UserID)
+		user, err := h.userService.GetUserFull(c.Context(), creds.UserID)
 		if err != nil {
 			return err
 		}
@@ -31,13 +32,13 @@ func (h Handler) Get() fiber.Handler {
 	}
 }
 
-func toUserResp(user entity.User) UserResp {
+func toUserResp(user entity.UserFullInfo) UserResp {
 	return UserResp{
-		UserID:  user.UserID,
-		Name:    user.Name,
-		Surname: user.Surname,
-		Email:   user.Email,
-		Role:    user.Role,
-		GroupID: user.GroupID,
+		UserID:    user.UserID,
+		Name:      user.Name,
+		Surname:   user.Surname,
+		Email:     user.Email,
+		Role:      user.Role,
+		GroupName: user.GroupName,
 	}
 }

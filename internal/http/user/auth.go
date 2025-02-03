@@ -1,10 +1,12 @@
 package user
 
 import (
+	"time"
+
 	"github.com/gofiber/fiber/v2"
+
 	"homeworktodolist/internal/entity"
 	userService "homeworktodolist/internal/service/user"
-	"time"
 )
 
 type AuthReq struct {
@@ -30,12 +32,21 @@ func (h *Handler) Auth() fiber.Handler {
 			return err
 		}
 
+		expiresTime := time.Now().Add(h.config.AuthTTL)
+
 		c.Cookie(&fiber.Cookie{
 			Name:    entity.SessionKey,
 			Value:   sessionKey,
 			Path:    "/",
 			Domain:  h.config.Domain,
-			Expires: time.Now().Add(h.config.AuthTTL),
+			Expires: expiresTime,
+		})
+		c.Cookie(&fiber.Cookie{
+			Name:    "session_expires",
+			Value:   expiresTime.String(),
+			Path:    "/",
+			Domain:  h.config.Domain,
+			Expires: expiresTime,
 		})
 
 		return c.JSON(fiber.Map{

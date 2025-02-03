@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"github.com/gofiber/fiber/v2"
+
 	"homeworktodolist/internal/errs"
 )
 

@@ -18,3 +18,12 @@ type UserCreds struct {
 	Role    Role
 	GroupID GroupID
 }
+
+type UserFullInfo struct {
+	UserID    UserID
+	Name      string
+	Surname   *string
+	Email     string
+	Role      Role
+	GroupName string
+}

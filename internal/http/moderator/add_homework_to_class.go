@@ -1,20 +1,22 @@
 package moderator
 
 import (
+	"time"
+
 	"github.com/gofiber/fiber/v2"
+
 	"homeworktodolist/internal/entity"
 	moderatorService "homeworktodolist/internal/service/moderator"
-	"time"
 )
 
 type AddHomeworkToClassReq struct {
-	ClassSemNumber *int64           `json:"classSemNumber"`
+	ClassSemNumber int64            `json:"classSemNumber"`
 	SubjectID      entity.SubjectID `json:"subjectId"`
+	Category       string           `json:"category"`
 	HomeworkText   string           `json:"homeworkText"`
 	DueDate        time.Time        `json:"dueDate"`
 }
 
-// TODO: траблы с временем
 func (h *Handler) AddHomeworkToClass() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
@@ -29,14 +31,20 @@ func (h *Handler) AddHomeworkToClass() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
-		if req.ClassSemNumber == nil || *req.ClassSemNumber == 0 || req.SubjectID == 0 || req.HomeworkText == "" || req.DueDate.IsZero() {
+		if req.ClassSemNumber == 0 || req.SubjectID == 0 || req.HomeworkText == "" || req.DueDate.IsZero() {
 			return fiber.ErrBadRequest
 		}
 
-		err := h.moderatorService.AddHomework(c.Context(), moderatorService.AddHomework{
-			ClassSemNumber: req.ClassSemNumber,
+		category, ok := entity.CategoryToNumber[req.Category]
+		if !ok {
+			return fiber.ErrBadRequest
+		}
+
+		id, err := h.moderatorService.AddHomework(c.Context(), moderatorService.AddHomework{
+			ClassSemNumber: &req.ClassSemNumber,
 			GroupID:        creds.GroupID,
 			SubjectID:      req.SubjectID,
+			Category:       &category,
 			HomeworkText:   req.HomeworkText,
 			DueDate:        req.DueDate,
 		})
@@ -45,7 +53,8 @@ func (h *Handler) AddHomeworkToClass() fiber.Handler {
 		}
 
 		return c.JSON(fiber.Map{
-			"data": "Homework successfully added",
+			"homework_id": id,
+			"data":        "Homework successfully added",
 		})
 	}
 }

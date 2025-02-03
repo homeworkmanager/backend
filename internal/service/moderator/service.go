@@ -1,11 +1,13 @@
 package moderator
 
 type Service struct {
-	homeworkService HomeworkService
+	homeworkService    HomeworkService
+	subjectNoteService SubjectNoteService
 }
 
-func NewModeratorService(homeworkService HomeworkService) *Service {
+func NewModeratorService(homeworkService HomeworkService, subjectNoteService SubjectNoteService) *Service {
 	return &Service{
-		homeworkService: homeworkService,
+		homeworkService:    homeworkService,
+		subjectNoteService: subjectNoteService,
 	}
 }

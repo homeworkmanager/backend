@@ -2,8 +2,9 @@ package class
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
 	"time"
+
+	"homeworktodolist/internal/entity"
 )
 
 func (s *Service) GetByGroupAndTime(ctx context.Context, groupID entity.GroupID, fromTime time.Time, toTime time.Time) ([]entity.Class, error) {

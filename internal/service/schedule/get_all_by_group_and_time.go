@@ -2,14 +2,16 @@ package schedule
 
 import (
 	"context"
+	"time"
+
 	"homeworktodolist/internal/entity"
 	"homeworktodolist/internal/errs"
 	"homeworktodolist/internal/utils"
-	"time"
 )
 
 type GetSchedule struct {
-	GroupId   entity.GroupID
+	UserID    entity.UserID
+	GroupID   entity.GroupID
 	FromTime  time.Time
 	DaysCount int
 }
@@ -17,14 +19,14 @@ type GetSchedule struct {
 func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]entity.Day, error) {
 	toTime := req.FromTime.Add(time.Duration(req.DaysCount*24) * time.Hour)
 
-	classes, err := s.classService.GetByGroupAndTime(ctx, req.GroupId, req.FromTime, toTime)
+	classes, err := s.classService.GetByGroupAndTime(ctx, req.GroupID, req.FromTime, toTime)
 	if err != nil {
 		if err != errs.ClassesNotFound {
 			return nil, err
 		}
 	}
 
-	homeworks, err := s.homeworkService.GetByGroupAndTime(ctx, req.GroupId, req.FromTime, toTime)
+	homeworks, err := s.homeworkService.GetByGroupAndTime(ctx, req.UserID, req.GroupID, req.FromTime, toTime)
 	if err != nil {
 		if err != errs.HomeworksNotFound {
 			return nil, err
@@ -64,7 +66,7 @@ func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]
 			}
 
 			for _, homework := range dayHomeworks {
-				if homework.SubjectID == class.SubjectID && utils.DeRef[int64](homework.SemClassNumber) == class.SemClassNumber {
+				if homework.SubjectID == class.SubjectID && utils.DeRef[int64](homework.SemClassNumber) == class.SemClassNumber && utils.DeRef[entity.ClassCategory](homework.Category) == class.Category {
 					outputClass.Homework = append(outputClass.Homework, homework)
 				}
 			}

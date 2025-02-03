@@ -8,6 +8,8 @@ type Homework struct {
 	GroupID        GroupID
 	SubjectID      SubjectID
 	HomeworkText   string
+	Category       *ClassCategory
+	IsCompleted    bool
 	DueDate        time.Time
 	CreatedAt      time.Time
 }

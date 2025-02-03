@@ -2,20 +2,23 @@ package homework
 
 import (
 	"context"
+
 	"homeworktodolist/internal/entity"
 )
 
-func (r *Repo) Create(ctx context.Context, homework entity.Homework) error {
+func (r *Repo) Create(ctx context.Context, homework entity.Homework) (entity.HomeworkID, error) {
 
-	q := "INSERT INTO homeworks(class_sem_number, group_id, subject_id, homework_text, due_date) VALUES ($1, $2, $3, $4, $5)"
+	q := "INSERT INTO homeworks(class_sem_number, group_id, subject_id, homework_text, category, due_date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING homework_id"
 
 	t := r.manager.GetTxOrDefault(ctx)
 
-	_, err := t.ExecContext(ctx, q, homework.SemClassNumber, homework.GroupID, homework.SubjectID, homework.HomeworkText, homework.DueDate)
+	var id entity.HomeworkID
+
+	err := t.QueryRowContext(ctx, q, homework.SemClassNumber, homework.GroupID, homework.SubjectID, homework.HomeworkText, homework.Category, homework.DueDate).Scan(&id)
 
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return id, nil
 
 }
