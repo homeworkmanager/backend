@@ -9,7 +9,7 @@ import (
 
 type AddNoteReq struct {
 	SubjectID entity.SubjectID
-	NoteText  string `json:"note_text"`
+	NoteText  string `json:"noteText"`
 }
 
 func (h *Handler) AddNote() fiber.Handler {
