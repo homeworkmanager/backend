@@ -11,6 +11,7 @@ type homework struct {
 	ClassSemNumber *int64                `db:"class_sem_number"`
 	GroupID        entity.GroupID        `db:"group_id"`
 	SubjectID      entity.SubjectID      `db:"subject_id"`
+	SubjectName    string                `db:"subject_name"`
 	Category       *entity.ClassCategory `db:"category"`
 	HomeworkText   string                `db:"homework_text"`
 	Status         bool                  `db:"status"`
@@ -24,6 +25,7 @@ func (h homework) toHomework() entity.Homework {
 		SemClassNumber: h.ClassSemNumber,
 		GroupID:        h.GroupID,
 		SubjectID:      h.SubjectID,
+		SubjectName:    h.SubjectName,
 		Category:       h.Category,
 		HomeworkText:   h.HomeworkText,
 		IsCompleted:    h.Status,

@@ -7,6 +7,7 @@ type Homework struct {
 	SemClassNumber *int64
 	GroupID        GroupID
 	SubjectID      SubjectID
+	SubjectName    string
 	HomeworkText   string
 	Category       *ClassCategory
 	IsCompleted    bool
