@@ -5,7 +5,7 @@ import (
 	"homeworktodolist/internal/entity"
 )
 
-func (h *Handler) GetSchedule() fiber.Handler {
+func (h *Handler) GetSubjectNotes() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		creds, ok := c.Locals(entity.Claims).(entity.UserCreds)
 		if !ok {

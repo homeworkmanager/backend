@@ -13,7 +13,7 @@ func (h *Handler) Refresh() fiber.Handler {
 		sessionKey := c.Cookies(entity.SessionKey)
 
 		if sessionKey == "" {
-			return fiber.ErrForbidden
+			return fiber.ErrUnauthorized
 		}
 
 		err := h.userService.RefreshCookie(c.Context(), sessionKey)

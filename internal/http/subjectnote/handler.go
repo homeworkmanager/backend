@@ -16,5 +16,5 @@ func NewSubjectNoteHandler(subjectNoteService SubjectNoteService) *Handler {
 }
 
 func MapSubjectNoteRoutes(g fiber.Router, h *Handler, mw *middleware.MwManager) {
-	g.Get("", mw.Auth(), h.GetSchedule())
+	g.Get("", mw.Auth(), h.GetSubjectNotes())
 }
