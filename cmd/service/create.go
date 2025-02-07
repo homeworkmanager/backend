@@ -13,6 +13,7 @@ import (
 	moderatorHandlers "homeworktodolist/internal/http/moderator"
 	scheduleHandlers "homeworktodolist/internal/http/schedule"
 	subjectHandlers "homeworktodolist/internal/http/subject"
+	subjectNoteHandlers "homeworktodolist/internal/http/subjectnote"
 	userHandlers "homeworktodolist/internal/http/user"
 	middleware "homeworktodolist/internal/middleware"
 	classRepo "homeworktodolist/internal/repository/postgres/class"
@@ -20,6 +21,7 @@ import (
 	homeworkRepo "homeworktodolist/internal/repository/postgres/homework"
 	homeworkStatusRepo "homeworktodolist/internal/repository/postgres/homework_status"
 	subjectRepo "homeworktodolist/internal/repository/postgres/subject"
+	subjectNoteRepo "homeworktodolist/internal/repository/postgres/subjectnote"
 	userRepo "homeworktodolist/internal/repository/postgres/user"
 	userRedisRepo "homeworktodolist/internal/repository/redis/user"
 	adminService "homeworktodolist/internal/service/admin"
@@ -30,6 +32,7 @@ import (
 	moderatorService "homeworktodolist/internal/service/moderator"
 	scheduleService "homeworktodolist/internal/service/schedule"
 	subjectService "homeworktodolist/internal/service/subject"
+	subjectNoteService "homeworktodolist/internal/service/subjectnote"
 	userService "homeworktodolist/internal/service/user"
 	"homeworktodolist/internal/tx_manager"
 	postgres "homeworktodolist/pkg/db/postgres"
@@ -57,6 +60,7 @@ func createApp() {
 	groupRepo := groupRepo.NewGroupRepo(txmanager)
 	classRepo := classRepo.NewClassRepo(txmanager)
 	subjectRepo := subjectRepo.NewSubjectRepo(txmanager)
+	subjectNoteRepo := subjectNoteRepo.NewSubjectNoteRepo(txmanager)
 	homeworkRepo := homeworkRepo.NewHomeworkRepo(txmanager)
 	homeworkStatusRepo := homeworkStatusRepo.NewHomeworkStatusRepo(txmanager)
 
@@ -67,17 +71,19 @@ func createApp() {
 
 	subjectService := subjectService.NewSubjectService(subjectRepo)
 
+	subjectNoteService := subjectNoteService.NewSubjectNoteService(subjectNoteRepo, subjectService)
+
 	classService := classService.NewClassService(groupService, classRepo, subjectService, txmanager)
 
-	homeworkService := homeworkService.NewHomeworkService(homeworkRepo)
+	homeworkStatusService := homeworkStatusService.NewHomeworkStatusService(homeworkStatusRepo)
 
-	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, txmanager)
+	homeworkService := homeworkService.NewHomeworkService(homeworkRepo, homeworkStatusService, txmanager)
 
-	moderatorService := moderatorService.NewModeratorService(homeworkService)
+	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, subjectNoteService, txmanager)
+
+	moderatorService := moderatorService.NewModeratorService(homeworkService, subjectNoteService)
 
 	scheduleService := scheduleService.NewScheduleService(classService, homeworkService)
-
-	homeworkStatusService := homeworkStatusService.NewHomeworkStatusService(homeworkStatusRepo)
 
 	//Handlers
 	userHandler := userHandlers.NewUserHandler(cfg, userService)
@@ -93,6 +99,8 @@ func createApp() {
 	homeworkStatusHandler := homeworkStatusHandlers.NewHomeworkStatusHandler(homeworkStatusService)
 
 	subjectHandler := subjectHandlers.NewSubjectHandler(subjectService)
+
+	subjectNoteHandler := subjectNoteHandlers.NewSubjectNoteHandler(subjectNoteService)
 
 	//fiber
 	fiberApp := fiber.New(fiber.Config{
@@ -147,6 +155,9 @@ func createApp() {
 
 	subjectGroup := fiberApp.Group("/subject")
 	subjectHandlers.MapSubjectRoutes(subjectGroup, subjectHandler, mw)
+
+	subjectNoteGroup := fiberApp.Group("/note")
+	subjectNoteHandlers.MapSubjectNoteRoutes(subjectNoteGroup, subjectNoteHandler, mw)
 
 	//fiber listen
 	exit := make(chan os.Signal, 1)

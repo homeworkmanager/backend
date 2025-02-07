@@ -10,7 +10,7 @@ func (s *Service) UpdGroupSubjects(ctx context.Context, group entity.Group, subj
 
 	for _, subject := range subjects {
 		err := s.subjectRepo.Create(ctx, entity.Subject{
-			GroupId:     group.GroupID,
+			GroupID:     group.GroupID,
 			SubjectName: subject,
 		})
 		if err != nil {

@@ -11,7 +11,7 @@ func (mw *MwManager) Auth() fiber.Handler {
 		sessionKey := c.Cookies(entity.SessionKey)
 
 		if sessionKey == "" {
-			return fiber.ErrForbidden
+			return fiber.ErrUnauthorized
 		}
 
 		userCreds, err := mw.UserRedisRepo.GetCreds(c.Context(), sessionKey)

@@ -8,6 +8,7 @@ import (
 
 type UserService interface {
 	UpdateRole(ctx context.Context, userID entity.UserID, role entity.Role) error
+	GetAllUsersFull(ctx context.Context) ([]entity.UserFullInfo, error)
 }
 
 type GroupService interface {
@@ -27,4 +28,8 @@ type SubjectService interface {
 
 type HomeworkService interface {
 	ClearAllHomeworks(ctx context.Context) error
+}
+
+type SubjectNoteService interface {
+	ClearAllNotes(ctx context.Context) error
 }

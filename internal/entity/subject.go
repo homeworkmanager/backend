@@ -1,7 +1,7 @@
 package entity
 
 type Subject struct {
-	SubjectId   SubjectID
-	GroupId     GroupID
+	SubjectID   SubjectID
+	GroupID     GroupID
 	SubjectName string
 }

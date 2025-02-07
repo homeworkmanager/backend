@@ -14,10 +14,17 @@ func (s *Service) RefreshAllData(ctx context.Context) error {
 	}
 
 	err = s.manager.Do(ctx, func(ctx context.Context) error {
+
+		err = s.subjectNoteService.ClearAllNotes(ctx)
+		if err != nil {
+			return err
+		}
+
 		err = s.homeworkService.ClearAllHomeworks(ctx)
 		if err != nil {
 			return err
 		}
+
 		err = s.classService.ClearAllClasses(ctx)
 		if err != nil {
 			return err

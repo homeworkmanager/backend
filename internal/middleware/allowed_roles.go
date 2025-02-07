@@ -10,7 +10,7 @@ func (mw *MwManager) AllowedRoles(allowedRoles []entity.Role) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		cl, ok := c.Locals(entity.Claims).(entity.UserCreds)
 		if !ok {
-			return fiber.ErrForbidden
+			return fiber.ErrUnauthorized
 		}
 
 		flag := false

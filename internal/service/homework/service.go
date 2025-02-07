@@ -1,11 +1,17 @@
 package homework
 
+import "homeworktodolist/internal/tx_manager"
+
 type Service struct {
-	homeworkRepo HomeworkRepo
+	homeworkRepo          HomeworkRepo
+	homeworkStatusService HomeworkStatusService
+	manager               *tx_manager.TxManager
 }
 
-func NewHomeworkService(homeworkRepo HomeworkRepo) *Service {
+func NewHomeworkService(homeworkRepo HomeworkRepo, homeworkStatusService HomeworkStatusService, manager *tx_manager.TxManager) *Service {
 	return &Service{
-		homeworkRepo: homeworkRepo,
+		homeworkRepo:          homeworkRepo,
+		homeworkStatusService: homeworkStatusService,
+		manager:               manager,
 	}
 }

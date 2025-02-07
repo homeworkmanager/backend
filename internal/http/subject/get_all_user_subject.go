@@ -29,7 +29,7 @@ func toSubjectResp(g []entity.Subject) []SubjectResp {
 	res := make([]SubjectResp, len(g))
 	for i := range g {
 		res[i] = SubjectResp{
-			SubjectID:   g[i].SubjectId,
+			SubjectID:   g[i].SubjectID,
 			SubjectName: g[i].SubjectName,
 		}
 	}

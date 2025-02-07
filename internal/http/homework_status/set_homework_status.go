@@ -35,7 +35,7 @@ func (h *Handler) SetHomeworkStatus() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
-		if req.HomeworkId == entity.HomeworkID(0) {
+		if req.HomeworkId == 0 {
 			return fiber.ErrBadRequest
 		}
 

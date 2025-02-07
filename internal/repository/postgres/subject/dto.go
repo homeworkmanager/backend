@@ -10,8 +10,8 @@ type subject struct {
 
 func (s subject) toSubject() entity.Subject {
 	return entity.Subject{
-		SubjectId:   s.SubjectId,
-		GroupId:     s.GroupId,
+		SubjectID:   s.SubjectId,
+		GroupID:     s.GroupId,
 		SubjectName: s.SubjectName,
 	}
 }

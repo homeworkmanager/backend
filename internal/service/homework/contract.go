@@ -13,3 +13,7 @@ type HomeworkRepo interface {
 	Update(ctx context.Context, id entity.HomeworkID, homeworkText string) error
 	GetByGroupAndTime(ctx context.Context, userID entity.UserID, groupID entity.GroupID, fromTime time.Time, toTime time.Time) ([]entity.Homework, error)
 }
+
+type HomeworkStatusService interface {
+	DeleteHomeworkID(ctx context.Context, homeworkID entity.HomeworkID) error
+}
