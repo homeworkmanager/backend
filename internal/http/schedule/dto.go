@@ -8,7 +8,7 @@ import (
 
 type homework struct {
 	HomeworkID   entity.HomeworkID `json:"homeworkID"`
-	SubjectID    entity.SubjectID  `json:"subjectId"`
+	SubjectName  string            `json:"subjectName"`
 	HomeworkText string            `json:"homeworkText"`
 	IsCompleted  bool              `json:"isCompleted"`
 	DueDate      time.Time         `json:"dueDate"`
@@ -52,7 +52,7 @@ func toHomework(c []entity.Homework) []homework {
 	for i, h := range c {
 		result[i] = homework{
 			HomeworkID:   h.HomeworkID,
-			SubjectID:    h.SubjectID,
+			SubjectName:  h.SubjectName,
 			HomeworkText: h.HomeworkText,
 			IsCompleted:  h.IsCompleted,
 			DueDate:      h.DueDate,
