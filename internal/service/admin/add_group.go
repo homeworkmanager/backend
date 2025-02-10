@@ -2,6 +2,7 @@ package admin
 
 import (
 	"context"
+	"github.com/google/uuid"
 
 	"homeworktodolist/internal/entity"
 	"homeworktodolist/internal/utils/classParse"
@@ -15,6 +16,8 @@ type AddGroup struct {
 
 func (s *Service) AddGroup(ctx context.Context, req AddGroup) error {
 	group := req.toGroup()
+
+	group.RegisterKey = uuid.NewString()[:5]
 
 	err := s.manager.Do(ctx, func(ctx context.Context) error {
 		var err error
