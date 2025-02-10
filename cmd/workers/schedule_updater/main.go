@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/robfig/cron/v3"
 	"homeworktodolist/internal/config"
 	"homeworktodolist/internal/cron/schedule_updater"
 	classRepo "homeworktodolist/internal/repository/postgres/class"
@@ -67,7 +68,12 @@ func main() {
 	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, subjectNoteService, txmanager)
 	job := schedule_updater.NewCronJob(adminService, logger)
 
-	c := job.Run()
+	c := cron.New()
+	_, err := c.AddFunc("0 * * * *", job.Run)
+	if err != nil {
+		panic(err)
+	}
+	c.Start()
 	defer c.Stop()
 
 	select {}
