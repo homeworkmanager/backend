@@ -27,7 +27,11 @@ services:
 
     networks:
       - backend
-
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: always
 
   goose:
@@ -62,13 +66,12 @@ services:
     ports:
       - "8080:80"
 
-
-
-  backend:
-    image: ghcr.io/homeworkmanager/backend:${BACKEND_TAG:-latest}
+  schedule-worker:
     build:
       context: .
+      dockerfile: ./cmd/workers/schedule_updater/Dockerfile
     environment:
+      - TZ=Europe/Moscow
       - AUTH_TTL=1500s
       - DOMAIN=unihelper.ru
       - ENCODING_MODE=console
@@ -90,6 +93,42 @@ services:
         condition: service_completed_successfully
       db:
         condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - backend
+    restart: always
+
+
+  backend:
+    image: ghcr.io/homeworkmanager/backend:${BACKEND_TAG:-latest}
+    build:
+      context: .
+    environment:
+      - TZ=Europe/Moscow
+      - AUTH_TTL=1500s
+      - DOMAIN=unihelper.ru
+      - ENCODING_MODE=console
+      - HOST=0.0.0.0
+      - PORT=8888
+      - FRONTEND_HOST=localhost
+      - FRONTEND_PORT=3000
+      - POSTGRES_CONNECT_TIMEOUT=5
+      - POSTGRES_DB_NAME=homeworkmanager
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_PORT=5432
+      - POSTGRES_SSLMODE=disable
+      - POSTGRES_USER=${POSTGRES_USER}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      goose:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     networks:
       - backend
 
@@ -102,7 +141,6 @@ services:
       - backend
     depends_on:
       - backend
-
 
 volumes:
   db_data:

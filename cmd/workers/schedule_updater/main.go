@@ -69,7 +69,8 @@ func main() {
 	job := schedule_updater.NewCronJob(adminService, logger)
 
 	c := cron.New()
-	_, err := c.AddFunc("0 * * * *", job.Run)
+	_, err := c.AddFunc("0 0 * * *", job.Run)
+	logger.Info("Worker start")
 	if err != nil {
 		panic(err)
 	}
