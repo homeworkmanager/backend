@@ -1,6 +1,7 @@
 package classParse
 
 import (
+	"homeworktodolist/internal/errs"
 	"io"
 	"net/http"
 	"sort"
@@ -37,6 +38,10 @@ func IcalParse(icalLink string) ([]entity.Class, []string, error) {
 		return nil, nil, err
 	}
 	bodyString := string(body)
+
+	if len(bodyString) == 0 {
+		return nil, nil, errs.NoIcal
+	}
 
 	bodyString = strings.Replace(bodyString, "X-SCHEDULE_VERSION-ID:", "X-SCHEDULE-VERSION-ID:", -1)
 

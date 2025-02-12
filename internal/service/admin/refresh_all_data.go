@@ -6,6 +6,7 @@ import (
 	"homeworktodolist/internal/utils/classParse"
 )
 
+// TODO: добавить отчищение статуса выполненности
 func (s *Service) RefreshAllData(ctx context.Context) error {
 
 	groups, err := s.groupService.GetAllGroups(ctx)
