@@ -16,3 +16,8 @@ type SubjectNoteService interface {
 	Delete(ctx context.Context, noteID entity.NoteID) error
 	Update(ctx context.Context, noteID entity.NoteID, noteText string) error
 }
+
+type GroupService interface {
+	RegenerateGroupRegisterKey(ctx context.Context, groupID entity.GroupID) error
+	GetByID(ctx context.Context, groupID entity.GroupID) (entity.Group, error)
+}

@@ -14,4 +14,6 @@ type ModeratorService interface {
 	AddNote(ctx context.Context, req moderatorService.AddNote) (entity.NoteID, error)
 	DeleteNote(ctx context.Context, id entity.NoteID) error
 	UpdateNote(ctx context.Context, noteID entity.NoteID, noteText string) error
+	RegenerateGroupRegisterKey(ctx context.Context, groupID entity.GroupID) error
+	GetGroupRegisterKey(ctx context.Context, groupID entity.GroupID) (string, error)
 }

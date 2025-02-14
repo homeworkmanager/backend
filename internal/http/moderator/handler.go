@@ -25,4 +25,6 @@ func MapModeratorRoutes(g fiber.Router, h *Handler, mw *middleware.MwManager) {
 	g.Post("/note/add/:subjectID", mw.Auth(), mw.AllowedRoles([]entity.Role{entity.RoleGlobalAdmin, entity.RoleGroupModerator}), h.AddNote())
 	g.Delete("/note/delete/:noteID", mw.Auth(), mw.AllowedRoles([]entity.Role{entity.RoleGlobalAdmin, entity.RoleGroupModerator}), h.DeleteNote())
 	g.Patch("/note/update/:noteID", mw.Auth(), mw.AllowedRoles([]entity.Role{entity.RoleGlobalAdmin, entity.RoleGroupModerator}), h.UpdateNote())
+	g.Patch("/key/regenerate", mw.Auth(), h.RegenerateGroupRegisterKey()) //TODO:проверка ролей
+	g.Get("/key/get", mw.Auth(), h.GetGroupRegisterKey())
 }

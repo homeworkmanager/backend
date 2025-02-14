@@ -65,7 +65,7 @@ func createApp() {
 	homeworkStatusRepo := homeworkStatusRepo.NewHomeworkStatusRepo(txmanager)
 
 	//Service
-	userService := userService.NewUserService(userRepo, userRedisRepo, cfg)
+	userService := userService.NewUserService(userRepo, userRedisRepo, groupRepo, cfg)
 
 	groupService := groupService.NewGroupService(groupRepo)
 
@@ -81,7 +81,7 @@ func createApp() {
 
 	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, subjectNoteService, txmanager)
 
-	moderatorService := moderatorService.NewModeratorService(homeworkService, subjectNoteService)
+	moderatorService := moderatorService.NewModeratorService(homeworkService, subjectNoteService, groupService)
 
 	scheduleService := scheduleService.NewScheduleService(classService, homeworkService)
 

@@ -3,6 +3,7 @@ package group
 import (
 	"context"
 	"errors"
+	"github.com/google/uuid"
 
 	"homeworktodolist/internal/entity"
 	"homeworktodolist/internal/errs"
@@ -18,6 +19,8 @@ func (s *Service) Create(ctx context.Context, group entity.Group) (entity.GroupI
 	if !(errors.Is(err, errs.GroupNotFound)) {
 		return 0, err
 	}
+
+	group.RegisterKey = uuid.NewString()[:5]
 
 	id, err := s.groupRepo.Create(ctx, group)
 	if err != nil {
