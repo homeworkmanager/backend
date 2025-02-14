@@ -18,6 +18,6 @@ type SubjectNoteService interface {
 }
 
 type GroupService interface {
-	RegenerateGroupRegisterKey(ctx context.Context, groupID entity.GroupID) error
+	RegenerateGroupRegisterKey(ctx context.Context, groupID entity.GroupID) (string, error)
 	GetByID(ctx context.Context, groupID entity.GroupID) (entity.Group, error)
 }

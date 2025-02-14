@@ -13,14 +13,15 @@ func (h *Handler) RegenerateGroupRegisterKey() fiber.Handler {
 			return fiber.ErrUnauthorized
 		}
 
-		err := h.moderatorService.RegenerateGroupRegisterKey(c.Context(), creds.GroupID)
+		registerKey, err := h.moderatorService.RegenerateGroupRegisterKey(c.Context(), creds.GroupID)
 
 		if err != nil {
 			return err
 		}
 
 		return c.JSON(fiber.Map{
-			"data": "Key successfully regenerated",
+			"register_key": registerKey,
+			"data":         "Key successfully regenerated",
 		})
 
 	}

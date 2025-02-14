@@ -9,8 +9,8 @@ func (s *Service) RegenerateRegisterKeys(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	for i, _ := range groups {
-		err = s.RegenerateGroupRegisterKey(ctx, groups[i].GroupID)
+	for i := range groups {
+		_, err = s.RegenerateGroupRegisterKey(ctx, groups[i].GroupID)
 		if err != nil {
 			return err
 		}
