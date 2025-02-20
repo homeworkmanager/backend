@@ -20,7 +20,7 @@ func (s *Service) Create(ctx context.Context, group entity.Group) (entity.GroupI
 		return 0, err
 	}
 
-	group.RegisterKey = uuid.NewString()[:5]
+	group.RegisterKey = uuid.NewString()[:8] //TODO:вынести это в env
 
 	id, err := s.groupRepo.Create(ctx, group)
 	if err != nil {
