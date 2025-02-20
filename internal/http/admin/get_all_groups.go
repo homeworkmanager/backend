@@ -27,8 +27,14 @@ func (h *Handler) GetAllGroups() fiber.Handler {
 
 func toGroupResp(u []entity.Group) []GroupResp {
 	res := make([]GroupResp, len(u))
-	for i := range u {
-		res[i] = GroupResp{}
+	for i, g := range u {
+		res[i] = GroupResp{
+			GroupID:     g.GroupID,
+			Name:        g.Name,
+			Course:      g.Course,
+			IcalLink:    g.IcalLink,
+			RegisterKey: g.RegisterKey,
+		}
 	}
 	return res
 }
