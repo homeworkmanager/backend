@@ -13,4 +13,6 @@ type AdminService interface {
 	RefreshAllData(ctx context.Context) error
 	UpdateRole(ctx context.Context, req adminService.UpdateUserRole) error
 	GetAllUsers(ctx context.Context) ([]entity.UserFullInfo, error)
+	GetAllGroups(ctx context.Context) ([]entity.Group, error)
+	RegenerateAllRegisterKeys(ctx context.Context) error
 }
