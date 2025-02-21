@@ -12,4 +12,5 @@ type UserService interface {
 	Auth(ctx context.Context, req userService.AuthUser) (sessionKey string, err error)
 	GetUserFull(ctx context.Context, id entity.UserID) (entity.UserFullInfo, error)
 	RefreshCookie(ctx context.Context, sessionKey string) error
+	Logout(ctx context.Context, sessionKey string) error
 }
