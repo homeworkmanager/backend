@@ -105,8 +105,7 @@ services:
     build:
       context: .
     environment:
-      - TZ=Europe/Moscow
-      - AUTH_TTL=1500s
+      - AUTH_TTL=720h
       - DOMAIN=unihelper.ru
       - ENCODING_MODE=console
       - HOST=0.0.0.0
