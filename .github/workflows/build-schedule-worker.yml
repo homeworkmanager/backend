@@ -16,7 +16,7 @@ env:
     MAJOR_VERSION: 1 
 
 jobs:
-  build-goose:
+  build-schedule-worker:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
