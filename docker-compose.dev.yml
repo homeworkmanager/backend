@@ -2,9 +2,11 @@ services:
   db:
     image: postgres:16.4
     container_name: postgres
+    ports:
+      - "5431:5432"
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
       POSTGRES_DB: homeworkmanager
     volumes:
       - db_data:/var/lib/postgresql/data
@@ -22,6 +24,8 @@ services:
   redis:
     image: redis:latest
     container_name: redis
+    ports:
+      - "6379:6379"
     volumes:
       - redis_data:/data
 
@@ -35,60 +39,25 @@ services:
     restart: always
 
   goose:
-    image: ghcr.io/homeworkmanager/backend/migrations
     build:
       context: ./migrations
       dockerfile: ./Dockerfile
-    environment:
-      - POSTGRES_DB_NAME=homeworkmanager
-      - POSTGRES_HOST=db
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_PORT=5432
-      - POSTGRES_SSLMODE=disable
-      - POSTGRES_USER=${POSTGRES_USER}
+    env_file:
+      - db.env
+
     networks:
       - backend
 
     depends_on:
       db:
         condition: service_healthy
-
-
-  nginx:
-    image: nginx:latest
-    networks:
-      - backend
-      - frontend
-    depends_on:
-      - backend
-      - frontend
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-    ports:
-      - "8080:80"
 
   schedule-worker:
     build:
       context: .
       dockerfile: ./cmd/workers/schedule_updater/Dockerfile
-    environment:
-      - TZ=Europe/Moscow
-      - AUTH_TTL=1500s
-      - DOMAIN=unihelper.ru
-      - ENCODING_MODE=console
-      - HOST=0.0.0.0
-      - PORT=8888
-      - FRONTEND_HOST=localhost
-      - FRONTEND_PORT=3000
-      - POSTGRES_CONNECT_TIMEOUT=5
-      - POSTGRES_DB_NAME=homeworkmanager
-      - POSTGRES_HOST=db
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_PORT=5432
-      - POSTGRES_SSLMODE=disable
-      - POSTGRES_USER=${POSTGRES_USER}
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+    env_file:
+      - backend.env
     depends_on:
       goose:
         condition: service_completed_successfully
@@ -99,29 +68,13 @@ services:
     networks:
       - backend
     restart: always
-
 
   backend:
     image: ghcr.io/homeworkmanager/backend:${BACKEND_TAG:-latest}
     build:
       context: .
-    environment:
-      - AUTH_TTL=720h
-      - DOMAIN=unihelper.ru
-      - ENCODING_MODE=console
-      - HOST=0.0.0.0
-      - PORT=8888
-      - FRONTEND_HOST=localhost
-      - FRONTEND_PORT=3000
-      - POSTGRES_CONNECT_TIMEOUT=5
-      - POSTGRES_DB_NAME=homeworkmanager
-      - POSTGRES_HOST=db
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_PORT=5432
-      - POSTGRES_SSLMODE=disable
-      - POSTGRES_USER=${POSTGRES_USER}
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+    env_file:
+      - backend.env
     depends_on:
       goose:
         condition: service_completed_successfully
@@ -129,25 +82,18 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    ports:
+      - "8888:8888"
+
     networks:
       - backend
 
     restart: always
 
-  frontend:
-    image: ghcr.io/homeworkmanager/frontend:${FRONTEND_TAG:-latest}
-    networks:
-      - frontend
-      - backend
-    depends_on:
-      - backend
-
 volumes:
   db_data:
   redis_data:
 
-
 networks:
   backend:
   frontend:
-
