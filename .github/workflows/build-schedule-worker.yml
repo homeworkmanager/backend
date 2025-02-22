@@ -1,4 +1,4 @@
-name: Build goose to package
+name: Build schedule-worker to package
 
  
 on:
