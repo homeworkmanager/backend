@@ -40,8 +40,8 @@ services:
 
   goose:
     build:
-      context: .
-      dockerfile: ./migrations/Dockerfile
+      context: ./migrations
+      dockerfile: ./Dockerfile
     env_file:
       - db.env
 
