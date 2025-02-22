@@ -12,7 +12,7 @@ on:
 
 env:
     REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}/migrations
+    IMAGE_NAME: ${{ github.repository }}/schedule-worker
     MAJOR_VERSION: 1 
 
 jobs:
@@ -38,7 +38,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5.3.0
         with:
-          context: ./migrations
+          context: .
+          file: /cmd/workers/schedule_updater/
           push: true
           tags: ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:${{ env.MAJOR_VERSION }}.${{ github.run_number }}
           labels: ${{ steps.meta.outputs.labels }}
