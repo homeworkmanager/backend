@@ -1,8 +1,14 @@
 name: Build goose to package
 
-on: 
-    workflow_dispatch:
-    pull_request:
+ 
+on:
+  push:
+    branches:
+      - release*
+  create:
+    branches:
+      - release*
+
 env:
     REGISTRY: ghcr.io
     IMAGE_NAME: ${{ github.repository }}/migrations
