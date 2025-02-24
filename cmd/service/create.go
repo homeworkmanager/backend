@@ -79,7 +79,7 @@ func createApp() {
 
 	homeworkService := homeworkService.NewHomeworkService(homeworkRepo, homeworkStatusService, txmanager)
 
-	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, subjectNoteService, txmanager)
+	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, subjectNoteService, homeworkStatusService, txmanager)
 
 	moderatorService := moderatorService.NewModeratorService(homeworkService, subjectNoteService)
 

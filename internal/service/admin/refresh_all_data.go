@@ -21,6 +21,11 @@ func (s *Service) RefreshAllData(ctx context.Context) error {
 			return err
 		}
 
+		err = s.homeworkStatusService.ClearAllHomeworkStatuses(ctx)
+		if err != nil {
+			return err
+		}
+
 		err = s.homeworkService.ClearAllHomeworks(ctx)
 		if err != nil {
 			return err

@@ -33,3 +33,7 @@ type HomeworkService interface {
 type SubjectNoteService interface {
 	ClearAllNotes(ctx context.Context) error
 }
+
+type HomeworkStatusService interface {
+	ClearAllHomeworkStatuses(ctx context.Context) error
+}
