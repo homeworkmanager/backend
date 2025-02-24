@@ -3,6 +3,7 @@ package moderator
 import (
 	"github.com/gofiber/fiber/v2"
 	"homeworktodolist/internal/entity"
+	"strconv"
 )
 
 func (h *Handler) RegenerateGroupRegisterKey() fiber.Handler {
@@ -13,7 +14,22 @@ func (h *Handler) RegenerateGroupRegisterKey() fiber.Handler {
 			return fiber.ErrUnauthorized
 		}
 
-		registerKey, err := h.moderatorService.RegenerateGroupRegisterKey(c.Context(), creds.GroupID)
+		var groupID entity.GroupID
+
+		if creds.Role == entity.RoleGroupModerator {
+			groupID = creds.GroupID
+		} else {
+			id, err := strconv.Atoi(c.Params("groupID"))
+			if err != nil {
+				return fiber.ErrBadRequest
+			}
+			if id == 0 {
+				return fiber.ErrBadRequest
+			}
+			groupID = entity.GroupID(id)
+		}
+
+		registerKey, err := h.moderatorService.RegenerateGroupRegisterKey(c.Context(), groupID)
 
 		if err != nil {
 			return err
