@@ -42,7 +42,7 @@ jobs:
           context: .
           file: cmd/workers/schedule_updater/Dockerfile
           push: true
-          tags:
-           - ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:${{ env.MAJOR_VERSION }}.${{ github.run_number }}
-           - ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:latest
+          tags: |
+           ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:${{ env.MAJOR_VERSION }}.${{ github.run_number }}
+           ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
