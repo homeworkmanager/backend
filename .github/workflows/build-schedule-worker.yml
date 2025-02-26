@@ -9,7 +9,8 @@ on:
     branches:
       - release*
   pull_request:
-
+  workflow_dispatch:
+  
 env:
     REGISTRY: ghcr.io
     IMAGE_NAME: ${{ github.repository }}/schedule-worker
