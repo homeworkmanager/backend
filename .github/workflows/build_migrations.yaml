@@ -1,4 +1,4 @@
-name: Build goose to package
+name: Build migrations
 
  
 on:
@@ -39,5 +39,7 @@ jobs:
         with:
           context: ./migrations
           push: true
-          tags: ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:${{ env.MAJOR_VERSION }}.${{ github.run_number }}
+          tags: |
+            ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:${{ env.MAJOR_VERSION }}.${{ github.run_number }}
+            ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}

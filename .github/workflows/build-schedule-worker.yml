@@ -9,7 +9,8 @@ on:
     branches:
       - release*
   pull_request:
-
+  workflow_dispatch:
+  
 env:
     REGISTRY: ghcr.io
     IMAGE_NAME: ${{ github.repository }}/schedule-worker
@@ -36,10 +37,12 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5.3.0
+        uses: docker/build-push-action@v6.15.0
         with:
           context: .
           file: cmd/workers/schedule_updater/Dockerfile
           push: true
-          tags: ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:${{ env.MAJOR_VERSION }}.${{ github.run_number }}
+          tags: |
+           ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:${{ env.MAJOR_VERSION }}.${{ github.run_number }}
+           ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
