@@ -14,6 +14,7 @@ type UserService interface {
 type GroupService interface {
 	Create(ctx context.Context, group entity.Group) (entity.GroupID, error)
 	GetAllGroups(ctx context.Context) ([]entity.Group, error)
+	RegenerateRegisterKeys(ctx context.Context) error
 }
 
 type ClassService interface {

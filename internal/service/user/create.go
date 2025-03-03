@@ -11,17 +11,26 @@ import (
 )
 
 type CreateUser struct {
-	Name     string
-	Surname  *string
-	Email    string
-	Password string
-	GroupID  entity.GroupID
+	Name        string
+	Surname     *string
+	Email       string
+	Password    string
+	GroupID     entity.GroupID
+	RegisterKey string
 }
 
 func (s *Service) Create(ctx context.Context, req CreateUser) error {
 	user := req.toUser()
 
-	_, err := s.userRepo.GetByEmail(ctx, user.Email)
+	group, err := s.groupService.GetByID(ctx, user.GroupID)
+	if err != nil {
+		return err
+	}
+	if group.RegisterKey != req.RegisterKey {
+		return errs.InvalidRegisterKey
+	}
+
+	_, err = s.userRepo.GetByEmail(ctx, user.Email)
 	if err == nil {
 		return errs.UserExists
 	}

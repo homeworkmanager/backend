@@ -8,11 +8,12 @@ import (
 )
 
 type RegisterReq struct {
-	Name     string         `json:"name"`
-	Surname  *string        `json:"surname"`
-	Email    string         `json:"email"`
-	Password string         `json:"password"`
-	GroupID  entity.GroupID `json:"groupId"`
+	Name        string         `json:"name"`
+	Surname     *string        `json:"surname"`
+	Email       string         `json:"email"`
+	Password    string         `json:"password"`
+	GroupID     entity.GroupID `json:"groupId"`
+	RegisterKey string         `json:"registerKey"`
 }
 
 func (h *Handler) Register() fiber.Handler {
@@ -24,7 +25,7 @@ func (h *Handler) Register() fiber.Handler {
 		}
 
 		//TODO добавить проверку на валидность email
-		if req.Name == "" || req.Email == "" || req.Password == "" || req.GroupID == 0 {
+		if req.Name == "" || req.Email == "" || req.Password == "" || req.GroupID == 0 || req.RegisterKey == "" {
 			return fiber.ErrBadRequest
 		}
 
@@ -41,10 +42,11 @@ func (h *Handler) Register() fiber.Handler {
 
 func (r *RegisterReq) toCreate() userService.CreateUser {
 	return userService.CreateUser{
-		Name:     r.Name,
-		Surname:  r.Surname,
-		Email:    r.Email,
-		Password: r.Password,
-		GroupID:  r.GroupID,
+		Name:        r.Name,
+		Surname:     r.Surname,
+		Email:       r.Email,
+		Password:    r.Password,
+		GroupID:     r.GroupID,
+		RegisterKey: r.RegisterKey,
 	}
 }
