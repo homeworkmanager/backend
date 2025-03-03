@@ -51,9 +51,9 @@ func main() {
 	logger := logger.InitLogger(cfg)
 
 	//Service
-	userService := userService.NewUserService(userRepo, userRedisRepo, cfg)
-
 	groupService := groupService.NewGroupService(groupRepo)
+
+	userService := userService.NewUserService(userRepo, userRedisRepo, groupService, cfg)
 
 	subjectService := subjectService.NewSubjectService(subjectRepo)
 
@@ -65,7 +65,7 @@ func main() {
 
 	homeworkService := homeworkService.NewHomeworkService(homeworkRepo, homeworkStatusService, txmanager)
 
-	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, subjectNoteService, txmanager)
+	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, subjectNoteService, homeworkStatusService, txmanager)
 	job := schedule_updater.NewCronJob(adminService, logger)
 
 	c := cron.New()

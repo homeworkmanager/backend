@@ -17,7 +17,9 @@ var (
 	GroupExists        = errors.New("group already exists")
 	ErrInvalidPassword = errors.New("invalid password provided")
 )
-
+var (
+	InvalidRegisterKey = errors.New("invalid register key provided")
+)
 var (
 	NoIcal = errors.New("no calendar")
 )

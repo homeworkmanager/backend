@@ -1,5 +1,6 @@
-name: Build API
+name: Build migrations
 
+ 
 on:
   push:
     branches:
@@ -10,11 +11,11 @@ on:
 
 env:
     REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}
+    IMAGE_NAME: ${{ github.repository }}/migrations
     MAJOR_VERSION: 1 
 
 jobs:
-  build-docker:
+  build-goose:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -36,9 +37,9 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5.3.0
         with:
-          context: .
+          context: ./migrations
           push: true
           tags: |
-           ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:${{ env.MAJOR_VERSION }}.${{ github.run_number }}
-           ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:latest
+            ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:${{ env.MAJOR_VERSION }}.${{ github.run_number }}
+            ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}

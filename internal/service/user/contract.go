@@ -19,4 +19,9 @@ type UserRedisRepo interface {
 	CreateCreds(ctx context.Context, creds entity.UserCreds) (sessionKey string, err error)
 	GetCreds(ctx context.Context, sessionKey string) (entity.UserCreds, error)
 	RefreshCreds(ctx context.Context, sessionKey string) error
+	DeleteCreds(ctx context.Context, sessionKey string) error
+}
+
+type GroupService interface {
+	GetByID(ctx context.Context, groupID entity.GroupID) (entity.Group, error)
 }

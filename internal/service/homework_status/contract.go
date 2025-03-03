@@ -11,4 +11,5 @@ type HomeworkStatusRepo interface {
 	Delete(ctx context.Context, id entity.StatusID) error
 	Create(ctx context.Context, HomeworkStatus entity.HomeworkStatus) error
 	DeleteByHomeworkID(ctx context.Context, id entity.HomeworkID) error
+	Clear(ctx context.Context) error
 }

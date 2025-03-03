@@ -24,4 +24,5 @@ func MapUserRoutes(g fiber.Router, h *Handler, mw *middleware.MwManager) {
 	g.Post("/auth", h.Auth())
 	g.Get("/get", mw.Auth(), h.Get())
 	g.Get("/refresh", h.Refresh())
+	g.Delete("/logout", mw.Auth(), h.Logout())
 }

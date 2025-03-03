@@ -23,4 +23,6 @@ func MapAdminRoutes(g fiber.Router, h *Handler, mw *middleware.MwManager) {
 	g.Patch("/refreshAllData", mw.Auth(), mw.AllowedRoles([]entity.Role{entity.RoleGlobalAdmin}), h.RefreshAllData())
 	g.Patch("/role/:userID", mw.Auth(), mw.AllowedRoles([]entity.Role{entity.RoleGlobalAdmin}), h.UpdateRole())
 	g.Get("/users", mw.Auth(), mw.AllowedRoles([]entity.Role{entity.RoleGlobalAdmin}), h.GetAllUsers())
+	g.Get("/groups", mw.Auth(), mw.AllowedRoles([]entity.Role{entity.RoleGlobalAdmin}), h.GetAllGroups())
+	g.Patch("/keys/regenerate", mw.Auth(), mw.AllowedRoles([]entity.Role{entity.RoleGlobalAdmin}), h.RegenerateAllRegisterKeys())
 }

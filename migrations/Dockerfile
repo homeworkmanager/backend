@@ -1,7 +1,7 @@
 FROM gomicro/goose
 
 
-COPY ./migrations/*.sql ./migrations/entrypoint.sh ./
+COPY *.sql entrypoint.sh ./
 RUN chmod a+x ./entrypoint.sh
 
 RUN tr -d '\r' <./entrypoint.sh> ./entrypoint.tmp
