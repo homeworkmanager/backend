@@ -115,7 +115,7 @@ func createApp() {
 	}))
 
 	//middleware
-	mw := middleware.NewMwManager(userRedisRepo)
+	mw := middleware.NewMwManager(userRedisRepo, userRepo)
 
 	//logger
 	logger := logger.InitLogger(cfg)

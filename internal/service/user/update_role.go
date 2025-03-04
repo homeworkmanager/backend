@@ -10,5 +10,9 @@ func (s *Service) UpdateRole(ctx context.Context, userID entity.UserID, role ent
 	if err != nil {
 		return err
 	}
+	err = s.userRedisRepo.CreateUserRole(ctx, userID, role)
+	if err != nil {
+		return err
+	}
 	return nil
 }

@@ -1,9 +1,13 @@
 package middleware
 
 type MwManager struct {
-	UserRedisRepo UserRedisRepo
+	userRedisRepo UserRedisRepo
+	userRepo      UserRepo
 }
 
-func NewMwManager(userRedisRepo UserRedisRepo) *MwManager {
-	return &MwManager{userRedisRepo}
+func NewMwManager(userRedisRepo UserRedisRepo, userRepo UserRepo) *MwManager {
+	return &MwManager{
+		userRedisRepo: userRedisRepo,
+		userRepo:      userRepo,
+	}
 }
