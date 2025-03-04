@@ -23,3 +23,6 @@ var (
 var (
 	NoIcal = errors.New("no calendar")
 )
+var (
+	NoUserRole = errors.New("no user role")
+)

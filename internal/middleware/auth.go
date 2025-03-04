@@ -14,7 +14,11 @@ func (mw *MwManager) Auth() fiber.Handler {
 			return fiber.ErrUnauthorized
 		}
 
-		userCreds, err := mw.UserRedisRepo.GetCreds(c.Context(), sessionKey)
+		userCreds, err := mw.userRedisRepo.GetCreds(c.Context(), sessionKey)
+		if err != nil {
+			return err
+		}
+		userCreds.Role, err = mw.lookupRole(c.Context(), userCreds.UserID)
 		if err != nil {
 			return err
 		}

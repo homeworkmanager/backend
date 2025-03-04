@@ -14,7 +14,6 @@ func (r *Repo) CreateCreds(ctx context.Context, creds entity.UserCreds) (session
 
 	credsBytes, err := json.Marshal(credsData{
 		UserID:  creds.UserID,
-		Role:    creds.Role,
 		GroupID: creds.GroupID,
 	})
 	if err != nil {
