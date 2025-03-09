@@ -14,11 +14,16 @@ var (
 		errs.UserNotFound,
 		errs.GroupNotFound,
 		errs.ClassesNotFound,
+		errs.SubjectNotesNotFound,
+		errs.SubjectsNotFound,
+		errs.HomeworksNotFound,
+		errs.HomeworkStatusNotFound,
 	}
 	badRequestErrors = []error{
 		errs.UserExists,
 		errs.GroupExists,
 		errs.ErrInvalidPassword,
+		errs.InvalidRegisterKey,
 	}
 )
 

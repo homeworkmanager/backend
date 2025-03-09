@@ -1,6 +1,8 @@
 package middleware
 
 import (
+	"errors"
+	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
 
 	"homeworktodolist/internal/entity"
@@ -16,6 +18,9 @@ func (mw *MwManager) Auth() fiber.Handler {
 
 		userCreds, err := mw.userRedisRepo.GetCreds(c.Context(), sessionKey)
 		if err != nil {
+			if errors.Is(err, redis.Nil) {
+				return fiber.ErrUnauthorized
+			}
 			return err
 		}
 		userCreds.Role, err = mw.lookupRole(c.Context(), userCreds.UserID)
