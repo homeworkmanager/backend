@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"os"
 	"time"
 
 	"github.com/kelseyhightower/envconfig"
@@ -28,6 +29,9 @@ type Config struct {
 
 func NewCfg() *Config {
 	var cfg Config
+
+	os.Setenv("TZ", "Europe/Moscow")
+	time.Local, _ = time.LoadLocation("Europe/Moscow")
 
 	if err := envconfig.Process("", &cfg); err != nil {
 		panic(err)

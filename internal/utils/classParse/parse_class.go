@@ -63,9 +63,9 @@ func IcalParse(icalLink string) ([]entity.Class, []string, error) {
 			Location:    utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyLocation)).Value,
 			Category:    utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyCategories)).Value,
 		}
-		class.Start, err = time.Parse("20060102T150405", utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyDtStart)).Value)
+		class.Start, err = time.ParseInLocation("20060102T150405", utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyDtStart)).Value, time.Local)
 
-		class.End, err = time.Parse("20060102T150405", utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyDtEnd)).Value)
+		class.End, err = time.ParseInLocation("20060102T150405", utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyDtEnd)).Value, time.Local)
 
 		RRULE := utils.DeRef[ics.IANAProperty](event.GetProperty(ics.ComponentPropertyRrule)).Value
 
@@ -85,7 +85,7 @@ func IcalParse(icalLink string) ([]entity.Class, []string, error) {
 				if date == "" {
 					continue
 				}
-				date, err := time.Parse("20060102T150405", date)
+				date, err := time.ParseInLocation("20060102T150405", date, time.Local)
 				if err != nil {
 					return nil, nil, err
 				}
