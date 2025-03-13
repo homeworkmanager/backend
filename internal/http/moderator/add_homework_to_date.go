@@ -38,7 +38,7 @@ func (h *Handler) AddHomeworkToDate() fiber.Handler {
 			GroupID:        creds.GroupID,
 			SubjectID:      req.SubjectID,
 			HomeworkText:   req.HomeworkText,
-			DueDate:        req.DueDate,
+			DueDate:        req.DueDate.In(time.Local),
 		})
 		if err != nil {
 			return err
