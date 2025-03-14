@@ -70,7 +70,6 @@ services:
     restart: always
 
   backend:
-    image: ghcr.io/homeworkmanager/backend:${BACKEND_TAG:-latest}
     build:
       context: .
     env_file:
