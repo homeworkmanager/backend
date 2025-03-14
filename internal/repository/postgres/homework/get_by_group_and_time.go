@@ -13,7 +13,7 @@ func (r *Repo) GetByGroupAndTime(ctx context.Context, userID entity.UserID, grou
 		"FROM homeworks LEFT OUTER JOIN  homeworkstatuses " +
 		"ON homeworks.homework_id = homeworkstatuses.homework_id " +
 		"WHERE homeworks.group_id = $1 AND homeworks.due_date >= $2 " +
-		"AND homeworks.due_date <= $3 " +
+		"AND homeworks.due_date < $3 " +
 		"AND (homeworkstatuses.user_id = $4 OR homeworkstatuses.user_id IS NULL ))" +
 		"SELECT tmp.*, subject_name FROM tmp JOIN subjects ON tmp.subject_id = subjects.subject_id"
 
