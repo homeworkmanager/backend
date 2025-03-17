@@ -29,7 +29,7 @@ func (h homework) toHomework() entity.Homework {
 		Category:       h.Category,
 		HomeworkText:   h.HomeworkText,
 		IsCompleted:    h.Status,
-		DueDate:        h.DueDate,
-		CreatedAt:      h.CreatedAt,
+		DueDate:        h.DueDate.Local(),
+		CreatedAt:      h.CreatedAt.Local(),
 	}
 }

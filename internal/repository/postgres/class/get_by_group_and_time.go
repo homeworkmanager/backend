@@ -9,7 +9,7 @@ import (
 )
 
 func (r *Repo) GetByGroupAndTime(ctx context.Context, groupID entity.GroupID, fromTime time.Time, toTime time.Time) ([]entity.Class, error) {
-	q := "SELECT * FROM classes WHERE group_id = $1 AND start_time >= $2 AND end_time <= $3"
+	q := "SELECT * FROM classes WHERE group_id = $1 AND start_time >= $2 AND end_time < $3"
 
 	var classes []class
 
