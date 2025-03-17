@@ -19,6 +19,7 @@ func (r *Repo) GetByGroupAndTime(ctx context.Context, userID entity.UserID, grou
 		"AND h.due_date >= $2 " +
 		"AND h.due_date <= $3"
 
+
 	var homeworks []homework
 
 	t := r.manager.GetTxOrDefault(ctx)

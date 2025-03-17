@@ -29,6 +29,9 @@ type Config struct {
 func NewCfg() *Config {
 	var cfg Config
 
+	local := time.FixedZone("MSK", 3*60*60)
+	time.Local = local
+
 	if err := envconfig.Process("", &cfg); err != nil {
 		panic(err)
 	}

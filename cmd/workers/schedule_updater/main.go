@@ -24,6 +24,7 @@ import (
 	"homeworktodolist/pkg/db/postgres"
 	"homeworktodolist/pkg/db/redis"
 	"homeworktodolist/pkg/logger"
+	"time"
 )
 
 func main() {
@@ -68,7 +69,7 @@ func main() {
 	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, subjectNoteService, homeworkStatusService, txmanager)
 	job := schedule_updater.NewCronJob(adminService, logger)
 
-	c := cron.New()
+	c := cron.New(cron.WithLocation(time.Local))
 	_, err := c.AddFunc("0 0 * * *", job.Run)
 	logger.Info("Worker start")
 	if err != nil {
