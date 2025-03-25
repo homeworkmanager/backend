@@ -30,7 +30,7 @@ type outputClass struct {
 	Homework []homework `json:"homework"`
 }
 
-type day struct {
+type scheduleDay struct {
 	OutputClass         []outputClass `json:"outputClasses"`
 	IndependentHomework []homework    `json:"independentHomeworks"`
 }
@@ -70,4 +70,8 @@ func toOutputClass(c []entity.OutputClass) []outputClass {
 		}
 	}
 	return result
+}
+
+type homeworkDay struct {
+	Homework []homework `json:"homework"`
 }

@@ -18,7 +18,7 @@ func (r *Repo) GetByGroupAndTime(ctx context.Context, userID entity.UserID, grou
 		"WHERE h.group_id = $1 " +
 		"AND h.due_date >= $2 " +
 		"AND h.due_date <= $3) " +
-		"SELECT tmp.*, subject_name FROM tmp JOIN subjects ON tmp.subject_id = subjects.subject_id"
+		"SELECT tmp.*, subject_name FROM tmp JOIN subjects ON tmp.subject_id = subjects.subject_id ORDER BY due_date"
 
 	var homeworks []homework
 

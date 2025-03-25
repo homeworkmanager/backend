@@ -7,8 +7,12 @@ type OutputClass struct {
 	Homework []Homework
 }
 
-type Day struct {
+type ScheduleDay struct {
 	Date                time.Time
 	OutputClass         []OutputClass
 	IndependentHomework []Homework
+}
+type HomeworkDay struct {
+	Date     time.Time
+	Homework []Homework
 }

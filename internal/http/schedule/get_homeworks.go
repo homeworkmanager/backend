@@ -1,20 +1,12 @@
 package schedule
 
 import (
-	"time"
-
 	"github.com/gofiber/fiber/v2"
-
 	"homeworktodolist/internal/entity"
 	scheduleService "homeworktodolist/internal/service/schedule"
 )
 
-type GetReq struct {
-	FromTime  time.Time `query:"from_time"`
-	DaysCount int       `query:"days_count"`
-}
-
-func (h *Handler) GetSchedule() fiber.Handler {
+func (h *Handler) GetHomeworks() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		creds, ok := c.Locals(entity.Claims).(entity.UserCreds)
 		if !ok {
@@ -30,22 +22,21 @@ func (h *Handler) GetSchedule() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
-		days, err := h.scheduleService.GetAllByGroupAndTime(c.Context(), scheduleService.GetSchedule{
+		days, err := h.scheduleService.GetHomeworks(c.Context(), scheduleService.GetHomework{
 			UserID:    creds.UserID,
 			GroupID:   creds.GroupID,
-			FromTime:  req.FromTime.Local(),
+			FromTime:  req.FromTime,
 			DaysCount: req.DaysCount,
 		})
 		if err != nil {
 			return err
 		}
 
-		daysMap := make(map[string]scheduleDay)
+		daysMap := make(map[string]homeworkDay)
 		for _, d := range days {
 			key := d.Date.Format("2006-01-02")
-			daysMap[key] = scheduleDay{
-				OutputClass:         toOutputClass(d.OutputClass),
-				IndependentHomework: toHomework(d.IndependentHomework),
+			daysMap[key] = homeworkDay{
+				Homework: toHomework(d.Homework),
 			}
 		}
 		return c.JSON(daysMap)
