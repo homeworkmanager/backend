@@ -41,13 +41,6 @@ func (h *Handler) Auth() fiber.Handler {
 			Domain:  h.config.Domain,
 			Expires: expiresTime,
 		})
-		c.Cookie(&fiber.Cookie{
-			Name:    "session_expires",
-			Value:   expiresTime.String(),
-			Path:    "/",
-			Domain:  h.config.Domain,
-			Expires: expiresTime,
-		})
 
 		return c.JSON(fiber.Map{
 			"data": "User successfully authed",
