@@ -6,7 +6,6 @@ import (
 
 	"homeworktodolist/internal/entity"
 	"homeworktodolist/internal/errs"
-	"homeworktodolist/internal/utils"
 )
 
 type GetHomework struct {
@@ -47,9 +46,7 @@ func (s *Service) GetHomeworks(ctx context.Context, req GetHomework) ([]entity.H
 	for i, day := range days {
 		dayHomeworks := homeworkMap[day.Date]
 		for _, homework := range dayHomeworks {
-			if utils.DeRef[int64](homework.SemClassNumber) == 0 {
-				day.Homework = append(day.Homework, homework)
-			}
+			day.Homework = append(day.Homework, homework)
 		}
 		days[i] = day
 	}
