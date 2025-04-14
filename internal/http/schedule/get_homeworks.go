@@ -35,6 +35,9 @@ func (h *Handler) GetHomeworks() fiber.Handler {
 		daysMap := make(map[string]homeworkDay)
 		for _, d := range days {
 			key := d.Date.Format("2006-01-02")
+			if len(d.Homework) == 0 {
+				continue
+			}
 			daysMap[key] = homeworkDay{
 				Homework: toHomework(d.Homework),
 			}
