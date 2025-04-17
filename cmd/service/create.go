@@ -5,6 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"go.uber.org/zap"
+	"homeworktodolist/internal/client/http/s3"
 	"homeworktodolist/internal/config"
 	"homeworktodolist/internal/err_handler"
 	adminHandlers "homeworktodolist/internal/http/admin"
@@ -50,6 +51,9 @@ func createApp() {
 	//database
 	postgresDb := postgres.Connect(&cfg.PGConfig)
 	redisClient := redis.Connect(&cfg.RedisConfig)
+
+	//s3
+	s3Client := s3.Connect(&cfg.S3Config)
 
 	//txmanager
 	txmanager := tx_manager.NewTxManager(postgresDb)

@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"homeworktodolist/internal/client/http/s3"
 	"time"
 
 	"github.com/kelseyhightower/envconfig"
@@ -24,6 +25,7 @@ type Config struct {
 
 	postgres.PGConfig
 	redis.RedisConfig
+	s3.S3Config
 }
 
 func NewCfg() *Config {
