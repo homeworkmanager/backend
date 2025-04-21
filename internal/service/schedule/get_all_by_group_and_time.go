@@ -16,7 +16,7 @@ type GetSchedule struct {
 	DaysCount int
 }
 
-func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]entity.Day, error) {
+func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]entity.ScheduleDay, error) {
 	toTime := req.FromTime.Add(time.Duration(req.DaysCount*24) * time.Hour)
 
 	classes, err := s.classService.GetByGroupAndTime(ctx, req.GroupID, req.FromTime, toTime)
@@ -33,10 +33,10 @@ func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]
 		}
 	}
 
-	days := make([]entity.Day, req.DaysCount)
+	days := make([]entity.ScheduleDay, req.DaysCount)
 
 	for i := 0; i < req.DaysCount; i++ {
-		days[i] = entity.Day{
+		days[i] = entity.ScheduleDay{
 			Date:                req.FromTime.Add(time.Duration(i) * 24 * time.Hour).Local(),
 			OutputClass:         []entity.OutputClass{},
 			IndependentHomework: []entity.Homework{},
