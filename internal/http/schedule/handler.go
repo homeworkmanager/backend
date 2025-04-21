@@ -18,4 +18,5 @@ func NewScheduleHandler(scheduleService ScheduleService) *Handler {
 
 func MapScheduleRoutes(g fiber.Router, h *Handler, mw *middleware.MwManager) {
 	g.Get("/get", mw.Auth(), h.GetSchedule())
+	g.Get("/homeworks", mw.Auth(), h.GetHomeworks())
 }
