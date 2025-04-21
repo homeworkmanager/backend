@@ -24,6 +24,7 @@ var (
 		errs.GroupExists,
 		errs.ErrInvalidPassword,
 		errs.InvalidRegisterKey,
+		errs.FileTooLarge,
 	}
 )
 

@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE IF NOT EXISTS homeworks_files (
+CREATE TABLE IF NOT EXISTS HomeworksFiles (
   file_id BIGSERIAL PRIMARY KEY,
   homework_id integer NOT NULL,
   file_name TEXT NOT NULL,

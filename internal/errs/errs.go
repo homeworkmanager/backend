@@ -26,3 +26,8 @@ var (
 var (
 	NoUserRole = errors.New("no user role")
 )
+
+var (
+	FileTooLarge    = errors.New("file too large")
+	InvalidFileType = errors.New("invalid file type")
+)

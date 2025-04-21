@@ -37,3 +37,21 @@ var NumberToCategory = map[ClassCategory]string{
 	5: CategoryConsultation,
 	6: CategoryExam,
 }
+
+var PermittedExt = map[string]bool{
+	".pdf":  true,
+	".doc":  true,
+	".docx": true,
+	".png":  true,
+	".jpg":  true,
+	".jpeg": true,
+	".rar":  true,
+	".7z":   true,
+	".zip":  true,
+	".ppt":  true,
+	".pptx": true,
+	".odt":  true,
+	".xlsx": true,
+	".xls":  true,
+	".txt":  true,
+}

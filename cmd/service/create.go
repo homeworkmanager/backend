@@ -29,6 +29,7 @@ import (
 	classService "homeworktodolist/internal/service/class"
 	groupService "homeworktodolist/internal/service/group"
 	homeworkService "homeworktodolist/internal/service/homework"
+	homeworkFilesService "homeworktodolist/internal/service/homework_files"
 	homeworkStatusService "homeworktodolist/internal/service/homework_status"
 	moderatorService "homeworktodolist/internal/service/moderator"
 	scheduleService "homeworktodolist/internal/service/schedule"
@@ -53,7 +54,7 @@ func createApp() {
 	redisClient := redis.Connect(&cfg.RedisConfig)
 
 	//s3
-	s3Client := s3.Connect(&cfg.S3Config)
+	s3Client := s3.NewS3Client(&cfg.S3Config)
 
 	//txmanager
 	txmanager := tx_manager.NewTxManager(postgresDb)
@@ -81,6 +82,8 @@ func createApp() {
 
 	homeworkStatusService := homeworkStatusService.NewHomeworkStatusService(homeworkStatusRepo)
 
+	homeworkFilesService := homeworkFilesService.NewHomeworkFilesService(s3Client)
+
 	homeworkService := homeworkService.NewHomeworkService(homeworkRepo, homeworkStatusService, txmanager)
 
 	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, subjectNoteService, homeworkStatusService, txmanager)
@@ -96,7 +99,7 @@ func createApp() {
 
 	groupHandler := groupHandlers.NewGroupHandler(groupService)
 
-	moderatorHandler := moderatorHandlers.NewModeratorHandler(moderatorService)
+	moderatorHandler := moderatorHandlers.NewModeratorHandler(moderatorService, homeworkFilesService)
 
 	scheduleHandler := scheduleHandlers.NewScheduleHandler(scheduleService)
 

@@ -8,12 +8,14 @@ import (
 )
 
 type Handler struct {
-	moderatorService ModeratorService
+	moderatorService     ModeratorService
+	homeworkFilesService HomeworkFilesService
 }
 
-func NewModeratorHandler(moderatorService ModeratorService) *Handler {
+func NewModeratorHandler(moderatorService ModeratorService, homeworkFilesService HomeworkFilesService) *Handler {
 	return &Handler{
-		moderatorService: moderatorService,
+		moderatorService:     moderatorService,
+		homeworkFilesService: homeworkFilesService,
 	}
 }
 

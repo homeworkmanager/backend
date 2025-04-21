@@ -2,6 +2,7 @@ package moderator
 
 import (
 	"context"
+	"mime/multipart"
 
 	"homeworktodolist/internal/entity"
 	moderatorService "homeworktodolist/internal/service/moderator"
@@ -16,4 +17,7 @@ type ModeratorService interface {
 	UpdateNote(ctx context.Context, noteID entity.NoteID, noteText string) error
 	RegenerateGroupRegisterKey(ctx context.Context, groupID entity.GroupID) (string, error)
 	GetGroupRegisterKey(ctx context.Context, groupID entity.GroupID) (string, error)
+}
+type HomeworkFilesService interface {
+	Create(ctx context.Context, file *multipart.File) error
 }

@@ -15,7 +15,12 @@ type S3Config struct {
 	Endpoint   string `envconfig:"ENDPOINT"`
 }
 
-func Connect(s3Cfg *S3Config) *s3.Client {
+type S3Client struct {
+	client *s3.Client
+	config *S3Config
+}
+
+func NewS3Client(s3Cfg *S3Config) *S3Client {
 	cfg, err := config.LoadDefaultConfig(
 		context.TODO(),
 		config.WithRegion(s3Cfg.Region),
@@ -29,5 +34,5 @@ func Connect(s3Cfg *S3Config) *s3.Client {
 		o.UsePathStyle = true
 	})
 
-	return s3Client
+	return &S3Client{client: s3Client, config: s3Cfg}
 }
