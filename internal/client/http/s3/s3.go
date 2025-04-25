@@ -33,6 +33,12 @@ func NewS3Client(s3Cfg *S3Config) *S3Client {
 	s3Client := s3.NewFromConfig(cfg, func(o *s3.Options) {
 		o.UsePathStyle = true
 	})
+	_, err = s3Client.HeadBucket(context.TODO(), &s3.HeadBucketInput{
+		Bucket: &s3Cfg.Bucketname,
+	})
+	if err != nil {
+		panic(err)
+	}
 
 	return &S3Client{client: s3Client, config: s3Cfg}
 }

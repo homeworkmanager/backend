@@ -20,6 +20,7 @@ import (
 	classRepo "homeworktodolist/internal/repository/postgres/class"
 	groupRepo "homeworktodolist/internal/repository/postgres/group"
 	homeworkRepo "homeworktodolist/internal/repository/postgres/homework"
+	homeworkFilesRepo "homeworktodolist/internal/repository/postgres/homework_files"
 	homeworkStatusRepo "homeworktodolist/internal/repository/postgres/homework_status"
 	subjectRepo "homeworktodolist/internal/repository/postgres/subject"
 	subjectNoteRepo "homeworktodolist/internal/repository/postgres/subjectnote"
@@ -68,6 +69,7 @@ func createApp() {
 	subjectNoteRepo := subjectNoteRepo.NewSubjectNoteRepo(txmanager)
 	homeworkRepo := homeworkRepo.NewHomeworkRepo(txmanager)
 	homeworkStatusRepo := homeworkStatusRepo.NewHomeworkStatusRepo(txmanager)
+	homeworkFilesRepo := homeworkFilesRepo.NewHomeworkFilesRepo(txmanager)
 
 	//Service
 	userService := userService.NewUserService(userRepo, userRedisRepo, groupRepo, cfg)
@@ -82,13 +84,13 @@ func createApp() {
 
 	homeworkStatusService := homeworkStatusService.NewHomeworkStatusService(homeworkStatusRepo)
 
-	homeworkFilesService := homeworkFilesService.NewHomeworkFilesService(s3Client)
+	homeworkFilesService := homeworkFilesService.NewHomeworkFilesService(s3Client, homeworkFilesRepo, txmanager)
 
 	homeworkService := homeworkService.NewHomeworkService(homeworkRepo, homeworkStatusService, txmanager)
 
 	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, subjectNoteService, homeworkStatusService, txmanager)
 
-	moderatorService := moderatorService.NewModeratorService(homeworkService, subjectNoteService, groupService)
+	moderatorService := moderatorService.NewModeratorService(homeworkService, subjectNoteService, groupService, homeworkFilesService)
 
 	scheduleService := scheduleService.NewScheduleService(classService, homeworkService)
 
@@ -99,7 +101,7 @@ func createApp() {
 
 	groupHandler := groupHandlers.NewGroupHandler(groupService)
 
-	moderatorHandler := moderatorHandlers.NewModeratorHandler(moderatorService, homeworkFilesService)
+	moderatorHandler := moderatorHandlers.NewModeratorHandler(moderatorService)
 
 	scheduleHandler := scheduleHandlers.NewScheduleHandler(scheduleService)
 

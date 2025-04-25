@@ -5,14 +5,16 @@ import (
 	"homeworktodolist/internal/entity"
 )
 
-func (r *Repo) Create(ctx context.Context, HomeworkFile entity.HomeworkFile) error {
-	q := "INSERT INTO homeworksfiles (homework_id, file_name, file_url) values ($1, $2, $3)"
+func (r *Repo) Create(ctx context.Context, HomeworkFile entity.HomeworkFile) (entity.FileID, error) {
+	q := "INSERT INTO homeworksfiles (homework_id, group_id, file_name, file_url, key) values ($1, $2, $3, $4, $5) RETURNING file_id"
 
 	t := r.manager.GetTxOrDefault(ctx)
 
-	_, err := t.ExecContext(ctx, q, HomeworkFile.HomeworkID, HomeworkFile.FileName, HomeworkFile.FileURL)
+	var id entity.FileID
+
+	err := t.QueryRowContext(ctx, q, HomeworkFile.HomeworkID, HomeworkFile.GroupID, HomeworkFile.FileName, HomeworkFile.FileURL, HomeworkFile.Key).Scan(&id)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return id, err
 }

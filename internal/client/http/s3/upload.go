@@ -7,11 +7,16 @@ import (
 	"mime/multipart"
 )
 
-func (s3Client S3Client) Upload(ctx context.Context, file *multipart.File, keyName string) error {
-	_, err := s3Client.client.PutObject(ctx, &s3.PutObjectInput{
+func (s3Client S3Client) Upload(ctx context.Context, fileHeader *multipart.FileHeader, keyName string) error {
+	file, err := fileHeader.Open()
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	_, err = s3Client.client.PutObject(ctx, &s3.PutObjectInput{
 		Bucket: aws.String(s3Client.config.Bucketname),
 		Key:    aws.String(keyName),
-		Body:   *file,
+		Body:   file,
 	})
 	if err != nil {
 		return err

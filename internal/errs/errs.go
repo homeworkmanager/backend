@@ -10,6 +10,7 @@ var (
 	HomeworksNotFound      = errors.New("homeworks doesn't exist")
 	HomeworkStatusNotFound = errors.New("homeworkStatus doesn't exist")
 	SubjectNotesNotFound   = errors.New("subjectNote doesn't exist")
+	FileNotFound           = errors.New("file doesn't exist")
 )
 
 var (
