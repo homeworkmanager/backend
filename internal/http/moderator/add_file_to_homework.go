@@ -3,6 +3,7 @@ package moderator
 import (
 	"github.com/gofiber/fiber/v2"
 	"homeworktodolist/internal/entity"
+	"homeworktodolist/internal/errs"
 	moderatorService "homeworktodolist/internal/service/moderator"
 	"homeworktodolist/internal/utils"
 	"strconv"
@@ -20,27 +21,39 @@ func (h *Handler) AddFileToHomework() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
-		fileHeader, err := c.FormFile("file")
-		if err != nil {
+		form, err := c.MultipartForm()
+
+		files := form.File["files"]
+		if len(files) == 0 || homeworkID == 0 {
 			return fiber.ErrBadRequest
 		}
 
-		if err = utils.CheckFile(fileHeader); err != nil {
-			return fiber.ErrBadRequest
+		if len(files) > 10 {
+			return errs.TooManyFiles
 		}
 
-		id, err := h.moderatorService.AddFileToHomework(c.Context(), moderatorService.AddFileReq{
-			FileHeader: fileHeader,
-			HomeworkID: entity.HomeworkID(homeworkID),
-			GroupID:    creds.GroupID,
+		for _, file := range files {
+			if err = utils.CheckFile(file); err != nil {
+				return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+					"error": err.Error(),
+					"file":  file.Filename,
+				})
+			}
+		}
+
+		filesIdMap, filesErrMap, err := h.moderatorService.AddFileToHomework(c.Context(), moderatorService.AddFileReq{
+			FilesHeader: files,
+			HomeworkID:  entity.HomeworkID(homeworkID),
+			GroupID:     creds.GroupID,
 		})
 		if err != nil {
 			return err
 		}
 
 		return c.JSON(fiber.Map{
-			"file_id": id,
-			"data":    "File successfully added",
+			"filesIdMap":  filesIdMap,
+			"filesErrMap": filesErrMap,
+			"data":        "Files successfully added",
 		})
 
 	}

@@ -2,6 +2,7 @@ package moderator
 
 import (
 	"encoding/json"
+	"homeworktodolist/internal/errs"
 	"homeworktodolist/internal/utils"
 	"time"
 
@@ -35,6 +36,9 @@ func (h *Handler) AddHomeworkToClass() fiber.Handler {
 		}
 
 		files := form.File["files"]
+		if len(files) > 10 {
+			return errs.TooManyFiles
+		}
 		for _, file := range files {
 			if err = utils.CheckFile(file); err != nil {
 				return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -58,7 +62,7 @@ func (h *Handler) AddHomeworkToClass() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
-		id, filesIdMap, err := h.moderatorService.AddHomework(c.Context(), moderatorService.AddHomework{
+		id, filesIdMap, filesErrMap, err := h.moderatorService.AddHomework(c.Context(), moderatorService.AddHomework{
 			ClassSemNumber: &req.ClassSemNumber,
 			GroupID:        creds.GroupID,
 			SubjectID:      req.SubjectID,
@@ -74,6 +78,7 @@ func (h *Handler) AddHomeworkToClass() fiber.Handler {
 		return c.JSON(fiber.Map{
 			"homework_id": id,
 			"filesIdMap":  filesIdMap,
+			"filesErrMap": filesErrMap,
 			"data":        "Homework successfully added",
 		})
 	}

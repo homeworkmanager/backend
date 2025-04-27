@@ -9,12 +9,8 @@ import (
 
 func (s *Service) AddFileToHomework(ctx context.Context, fileHeader *multipart.FileHeader, homeworkID entity.HomeworkID, groupID entity.GroupID) (entity.FileID, error) {
 	key := fmt.Sprintf("homeworks/%d/%s", homeworkID, fileHeader.Filename)
-	err := s.homeworkFilesS3.Upload(ctx, fileHeader, key)
-	if err != nil {
-		return 0, err
-	}
 	fileName := fileHeader.Filename
-	fileUrl := "https://global.s3.cloud.ru/unihelper/" + key + "/" + fileName
+	fileUrl := "https://global.s3.cloud.ru/unihelper/" + key
 	homeworkFile := entity.HomeworkFile{
 		HomeworkID: homeworkID,
 		FileName:   fileName,
@@ -22,9 +18,21 @@ func (s *Service) AddFileToHomework(ctx context.Context, fileHeader *multipart.F
 		FileURL:    fileUrl,
 		Key:        key,
 	}
-	id, err := s.homeworkFilesRepo.Create(ctx, homeworkFile)
-	if err != nil {
-		return 0, err
-	}
+
+	var id entity.FileID
+
+	err := s.manager.Do(ctx, func(ctx context.Context) error {
+		var err error
+		id, err = s.homeworkFilesRepo.Create(ctx, homeworkFile)
+		if err != nil {
+			return err
+		}
+		err = s.homeworkFilesS3.Upload(ctx, fileHeader, key)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+
 	return id, err
 }

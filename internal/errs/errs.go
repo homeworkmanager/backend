@@ -31,4 +31,5 @@ var (
 var (
 	FileTooLarge    = errors.New("file too large")
 	InvalidFileType = errors.New("invalid file type")
+	TooManyFiles    = errors.New("too many files")
 )

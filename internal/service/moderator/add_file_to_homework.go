@@ -7,15 +7,25 @@ import (
 )
 
 type AddFileReq struct {
-	FileHeader *multipart.FileHeader
-	HomeworkID entity.HomeworkID
-	GroupID    entity.GroupID
+	FilesHeader []*multipart.FileHeader
+	HomeworkID  entity.HomeworkID
+	GroupID     entity.GroupID
 }
 
-func (s *Service) AddFileToHomework(ctx context.Context, req AddFileReq) (entity.FileID, error) {
-	id, err := s.homeworkFileService.AddFileToHomework(ctx, req.FileHeader, req.HomeworkID, req.GroupID)
-	if err != nil {
-		return 0, err
+func (s *Service) AddFileToHomework(ctx context.Context, req AddFileReq) (map[string]entity.FileID, map[string]error, error) {
+	filesIdMap := make(map[string]entity.FileID)
+	filesErrMap := make(map[string]error)
+
+	//TODO: добавить параллельность
+	//TODO: Написать в доке о том, что файл может не добавиться и тогда его имени просто не будет в мапке которую я возвращаю
+	for _, file := range req.FilesHeader {
+		fileID, err := s.homeworkFileService.AddFileToHomework(ctx, file, req.HomeworkID, req.GroupID)
+		if err != nil {
+			filesErrMap[file.Filename] = err
+			continue
+		}
+		filesIdMap[file.Filename] = fileID
 	}
-	return id, nil
+
+	return filesIdMap, filesErrMap, nil
 }
