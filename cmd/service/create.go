@@ -92,7 +92,7 @@ func createApp() {
 
 	moderatorService := moderatorService.NewModeratorService(homeworkService, subjectNoteService, groupService, homeworkFilesService)
 
-	scheduleService := scheduleService.NewScheduleService(classService, homeworkService)
+	scheduleService := scheduleService.NewScheduleService(classService, homeworkService, homeworkFilesService)
 
 	//Handlers
 	userHandler := userHandlers.NewUserHandler(cfg, userService)

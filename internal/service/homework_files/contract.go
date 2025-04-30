@@ -14,4 +14,5 @@ type HomeworkFilesRepo interface {
 	Create(ctx context.Context, HomeworkFile entity.HomeworkFile) (entity.FileID, error)
 	GetByFileID(ctx context.Context, fileID entity.FileID) (entity.HomeworkFile, error)
 	Delete(ctx context.Context, fileID entity.FileID) error
+	GetByGroupID(ctx context.Context, id entity.GroupID) ([]entity.HomeworkFile, error)
 }

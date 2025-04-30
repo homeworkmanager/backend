@@ -11,7 +11,15 @@ type homework struct {
 	SubjectName  string            `json:"subjectName"`
 	HomeworkText string            `json:"homeworkText"`
 	IsCompleted  bool              `json:"isCompleted"`
+	Files        []file            `json:"files"`
 	DueDate      time.Time         `json:"dueDate"`
+}
+
+type file struct {
+	FileID    entity.FileID
+	FileName  string
+	FileURL   string
+	CreatedAt time.Time
 }
 
 type class struct {
@@ -55,6 +63,7 @@ func toHomework(c []entity.Homework) []homework {
 			SubjectName:  h.SubjectName,
 			HomeworkText: h.HomeworkText,
 			IsCompleted:  h.IsCompleted,
+			Files:        toFiles(h.Files),
 			DueDate:      h.DueDate,
 		}
 	}
@@ -68,6 +77,23 @@ func toOutputClass(c []entity.OutputClass) []outputClass {
 			Class:    toClass(h.Class),
 			Homework: toHomework(h.Homework),
 		}
+	}
+	return result
+}
+
+func toFile(f entity.HomeworkFile) file {
+	return file{
+		FileID:    f.FileID,
+		FileName:  f.FileName,
+		FileURL:   f.FileURL,
+		CreatedAt: f.CreatedAt,
+	}
+}
+
+func toFiles(f []entity.HomeworkFile) []file {
+	result := make([]file, len(f))
+	for i := range f {
+		result[i] = toFile(f[i])
 	}
 	return result
 }

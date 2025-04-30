@@ -26,3 +26,10 @@ func (h homeworkFile) toHomeworkFile() entity.HomeworkFile {
 		CreatedAt:  h.CreatedAt,
 	}
 }
+func toHomeworkFiles(f []homeworkFile) []entity.HomeworkFile {
+	fs := make([]entity.HomeworkFile, len(f))
+	for i := range f {
+		fs[i] = f[i].toHomeworkFile()
+	}
+	return fs
+}

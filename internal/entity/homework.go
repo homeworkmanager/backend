@@ -11,6 +11,7 @@ type Homework struct {
 	HomeworkText   string
 	Category       *ClassCategory
 	IsCompleted    bool
+	Files          []HomeworkFile
 	DueDate        time.Time
 	CreatedAt      time.Time
 }
