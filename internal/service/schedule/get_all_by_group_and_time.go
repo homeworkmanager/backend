@@ -16,7 +16,7 @@ type GetSchedule struct {
 	DaysCount int
 }
 
-func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]entity.Day, error) {
+func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]entity.ScheduleDay, error) {
 	toTime := req.FromTime.Add(time.Duration(req.DaysCount*24) * time.Hour)
 
 	classes, err := s.classService.GetByGroupAndTime(ctx, req.GroupID, req.FromTime, toTime)

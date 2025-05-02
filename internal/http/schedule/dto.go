@@ -11,9 +11,16 @@ type homework struct {
 	SubjectName  string            `json:"subjectName"`
 	HomeworkText string            `json:"homeworkText"`
 	IsCompleted  bool              `json:"isCompleted"`
+	Files        []file            `json:"files"`
 	DueDate      time.Time         `json:"dueDate"`
 }
 
+type file struct {
+	FileID    entity.FileID
+	FileName  string
+	FileURL   string
+	CreatedAt time.Time
+}
 type class struct {
 	SubjectID      entity.SubjectID `json:"subjectId"`
 	StartTime      time.Time        `json:"startTime"`
