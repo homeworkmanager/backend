@@ -34,13 +34,21 @@ func (s *Service) GetHomeworks(ctx context.Context, req GetHomework) ([]entity.H
 		}
 	}
 
+	files, err := s.homeworkFilesService.GetByGroupID(ctx, req.GroupID)
+	filesMap := make(map[entity.HomeworkID][]entity.HomeworkFile)
+
+	for i := 0; i < len(files); i++ {
+		filesMap[files[i].HomeworkID] = append(filesMap[files[i].HomeworkID], files[i])
+	}
+
 	homeworkMap := make(map[time.Time][]entity.Homework)
-	for _, homework := range homeworks {
+	for i := range homeworks {
 		date := time.Date(
-			homework.DueDate.Year(), homework.DueDate.Month(), homework.DueDate.Day(),
+			homeworks[i].DueDate.Year(), homeworks[i].DueDate.Month(), homeworks[i].DueDate.Day(),
 			0, 0, 0, 0,
 			time.Local)
-		homeworkMap[date] = append(homeworkMap[date], homework)
+		homeworks[i].Files = filesMap[homeworks[i].HomeworkID]
+		homeworkMap[date] = append(homeworkMap[date], homeworks[i])
 	}
 
 	for i, day := range days {
