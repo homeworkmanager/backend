@@ -33,6 +33,7 @@ func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]
 		}
 	}
 
+	days := make([]entity.ScheduleDay, req.DaysCount)
 	files, err := s.homeworkFilesService.GetByGroupID(ctx, req.GroupID)
 	filesMap := make(map[entity.HomeworkID][]entity.HomeworkFile)
 
@@ -40,10 +41,8 @@ func (s *Service) GetAllByGroupAndTime(ctx context.Context, req GetSchedule) ([]
 		filesMap[files[i].HomeworkID] = append(filesMap[files[i].HomeworkID], files[i])
 	}
 
-	days := make([]entity.Day, req.DaysCount)
-
 	for i := 0; i < req.DaysCount; i++ {
-		days[i] = entity.Day{
+		days[i] = entity.ScheduleDay{
 			Date:                req.FromTime.Add(time.Duration(i) * 24 * time.Hour).Local(),
 			OutputClass:         []entity.OutputClass{},
 			IndependentHomework: []entity.Homework{},
