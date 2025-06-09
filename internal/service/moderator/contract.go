@@ -24,6 +24,6 @@ type GroupService interface {
 }
 
 type HomeworkFileService interface {
-	AddFileToHomework(ctx context.Context, fileHeader *multipart.FileHeader, homeworkID entity.HomeworkID, groupID entity.GroupID) (entity.FileID, error)
+	AddFileToHomework(ctx context.Context, fileHeader *multipart.FileHeader, homeworkID entity.HomeworkID, groupID entity.GroupID) (entity.FileID, string, error)
 	DeleteFile(ctx context.Context, fileID entity.FileID) error
 }

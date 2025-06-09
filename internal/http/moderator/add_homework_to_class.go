@@ -62,7 +62,7 @@ func (h *Handler) AddHomeworkToClass() fiber.Handler {
 			return fiber.ErrBadRequest
 		}
 
-		id, filesIdMap, filesErrMap, err := h.moderatorService.AddHomework(c.Context(), moderatorService.AddHomework{
+		id, filesIdMap, filesURLMap, filesErrMap, err := h.moderatorService.AddHomework(c.Context(), moderatorService.AddHomework{
 			ClassSemNumber: &req.ClassSemNumber,
 			GroupID:        creds.GroupID,
 			SubjectID:      req.SubjectID,
@@ -79,6 +79,7 @@ func (h *Handler) AddHomeworkToClass() fiber.Handler {
 			"homework_id": id,
 			"filesIdMap":  filesIdMap,
 			"filesErrMap": filesErrMap,
+			"filesURLMap": filesURLMap,
 			"data":        "Homework successfully added",
 		})
 	}

@@ -41,7 +41,7 @@ func (h *Handler) AddFileToHomework() fiber.Handler {
 			}
 		}
 
-		filesIdMap, filesErrMap, err := h.moderatorService.AddFileToHomework(c.Context(), moderatorService.AddFileReq{
+		filesIdMap, filesURLMap, filesErrMap, err := h.moderatorService.AddFileToHomework(c.Context(), moderatorService.AddFileReq{
 			FilesHeader: files,
 			HomeworkID:  entity.HomeworkID(homeworkID),
 			GroupID:     creds.GroupID,
@@ -53,6 +53,7 @@ func (h *Handler) AddFileToHomework() fiber.Handler {
 		return c.JSON(fiber.Map{
 			"filesIdMap":  filesIdMap,
 			"filesErrMap": filesErrMap,
+			"filesURLMap": filesURLMap,
 			"data":        "Files successfully added",
 		})
 

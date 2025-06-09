@@ -7,7 +7,7 @@ import (
 	"mime/multipart"
 )
 
-func (s *Service) AddFileToHomework(ctx context.Context, fileHeader *multipart.FileHeader, homeworkID entity.HomeworkID, groupID entity.GroupID) (entity.FileID, error) {
+func (s *Service) AddFileToHomework(ctx context.Context, fileHeader *multipart.FileHeader, homeworkID entity.HomeworkID, groupID entity.GroupID) (entity.FileID, string, error) {
 	key := fmt.Sprintf("homeworks/%d/%s", homeworkID, fileHeader.Filename)
 	fileName := fileHeader.Filename
 	fileUrl := "https://global.s3.cloud.ru/unihelper/" + key
@@ -34,5 +34,9 @@ func (s *Service) AddFileToHomework(ctx context.Context, fileHeader *multipart.F
 		return nil
 	})
 
-	return id, err
+	if err != nil {
+		return 0, "", err
+	}
+
+	return id, fileUrl, err
 }
