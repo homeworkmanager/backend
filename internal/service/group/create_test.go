@@ -2,6 +2,7 @@ package group
 
 import (
 	"context"
+	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 	"homeworktodolist/internal/entity"
 	"homeworktodolist/internal/errs"
@@ -18,11 +19,17 @@ func TestService_Create(t *testing.T) {
 		ctx   context.Context
 		group entity.Group
 	}
+
+	type want struct {
+		group entity.GroupID
+		err   error
+	}
+
 	tests := []struct {
 		name    string
 		mockFn  func(*MockGroupRepo)
 		args    args
-		want    entity.GroupID
+		want    want
 		wantErr bool
 	}{
 		{
@@ -37,8 +44,22 @@ func TestService_Create(t *testing.T) {
 					Name: "БСБО-01-23",
 				},
 			},
-			want:    1,
+			want:    want{group: entity.GroupID(1), err: nil},
 			wantErr: false,
+		},
+		{
+			name: "Not successful case",
+			mockFn: func(m *MockGroupRepo) {
+				m.EXPECT().GetByName(ctx, "БСБО-01-23").Times(1).Return(entity.Group{}, nil)
+			},
+			args: args{
+				ctx: ctx,
+				group: entity.Group{
+					Name: "БСБО-01-23",
+				},
+			},
+			want:    want{group: entity.GroupID(0), err: errs.GroupExists},
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -51,13 +72,15 @@ func TestService_Create(t *testing.T) {
 				groupRepo: repo,
 			}
 			got, err := s.Create(tt.args.ctx, tt.args.group)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("Create() error = %v, wantErr %v", err, tt.wantErr)
-				return
+
+			if tt.wantErr {
+				require.ErrorIs(t, tt.want.err, err)
+			} else {
+				require.NoError(t, err)
 			}
-			if got != tt.want {
-				t.Errorf("Create() got = %v, want %v", got, tt.want)
-			}
+
+			require.Equal(t, tt.want.group, got)
+
 		})
 	}
 }
