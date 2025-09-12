@@ -6,6 +6,8 @@ import (
 	"homeworktodolist/internal/entity"
 )
 
+//go:generate mockgen -source $GOFILE -destination contract_mocks_test.go -package $GOPACKAGE
+
 type GroupRepo interface {
 	Create(ctx context.Context, group entity.Group) (entity.GroupID, error)
 	GetByName(ctx context.Context, name string) (entity.Group, error)
