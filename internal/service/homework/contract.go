@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+//go:generate mockgen -source $GOFILE -destination contract_mocks_test.go -package $GOPACKAGE
+
 type HomeworkRepo interface {
 	Clear(ctx context.Context) error
 	Create(ctx context.Context, homework entity.Homework) (entity.HomeworkID, error)
