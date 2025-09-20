@@ -24,6 +24,7 @@ var (
 		errs.GroupExists,
 		errs.ErrInvalidPassword,
 		errs.InvalidRegisterKey,
+		errs.FileTooLarge,
 	}
 )
 
@@ -32,7 +33,6 @@ func ErrorHandler(ctx *fiber.Ctx, err error) error {
 	if errors.As(err, &ferr) {
 		ctx.Status(ferr.Code)
 		return ctx.JSON(fiber.Map{
-			"data":  "",
 			"error": err.Error(),
 		})
 	}
@@ -40,14 +40,12 @@ func ErrorHandler(ctx *fiber.Ctx, err error) error {
 	if isNotFoundError(err) {
 		ctx.Status(fiber.StatusNotFound)
 		return ctx.JSON(fiber.Map{
-			"data":  "",
 			"error": err.Error(),
 		})
 	}
 	if isBadRequest(err) {
 		ctx.Status(fiber.StatusBadRequest)
 		return ctx.JSON(fiber.Map{
-			"data":  "",
 			"error": err.Error(),
 		})
 	}
@@ -55,7 +53,6 @@ func ErrorHandler(ctx *fiber.Ctx, err error) error {
 	//any unspecified error
 	ctx.Status(fiber.StatusInternalServerError)
 	return ctx.JSON(fiber.Map{
-		"data":  "",
 		"error": err.Error(),
 	})
 

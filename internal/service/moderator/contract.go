@@ -2,6 +2,7 @@ package moderator
 
 import (
 	"context"
+	"mime/multipart"
 
 	"homeworktodolist/internal/entity"
 )
@@ -20,4 +21,10 @@ type SubjectNoteService interface {
 type GroupService interface {
 	RegenerateGroupRegisterKey(ctx context.Context, groupID entity.GroupID) (string, error)
 	GetByID(ctx context.Context, groupID entity.GroupID) (entity.Group, error)
+}
+
+type HomeworkFileService interface {
+	AddFileToHomework(ctx context.Context, fileHeader *multipart.FileHeader, homeworkID entity.HomeworkID, groupID entity.GroupID) (entity.FileID, string, error)
+	DeleteFile(ctx context.Context, fileID entity.FileID) error
+	GetByHomeworkID(ctx context.Context, id entity.HomeworkID) ([]entity.HomeworkFile, error)
 }
