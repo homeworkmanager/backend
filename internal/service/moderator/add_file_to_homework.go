@@ -18,7 +18,6 @@ func (s *Service) AddFileToHomework(ctx context.Context, req AddFileReq) (map[st
 	filesErrMap := make(map[string]error)
 
 	//TODO: добавить параллельность
-	//TODO: Написать в доке о том, что файл может не добавиться и тогда его имени просто не будет в мапке которую я возвращаю
 	for _, file := range req.FilesHeader {
 		fileID, fileURL, err := s.homeworkFileService.AddFileToHomework(ctx, file, req.HomeworkID, req.GroupID)
 		if err != nil {
