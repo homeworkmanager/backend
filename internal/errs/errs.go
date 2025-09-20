@@ -10,6 +10,7 @@ var (
 	HomeworksNotFound      = errors.New("homeworks doesn't exist")
 	HomeworkStatusNotFound = errors.New("homeworkStatus doesn't exist")
 	SubjectNotesNotFound   = errors.New("subjectNote doesn't exist")
+	FileNotFound           = errors.New("file doesn't exist")
 )
 
 var (
@@ -25,4 +26,10 @@ var (
 )
 var (
 	NoUserRole = errors.New("no user role")
+)
+
+var (
+	FileTooLarge    = errors.New("file too large")
+	InvalidFileType = errors.New("invalid file type")
+	TooManyFiles    = errors.New("too many files")
 )

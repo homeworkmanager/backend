@@ -5,6 +5,7 @@ import (
 )
 
 func (s *Service) RegenerateRegisterKeys(ctx context.Context) error {
+	//TODO: добавить тест на функцию
 	groups, err := s.groupRepo.GetAllGroups(ctx)
 	if err != nil {
 		return err

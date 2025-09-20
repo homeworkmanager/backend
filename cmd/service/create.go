@@ -5,6 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"go.uber.org/zap"
+	"homeworktodolist/internal/client/http/s3"
 	"homeworktodolist/internal/config"
 	"homeworktodolist/internal/err_handler"
 	adminHandlers "homeworktodolist/internal/http/admin"
@@ -19,6 +20,7 @@ import (
 	classRepo "homeworktodolist/internal/repository/postgres/class"
 	groupRepo "homeworktodolist/internal/repository/postgres/group"
 	homeworkRepo "homeworktodolist/internal/repository/postgres/homework"
+	homeworkFilesRepo "homeworktodolist/internal/repository/postgres/homework_files"
 	homeworkStatusRepo "homeworktodolist/internal/repository/postgres/homework_status"
 	subjectRepo "homeworktodolist/internal/repository/postgres/subject"
 	subjectNoteRepo "homeworktodolist/internal/repository/postgres/subjectnote"
@@ -28,6 +30,7 @@ import (
 	classService "homeworktodolist/internal/service/class"
 	groupService "homeworktodolist/internal/service/group"
 	homeworkService "homeworktodolist/internal/service/homework"
+	homeworkFilesService "homeworktodolist/internal/service/homework_files"
 	homeworkStatusService "homeworktodolist/internal/service/homework_status"
 	moderatorService "homeworktodolist/internal/service/moderator"
 	scheduleService "homeworktodolist/internal/service/schedule"
@@ -51,6 +54,9 @@ func createApp() {
 	postgresDb := postgres.Connect(&cfg.PGConfig)
 	redisClient := redis.Connect(&cfg.RedisConfig)
 
+	//s3
+	s3Client := s3.NewS3Client(&cfg.S3Config)
+
 	//txmanager
 	txmanager := tx_manager.NewTxManager(postgresDb)
 
@@ -63,6 +69,7 @@ func createApp() {
 	subjectNoteRepo := subjectNoteRepo.NewSubjectNoteRepo(txmanager)
 	homeworkRepo := homeworkRepo.NewHomeworkRepo(txmanager)
 	homeworkStatusRepo := homeworkStatusRepo.NewHomeworkStatusRepo(txmanager)
+	homeworkFilesRepo := homeworkFilesRepo.NewHomeworkFilesRepo(txmanager)
 
 	//Service
 	userService := userService.NewUserService(userRepo, userRedisRepo, groupRepo, cfg)
@@ -77,13 +84,15 @@ func createApp() {
 
 	homeworkStatusService := homeworkStatusService.NewHomeworkStatusService(homeworkStatusRepo)
 
+	homeworkFilesService := homeworkFilesService.NewHomeworkFilesService(s3Client, homeworkFilesRepo, txmanager)
+
 	homeworkService := homeworkService.NewHomeworkService(homeworkRepo, homeworkStatusService, txmanager)
 
 	adminService := adminService.NewAdminService(groupService, classService, subjectService, homeworkService, userService, subjectNoteService, homeworkStatusService, txmanager)
 
-	moderatorService := moderatorService.NewModeratorService(homeworkService, subjectNoteService, groupService)
+	moderatorService := moderatorService.NewModeratorService(homeworkService, subjectNoteService, groupService, homeworkFilesService)
 
-	scheduleService := scheduleService.NewScheduleService(classService, homeworkService)
+	scheduleService := scheduleService.NewScheduleService(classService, homeworkService, homeworkFilesService)
 
 	//Handlers
 	userHandler := userHandlers.NewUserHandler(cfg, userService)
@@ -105,6 +114,7 @@ func createApp() {
 	//fiber
 	fiberApp := fiber.New(fiber.Config{
 		ErrorHandler: err_handler.ErrorHandler,
+		BodyLimit:    20 * 1024 * 1024,
 	})
 
 	fiberApp.Use(cors.New(cors.Config{
