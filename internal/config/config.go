@@ -2,13 +2,13 @@ package config
 
 import (
 	"errors"
-	"homeworktodolist/internal/client/http/s3"
+	"github.com/kelseyhightower/envconfig"
+	"homewormanager/internal/client/http/s3"
+	"homewormanager/pkg/metrics"
 	"time"
 
-	"github.com/kelseyhightower/envconfig"
-
-	"homeworktodolist/pkg/db/postgres"
-	"homeworktodolist/pkg/db/redis"
+	"homewormanager/pkg/db/postgres"
+	"homewormanager/pkg/db/redis"
 )
 
 type Config struct {
@@ -23,6 +23,7 @@ type Config struct {
 	FrontendHost string `envconfig:"FRONTEND_HOST"`
 	FrontendPort string `envconfig:"FRONTEND_PORT"`
 
+	metrics.MetricsConfig
 	postgres.PGConfig
 	redis.RedisConfig
 	s3.S3Config

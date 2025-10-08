@@ -1,6 +1,6 @@
 package subject
 
-import "homeworktodolist/internal/entity"
+import "homewormanager/internal/entity"
 
 type subject struct {
 	SubjectId   entity.SubjectID `db:"subject_id"`

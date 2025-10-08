@@ -2,9 +2,9 @@ package admin
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 
-	"homeworktodolist/internal/middleware"
+	"homewormanager/internal/middleware"
 )
 
 type Handler struct {

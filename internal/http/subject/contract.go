@@ -2,7 +2,7 @@ package subject
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type SubjectService interface {

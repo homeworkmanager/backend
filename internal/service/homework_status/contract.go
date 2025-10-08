@@ -3,7 +3,7 @@ package homework_status
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type HomeworkStatusRepo interface {

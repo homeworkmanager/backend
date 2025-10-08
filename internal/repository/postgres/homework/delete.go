@@ -3,7 +3,7 @@ package homework
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (r *Repo) Delete(ctx context.Context, id entity.HomeworkID) error {

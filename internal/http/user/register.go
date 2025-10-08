@@ -3,8 +3,8 @@ package user
 import (
 	"github.com/gofiber/fiber/v2"
 
-	"homeworktodolist/internal/entity"
-	userService "homeworktodolist/internal/service/user"
+	"homewormanager/internal/entity"
+	userService "homewormanager/internal/service/user"
 )
 
 type RegisterReq struct {

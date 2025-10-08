@@ -3,8 +3,8 @@ package group
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 )
 
 func (r *Repo) GetAllGroups(ctx context.Context) ([]entity.Group, error) {

@@ -2,7 +2,7 @@ package group
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) GetByID(ctx context.Context, groupID entity.GroupID) (entity.Group, error) {

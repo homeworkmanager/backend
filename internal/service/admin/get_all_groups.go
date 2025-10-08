@@ -2,7 +2,7 @@ package admin
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) GetAllGroups(ctx context.Context) ([]entity.Group, error) {

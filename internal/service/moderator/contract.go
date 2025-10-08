@@ -4,7 +4,7 @@ import (
 	"context"
 	"mime/multipart"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type HomeworkService interface {

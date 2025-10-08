@@ -16,3 +16,19 @@ func (mw *MwManager) RequestLogger(logger *zap.SugaredLogger) fiber.Handler {
 		return c.Next()
 	}
 }
+
+func (mw *MwManager) ErrorLogger(logger *zap.SugaredLogger) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		err := c.Next()
+		if err != nil {
+			logger.Errorw("Unhandled error occurred",
+				zap.String("method", c.Method()),
+				zap.String("path", c.Path()),
+				zap.Error(err),
+			)
+			return err
+		}
+
+		return nil
+	}
+}

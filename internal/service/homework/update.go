@@ -3,7 +3,7 @@ package homework
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) Update(ctx context.Context, homeworkId entity.HomeworkID, homeworkText string) error {

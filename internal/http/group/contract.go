@@ -3,7 +3,7 @@ package group
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type GroupService interface {

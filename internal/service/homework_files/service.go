@@ -1,8 +1,8 @@
 package homework_files
 
 import (
-	"homeworktodolist/internal/client/http/s3"
-	"homeworktodolist/internal/tx_manager"
+	"homewormanager/internal/client/http/s3"
+	"homewormanager/internal/tx_manager"
 )
 
 type Service struct {

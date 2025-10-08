@@ -3,7 +3,7 @@ package subject
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) GetByGroupId(ctx context.Context, groupId entity.GroupID) ([]entity.Subject, error) {

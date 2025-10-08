@@ -6,7 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (r *Repo) CreateCreds(ctx context.Context, creds entity.UserCreds) (sessionKey string, err error) {

@@ -2,7 +2,7 @@ package subjectnote
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (r *Repo) Update(ctx context.Context, id entity.NoteID, noteText string) error {

@@ -2,7 +2,7 @@ package homework_files
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (r *Repo) Create(ctx context.Context, HomeworkFile entity.HomeworkFile) (entity.FileID, error) {

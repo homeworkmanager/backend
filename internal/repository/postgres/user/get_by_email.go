@@ -6,8 +6,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 )
 
 func (r *Repo) GetByEmail(ctx context.Context, email string) (entity.User, error) {

@@ -5,8 +5,8 @@ import (
 	"errors"
 	"github.com/google/uuid"
 
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 )
 
 func (s *Service) Create(ctx context.Context, group entity.Group) (entity.GroupID, error) {

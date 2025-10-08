@@ -3,7 +3,7 @@ package schedule
 import (
 	"time"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type homework struct {

@@ -3,7 +3,7 @@ package user
 import (
 	"github.com/go-redis/redis/v8"
 
-	"homeworktodolist/internal/config"
+	"homewormanager/internal/config"
 )
 
 type Repo struct {

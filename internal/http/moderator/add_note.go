@@ -2,8 +2,8 @@ package moderator
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"homeworktodolist/internal/entity"
-	moderatorService "homeworktodolist/internal/service/moderator"
+	"homewormanager/internal/entity"
+	moderatorService "homewormanager/internal/service/moderator"
 	"strconv"
 )
 

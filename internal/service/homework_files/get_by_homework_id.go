@@ -2,7 +2,7 @@ package homework_files
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) GetByHomeworkID(ctx context.Context, id entity.HomeworkID) ([]entity.HomeworkFile, error) {

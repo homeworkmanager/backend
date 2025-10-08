@@ -3,7 +3,7 @@ package moderator
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) UpdateHomework(ctx context.Context, homeworkId entity.HomeworkID, homeworkText string) error {

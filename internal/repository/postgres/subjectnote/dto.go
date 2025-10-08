@@ -1,7 +1,7 @@
 package subjectnote
 
 import (
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 	"time"
 )
 

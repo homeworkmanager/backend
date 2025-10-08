@@ -1,6 +1,6 @@
 package homework_status
 
-import "homeworktodolist/internal/entity"
+import "homewormanager/internal/entity"
 
 type homeworkStatus struct {
 	ID         entity.StatusID   `db:"id"`

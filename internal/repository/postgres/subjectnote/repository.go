@@ -1,6 +1,6 @@
 package subjectnote
 
-import "homeworktodolist/internal/tx_manager"
+import "homewormanager/internal/tx_manager"
 
 type Repo struct {
 	manager *tx_manager.TxManager

@@ -11,7 +11,7 @@ package homework
 
 import (
 	context "context"
-	entity "homeworktodolist/internal/entity"
+	entity "homewormanager/internal/entity"
 	reflect "reflect"
 	time "time"
 

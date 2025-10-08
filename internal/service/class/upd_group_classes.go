@@ -4,7 +4,7 @@ import (
 	"context"
 	"strings"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type classCount struct {

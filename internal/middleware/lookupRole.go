@@ -3,8 +3,8 @@ package middleware
 import (
 	"context"
 	"errors"
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 )
 
 func (mw *MwManager) lookupRole(ctx context.Context, UserID entity.UserID) (entity.Role, error) {
