@@ -2,7 +2,7 @@ package moderator
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) DeleteNote(ctx context.Context, id entity.NoteID) error {

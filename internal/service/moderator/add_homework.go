@@ -5,7 +5,7 @@ import (
 	"mime/multipart"
 	"time"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type AddHomework struct {

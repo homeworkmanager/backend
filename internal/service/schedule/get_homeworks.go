@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 )
 
 type GetHomework struct {

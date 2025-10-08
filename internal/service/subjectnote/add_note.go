@@ -2,7 +2,7 @@ package subjectnote
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) AddNote(ctx context.Context, note entity.SubjectNote) (entity.NoteID, error) {

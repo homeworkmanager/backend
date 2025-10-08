@@ -2,8 +2,8 @@ package admin
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"homeworktodolist/internal/entity"
-	adminService "homeworktodolist/internal/service/admin"
+	"homewormanager/internal/entity"
+	adminService "homewormanager/internal/service/admin"
 	"strconv"
 )
 

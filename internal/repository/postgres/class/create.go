@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (r *Repo) Create(ctx context.Context, classes []entity.Class) error {

@@ -3,7 +3,7 @@ package user
 import (
 	"time"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type user struct {

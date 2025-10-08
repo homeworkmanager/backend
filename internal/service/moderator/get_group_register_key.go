@@ -2,7 +2,7 @@ package moderator
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) GetGroupRegisterKey(ctx context.Context, groupID entity.GroupID) (string, error) {

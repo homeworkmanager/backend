@@ -3,7 +3,7 @@ package subject
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) UpdGroupSubjects(ctx context.Context, group entity.Group, subjects []string) error {

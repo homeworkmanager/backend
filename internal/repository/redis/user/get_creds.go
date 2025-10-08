@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (r *Repo) GetCreds(ctx context.Context, sessionKey string) (entity.UserCreds, error) {

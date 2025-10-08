@@ -2,7 +2,7 @@ package admin
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type UpdateUserRole struct {

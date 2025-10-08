@@ -2,9 +2,9 @@ package admin
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 
-	adminService "homeworktodolist/internal/service/admin"
+	adminService "homewormanager/internal/service/admin"
 )
 
 type AdminService interface {

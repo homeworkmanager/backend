@@ -3,7 +3,7 @@ package moderator
 import (
 	"github.com/gofiber/fiber/v2"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type UpdHomeworkReq struct {

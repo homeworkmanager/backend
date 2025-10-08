@@ -2,7 +2,7 @@ package subjectnote
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (r *Repo) GetByGroup(ctx context.Context, groupID entity.GroupID) ([]entity.SubjectNote, error) {

@@ -1,7 +1,7 @@
 package user
 
 import (
-	"homeworktodolist/internal/config"
+	"homewormanager/internal/config"
 )
 
 type Service struct {

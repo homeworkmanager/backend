@@ -2,7 +2,7 @@ package homework
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 	"time"
 )
 

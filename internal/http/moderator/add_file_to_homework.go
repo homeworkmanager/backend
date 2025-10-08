@@ -2,10 +2,10 @@ package moderator
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
-	moderatorService "homeworktodolist/internal/service/moderator"
-	"homeworktodolist/internal/utils"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
+	moderatorService "homewormanager/internal/service/moderator"
+	"homewormanager/internal/utils"
 	"strconv"
 )
 

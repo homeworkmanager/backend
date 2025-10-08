@@ -3,7 +3,7 @@ package group
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 //go:generate mockgen -source $GOFILE -destination contract_mocks_test.go -package $GOPACKAGE

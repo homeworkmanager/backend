@@ -2,14 +2,14 @@ package moderator
 
 import (
 	"encoding/json"
-	"homeworktodolist/internal/errs"
-	"homeworktodolist/internal/utils"
+	"homewormanager/internal/errs"
+	"homewormanager/internal/utils"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
 
-	"homeworktodolist/internal/entity"
-	moderatorService "homeworktodolist/internal/service/moderator"
+	"homewormanager/internal/entity"
+	moderatorService "homewormanager/internal/service/moderator"
 )
 
 type AddHomeworkToDateReq struct {

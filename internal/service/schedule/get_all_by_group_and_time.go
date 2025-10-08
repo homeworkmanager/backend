@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
-	"homeworktodolist/internal/utils"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
+	"homewormanager/internal/utils"
 )
 
 type GetSchedule struct {

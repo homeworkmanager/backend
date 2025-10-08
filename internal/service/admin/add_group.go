@@ -2,8 +2,8 @@ package admin
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/utils/classParse"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/utils/classParse"
 )
 
 type AddGroup struct {
