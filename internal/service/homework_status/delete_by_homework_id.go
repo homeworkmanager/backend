@@ -3,8 +3,8 @@ package homework_status
 import (
 	"context"
 	"errors"
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 )
 
 func (s *Service) DeleteHomeworkID(ctx context.Context, homeworkID entity.HomeworkID) error {

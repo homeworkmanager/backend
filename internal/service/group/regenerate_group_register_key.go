@@ -3,7 +3,7 @@ package group
 import (
 	"context"
 	"github.com/google/uuid"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) RegenerateGroupRegisterKey(ctx context.Context, groupID entity.GroupID) (string, error) {

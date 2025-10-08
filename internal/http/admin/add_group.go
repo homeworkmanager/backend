@@ -5,7 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 
-	adminService "homeworktodolist/internal/service/admin"
+	adminService "homewormanager/internal/service/admin"
 )
 
 type AddGroupReq struct {

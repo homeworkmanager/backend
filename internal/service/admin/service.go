@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"homeworktodolist/internal/tx_manager"
+	"homewormanager/internal/tx_manager"
 )
 
 type Service struct {

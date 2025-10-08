@@ -1,6 +1,10 @@
 package errs
 
-import "errors"
+import (
+	"database/sql"
+	"errors"
+	"github.com/gofiber/fiber/v2"
+)
 
 var (
 	UserNotFound           = errors.New("user doesn't exist")
@@ -33,3 +37,59 @@ var (
 	InvalidFileType = errors.New("invalid file type")
 	TooManyFiles    = errors.New("too many files")
 )
+
+var (
+	notFoundErrors = []error{
+		sql.ErrNoRows,
+		UserNotFound,
+		GroupNotFound,
+		ClassesNotFound,
+		SubjectNotesNotFound,
+		SubjectsNotFound,
+		HomeworksNotFound,
+		HomeworkStatusNotFound,
+	}
+	badRequestErrors = []error{
+		UserExists,
+		GroupExists,
+		ErrInvalidPassword,
+		InvalidRegisterKey,
+		FileTooLarge,
+	}
+)
+
+func isNotFoundError(err error) bool {
+	for _, e := range notFoundErrors {
+		if errors.Is(e, err) {
+			return true
+		}
+	}
+	return false
+}
+
+func isBadRequest(err error) bool {
+	for _, e := range badRequestErrors {
+		if errors.Is(e, err) {
+			return true
+		}
+	}
+	return false
+}
+
+func GetStatusFromError(err error) int {
+	var ferr *fiber.Error
+	if errors.As(err, &ferr) {
+		return ferr.Code
+	}
+
+	if isNotFoundError(err) {
+		return fiber.StatusNotFound
+	}
+	if isBadRequest(err) {
+		return fiber.StatusBadRequest
+	}
+
+	//any unspecified error
+
+	return fiber.StatusInternalServerError
+}

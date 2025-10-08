@@ -3,7 +3,7 @@ package subject
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (r *Repo) Create(ctx context.Context, subject entity.Subject) error {

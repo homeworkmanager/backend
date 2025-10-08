@@ -1,7 +1,7 @@
 package homework_files
 
 import (
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 	"time"
 )
 

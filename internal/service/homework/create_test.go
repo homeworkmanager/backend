@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 	"testing"
 )
 

@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"github.com/pkg/errors"
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 )
 
 func (r *Repo) UpdateRole(ctx context.Context, userID entity.UserID, role entity.Role) error {

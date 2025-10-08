@@ -11,7 +11,7 @@ package group
 
 import (
 	context "context"
-	entity "homeworktodolist/internal/entity"
+	entity "homewormanager/internal/entity"
 	reflect "reflect"
 
 	gomock "go.uber.org/mock/gomock"

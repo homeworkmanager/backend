@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) UpdateRole(ctx context.Context, userID entity.UserID, role entity.Role) error {

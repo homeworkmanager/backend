@@ -3,7 +3,7 @@ package user
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (r *Repo) Create(ctx context.Context, user entity.User) error {

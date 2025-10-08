@@ -2,7 +2,7 @@ package group
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (r *Repo) ChangeRegisterKey(ctx context.Context, group entity.Group) error {

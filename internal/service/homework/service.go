@@ -1,6 +1,6 @@
 package homework
 
-import "homeworktodolist/internal/tx_manager"
+import "homewormanager/internal/tx_manager"
 
 type Service struct {
 	homeworkRepo          HomeworkRepo

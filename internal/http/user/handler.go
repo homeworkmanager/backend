@@ -3,8 +3,8 @@ package user
 import (
 	"github.com/gofiber/fiber/v2"
 
-	"homeworktodolist/internal/config"
-	"homeworktodolist/internal/middleware"
+	"homewormanager/internal/config"
+	"homewormanager/internal/middleware"
 )
 
 type Handler struct {

@@ -4,43 +4,43 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"go.uber.org/zap"
-	"homeworktodolist/internal/client/http/s3"
-	"homeworktodolist/internal/config"
-	"homeworktodolist/internal/err_handler"
-	adminHandlers "homeworktodolist/internal/http/admin"
-	groupHandlers "homeworktodolist/internal/http/group"
-	homeworkStatusHandlers "homeworktodolist/internal/http/homework_status"
-	moderatorHandlers "homeworktodolist/internal/http/moderator"
-	scheduleHandlers "homeworktodolist/internal/http/schedule"
-	subjectHandlers "homeworktodolist/internal/http/subject"
-	subjectNoteHandlers "homeworktodolist/internal/http/subjectnote"
-	userHandlers "homeworktodolist/internal/http/user"
-	middleware "homeworktodolist/internal/middleware"
-	classRepo "homeworktodolist/internal/repository/postgres/class"
-	groupRepo "homeworktodolist/internal/repository/postgres/group"
-	homeworkRepo "homeworktodolist/internal/repository/postgres/homework"
-	homeworkFilesRepo "homeworktodolist/internal/repository/postgres/homework_files"
-	homeworkStatusRepo "homeworktodolist/internal/repository/postgres/homework_status"
-	subjectRepo "homeworktodolist/internal/repository/postgres/subject"
-	subjectNoteRepo "homeworktodolist/internal/repository/postgres/subjectnote"
-	userRepo "homeworktodolist/internal/repository/postgres/user"
-	userRedisRepo "homeworktodolist/internal/repository/redis/user"
-	adminService "homeworktodolist/internal/service/admin"
-	classService "homeworktodolist/internal/service/class"
-	groupService "homeworktodolist/internal/service/group"
-	homeworkService "homeworktodolist/internal/service/homework"
-	homeworkFilesService "homeworktodolist/internal/service/homework_files"
-	homeworkStatusService "homeworktodolist/internal/service/homework_status"
-	moderatorService "homeworktodolist/internal/service/moderator"
-	scheduleService "homeworktodolist/internal/service/schedule"
-	subjectService "homeworktodolist/internal/service/subject"
-	subjectNoteService "homeworktodolist/internal/service/subjectnote"
-	userService "homeworktodolist/internal/service/user"
-	"homeworktodolist/internal/tx_manager"
-	postgres "homeworktodolist/pkg/db/postgres"
-	"homeworktodolist/pkg/db/redis"
-	"homeworktodolist/pkg/logger"
+	"homewormanager/internal/client/http/s3"
+	"homewormanager/internal/config"
+	"homewormanager/internal/err_handler"
+	adminHandlers "homewormanager/internal/http/admin"
+	groupHandlers "homewormanager/internal/http/group"
+	homeworkStatusHandlers "homewormanager/internal/http/homework_status"
+	moderatorHandlers "homewormanager/internal/http/moderator"
+	scheduleHandlers "homewormanager/internal/http/schedule"
+	subjectHandlers "homewormanager/internal/http/subject"
+	subjectNoteHandlers "homewormanager/internal/http/subjectnote"
+	userHandlers "homewormanager/internal/http/user"
+	middleware "homewormanager/internal/middleware"
+	classRepo "homewormanager/internal/repository/postgres/class"
+	groupRepo "homewormanager/internal/repository/postgres/group"
+	homeworkRepo "homewormanager/internal/repository/postgres/homework"
+	homeworkFilesRepo "homewormanager/internal/repository/postgres/homework_files"
+	homeworkStatusRepo "homewormanager/internal/repository/postgres/homework_status"
+	subjectRepo "homewormanager/internal/repository/postgres/subject"
+	subjectNoteRepo "homewormanager/internal/repository/postgres/subjectnote"
+	userRepo "homewormanager/internal/repository/postgres/user"
+	userRedisRepo "homewormanager/internal/repository/redis/user"
+	adminService "homewormanager/internal/service/admin"
+	classService "homewormanager/internal/service/class"
+	groupService "homewormanager/internal/service/group"
+	homeworkService "homewormanager/internal/service/homework"
+	homeworkFilesService "homewormanager/internal/service/homework_files"
+	homeworkStatusService "homewormanager/internal/service/homework_status"
+	moderatorService "homewormanager/internal/service/moderator"
+	scheduleService "homewormanager/internal/service/schedule"
+	subjectService "homewormanager/internal/service/subject"
+	subjectNoteService "homewormanager/internal/service/subjectnote"
+	userService "homewormanager/internal/service/user"
+	"homewormanager/internal/tx_manager"
+	postgres "homewormanager/pkg/db/postgres"
+	"homewormanager/pkg/db/redis"
+	"homewormanager/pkg/logger"
+	"homewormanager/pkg/metrics"
 	"os"
 	"os/signal"
 )
@@ -49,6 +49,13 @@ func createApp() {
 
 	//config
 	cfg := config.NewCfg()
+
+	//logger
+	logger := logger.InitLogger(cfg)
+
+	//metrics
+	//TODO подумать про то нужно ли здесь что то возвращать
+	metrics.StartMetricsServer(&cfg.MetricsConfig, logger)
 
 	//database
 	postgresDb := postgres.Connect(&cfg.PGConfig)
@@ -127,22 +134,7 @@ func createApp() {
 	//middleware
 	mw := middleware.NewMwManager(userRedisRepo, userRepo)
 
-	//logger
-	logger := logger.InitLogger(cfg)
-
-	fiberApp.Use(func(c *fiber.Ctx) error {
-		err := c.Next()
-		if err != nil {
-			logger.Errorw("Unhandled error occurred",
-				zap.String("method", c.Method()),
-				zap.String("path", c.Path()),
-				zap.Error(err),
-			)
-			return err
-		}
-
-		return nil
-	}, mw.RequestLogger(logger))
+	fiberApp.Use(mw.Metrics(), mw.ErrorLogger(logger), mw.RequestLogger(logger))
 
 	//groups
 	userGroup := fiberApp.Group("/user")

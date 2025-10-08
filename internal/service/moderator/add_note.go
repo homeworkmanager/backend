@@ -2,7 +2,7 @@ package moderator
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type AddNote struct {

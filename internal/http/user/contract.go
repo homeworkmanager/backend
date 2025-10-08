@@ -3,8 +3,8 @@ package user
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
-	userService "homeworktodolist/internal/service/user"
+	"homewormanager/internal/entity"
+	userService "homewormanager/internal/service/user"
 )
 
 type UserService interface {

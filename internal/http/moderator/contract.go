@@ -2,8 +2,8 @@ package moderator
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
-	moderatorService "homeworktodolist/internal/service/moderator"
+	"homewormanager/internal/entity"
+	moderatorService "homewormanager/internal/service/moderator"
 )
 
 type ModeratorService interface {

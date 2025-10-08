@@ -2,7 +2,7 @@ package subjectnote
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type SubjectNoteService interface {

@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 )
 
 type SetHomeworkStatus struct {

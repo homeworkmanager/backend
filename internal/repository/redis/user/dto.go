@@ -1,6 +1,6 @@
 package user
 
-import "homeworktodolist/internal/entity"
+import "homewormanager/internal/entity"
 
 type credsData struct {
 	UserID  entity.UserID  `json:"userID"`

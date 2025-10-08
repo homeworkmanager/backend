@@ -1,77 +1,14 @@
 package err_handler
 
 import (
-	"database/sql"
-	"errors"
 	"github.com/gofiber/fiber/v2"
-
-	"homeworktodolist/internal/errs"
-)
-
-var (
-	notFoundErrors = []error{
-		sql.ErrNoRows,
-		errs.UserNotFound,
-		errs.GroupNotFound,
-		errs.ClassesNotFound,
-		errs.SubjectNotesNotFound,
-		errs.SubjectsNotFound,
-		errs.HomeworksNotFound,
-		errs.HomeworkStatusNotFound,
-	}
-	badRequestErrors = []error{
-		errs.UserExists,
-		errs.GroupExists,
-		errs.ErrInvalidPassword,
-		errs.InvalidRegisterKey,
-		errs.FileTooLarge,
-	}
+	"homewormanager/internal/errs"
 )
 
 func ErrorHandler(ctx *fiber.Ctx, err error) error {
-	var ferr *fiber.Error
-	if errors.As(err, &ferr) {
-		ctx.Status(ferr.Code)
-		return ctx.JSON(fiber.Map{
-			"error": err.Error(),
-		})
-	}
-
-	if isNotFoundError(err) {
-		ctx.Status(fiber.StatusNotFound)
-		return ctx.JSON(fiber.Map{
-			"error": err.Error(),
-		})
-	}
-	if isBadRequest(err) {
-		ctx.Status(fiber.StatusBadRequest)
-		return ctx.JSON(fiber.Map{
-			"error": err.Error(),
-		})
-	}
-
-	//any unspecified error
-	ctx.Status(fiber.StatusInternalServerError)
+	code := errs.GetStatusFromError(err)
+	ctx.Status(code)
 	return ctx.JSON(fiber.Map{
 		"error": err.Error(),
 	})
-
-}
-
-func isNotFoundError(err error) bool {
-	for _, e := range notFoundErrors {
-		if errors.Is(e, err) {
-			return true
-		}
-	}
-	return false
-}
-
-func isBadRequest(err error) bool {
-	for _, e := range badRequestErrors {
-		if errors.Is(e, err) {
-			return true
-		}
-	}
-	return false
 }

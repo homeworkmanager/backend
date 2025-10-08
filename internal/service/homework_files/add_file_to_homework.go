@@ -3,7 +3,7 @@ package homework_files
 import (
 	"context"
 	"fmt"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 	"mime/multipart"
 )
 

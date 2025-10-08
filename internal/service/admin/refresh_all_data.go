@@ -3,7 +3,7 @@ package admin
 import (
 	"context"
 
-	"homeworktodolist/internal/utils/classParse"
+	"homewormanager/internal/utils/classParse"
 )
 
 // TODO: добавить отчищение статуса выполненности

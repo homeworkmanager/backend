@@ -3,7 +3,7 @@ package admin
 import (
 	"context"
 
-	"homeworktodolist/internal/utils/classParse"
+	"homewormanager/internal/utils/classParse"
 )
 
 func (s *Service) UpdateClasses(ctx context.Context) error {

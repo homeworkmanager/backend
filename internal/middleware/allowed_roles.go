@@ -3,7 +3,7 @@ package middleware
 import (
 	"github.com/gofiber/fiber/v2"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (mw *MwManager) AllowedRoles(allowedRoles []entity.Role) fiber.Handler {

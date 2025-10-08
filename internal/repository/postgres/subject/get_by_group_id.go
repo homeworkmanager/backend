@@ -3,8 +3,8 @@ package subject
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 )
 
 func (r *Repo) GetByGroupId(ctx context.Context, groupId entity.GroupID) ([]entity.Subject, error) {

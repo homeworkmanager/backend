@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"errors"
 
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 )
 
 func (r *Repo) GetByUserAndHomework(ctx context.Context, userID entity.UserID, homeworkID entity.HomeworkID) (entity.HomeworkStatus, error) {

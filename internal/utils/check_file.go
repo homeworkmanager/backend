@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 	"mime/multipart"
 	"path/filepath"
 	"strings"

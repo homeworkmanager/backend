@@ -1,7 +1,7 @@
 package group
 
 import (
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type group struct {

@@ -3,7 +3,7 @@ package homework_status
 import (
 	"context"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (r *Repo) Create(ctx context.Context, HomeworkStatus entity.HomeworkStatus) error {

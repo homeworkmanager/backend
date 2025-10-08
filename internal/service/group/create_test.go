@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 	"testing"
 )
 

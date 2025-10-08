@@ -2,8 +2,8 @@ package homework_status
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/service/homework_status"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/service/homework_status"
 	"strconv"
 )
 

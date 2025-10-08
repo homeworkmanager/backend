@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (s *Service) GetAllUsersFull(ctx context.Context) ([]entity.UserFullInfo, error) {

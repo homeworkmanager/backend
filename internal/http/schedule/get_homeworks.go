@@ -2,8 +2,8 @@ package schedule
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"homeworktodolist/internal/entity"
-	scheduleService "homeworktodolist/internal/service/schedule"
+	"homewormanager/internal/entity"
+	scheduleService "homewormanager/internal/service/schedule"
 )
 
 func (h *Handler) GetHomeworks() fiber.Handler {

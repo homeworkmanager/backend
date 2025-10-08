@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 type GroupService interface {

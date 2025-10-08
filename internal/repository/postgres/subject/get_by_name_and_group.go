@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"errors"
 
-	"homeworktodolist/internal/entity"
-	"homeworktodolist/internal/errs"
+	"homewormanager/internal/entity"
+	"homewormanager/internal/errs"
 )
 
 func (r *Repo) GetByNameAndGroup(ctx context.Context, name string, groupID entity.GroupID) (entity.Subject, error) {

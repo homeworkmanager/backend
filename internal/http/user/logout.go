@@ -2,7 +2,7 @@ package user
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"homeworktodolist/internal/entity"
+	"homewormanager/internal/entity"
 )
 
 func (h *Handler) Logout() fiber.Handler {
