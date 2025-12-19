@@ -15,9 +15,9 @@ const (
 	CategoryLection      = "ЛК"
 	CategoryPractice     = "ПР"
 	CategoryLab          = "ЛАБ"
-	CategoryCredit       = "Зачет"
-	CategoryConsultation = "Консультация"
-	CategoryExam         = "Экзамен"
+	CategoryCredit       = "ЗАЧ"
+	CategoryConsultation = "Конс"
+	CategoryExam         = "Э"
 )
 
 var CategoryToNumber = map[string]ClassCategory{
